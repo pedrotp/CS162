@@ -59,7 +59,6 @@ void Game::getUserInput() {
 };
 
 void Game::play() {
-  // showInstructions();
   getUserInput();
   std::cout << "Press any key to begin the game..." << std::endl;
   std::cin.get();

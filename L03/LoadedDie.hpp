@@ -17,9 +17,6 @@ class, variable and function declarations.
 
 class LoadedDie : public Die {
 
-  private:
-    int oddsMultiplier; // how many times more likely that the die will land on the largest number (i.e. 3x, 5x)
-
   public:
     LoadedDie(int sides);
     int roll();
