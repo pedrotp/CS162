@@ -4,7 +4,7 @@
 
 ** Date: 10/17/2016
 
-** Description: Lab3 - Helper functions
+** Description: Lab3 - Implementation file for the input helper functions. 
 
 *********************************************************************/
 
@@ -26,15 +26,14 @@ int getInt(int minSize, int maxSize) {
   int userInt;
   bool isValid = false;
   while (!isValid) {
-    std::cin >> userInt;
-    std::cin.ignore(100,'\n');
-    if (userInt >= minSize && userInt <= maxSize) {
+    if (std::cin >> userInt && userInt >= minSize && userInt <= maxSize) {
       isValid = true;
+      std::cin.ignore(10000,'\n');
     } else {
-      std::cout << std::endl;
+      // std::cout << std::endl;
       std::cout << "Invalid input. Please enter an integer between " << minSize << " and " << maxSize << " (inclusive)." << std::endl;
       std::cin.clear();
-      std::cin.ignore();
+      std::cin.ignore(10000,'\n');
     }
   }
   return userInt;
@@ -55,7 +54,6 @@ bool getYesNo() {
   bool isValid = false;
   while (!isValid) {
     std::cin.get(input);
-    std::cout << std::endl;
     if (input == 'Y' || input == 'y') {
       yn = true;
       isValid = true;
@@ -66,6 +64,7 @@ bool getYesNo() {
       std::cout << "Invalid input. Please enter y or n only." << std::endl;
       std::cin.clear();
     }
+    std::cin.ignore(10000,'\n');
   }
   return yn;
 }

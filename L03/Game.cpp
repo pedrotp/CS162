@@ -2,7 +2,7 @@
 
 ** Author: Pedro Torres-Picon
 
-** Date: 10/15/2016
+** Date: 10/17/2016
 
 ** Description: Lab 3 - Part of a simplified game of War, with dice.
 This is the implementation file for the Game class, which includes
@@ -14,10 +14,30 @@ all the source code for the functions the class contains.
 #include "Game.hpp"
 #include "helpers.hpp"
 
+/*********************************************************************
+
+** Description: Game()
+
+** This is the default constructor, which initializes both players'
+scores to 0
+
+*********************************************************************/
+
 Game::Game() {
   p1Score = 0;
   p2Score = 0;
 };
+
+/*********************************************************************
+
+** Description: getUserInput()
+
+** This function gets input for the user for the number of rounds,
+number of sides for each die, and whether they are loaded or not. It
+then sets the numRounds variable and generates the dice store in
+p1Die and p2Die
+
+*********************************************************************/
 
 void Game::getUserInput() {
   int numSides;
@@ -58,6 +78,15 @@ void Game::getUserInput() {
   }
 };
 
+/*********************************************************************
+
+** Description: play()
+
+** This function plays the game. It has a loop that rolls both dice
+and keeps track of both players' scores.
+
+*********************************************************************/
+
 void Game::play() {
   getUserInput();
   std::cout << "Press any key to begin the game..." << std::endl;
@@ -80,8 +109,18 @@ void Game::play() {
   endGame();
 };
 
+/*********************************************************************
+
+** Description: endGame()
+
+** This function is run after the required number of rolls and it checks
+both scores to determine a winner and announce it to the user
+
+*********************************************************************/
+
 void Game::endGame() {
-  std::cout << "**FINAL SCORES**" << std::endl;
+  std::cout << "*** FINAL SCORES ***" << std::endl;
+  std::cout << "** " << numRounds << " ROUNDS PLAYED **" << std::endl;
   std::cout << "PLAYER 1: " << p1Score << " ROUNDS WON" << std::endl;
   std::cout << "PLAYER 2: " << p2Score << " ROUNDS WON" << std::endl;
   if (p1Score > p2Score) {
@@ -92,6 +131,15 @@ void Game::endGame() {
     std::cout << "** THE GAME IS A DRAW! **" << std::endl;
   }
 };
+
+/*********************************************************************
+
+** Description: ~Game()
+
+** This is the destructor that deallocates the dynamically allocated
+memory used for both dice
+
+*********************************************************************/
 
 Game::~Game() {
   delete p1Die;
