@@ -1,5 +1,7 @@
 /*********************************************************************
 
+** Program Filename: Item.hpp
+
 ** Author: Pedro Torres-Picon
 
 ** Date: 10/23/2016
@@ -10,7 +12,6 @@ class, variable and function declarations.
 
 *********************************************************************/
 
-#include <string>
 #include "Item.hpp"
 
 #ifndef LIST_HPP
@@ -19,19 +20,21 @@ class, variable and function declarations.
 class List {
 
   private:
-    Item* itemArr;
+    Item *itemArr;
+    int numItems;
+    int arrCapacity;
 
   public:
     List();
-    List();
-    void addItem(Item newItem);
-    void removeItem();
+    void addItems();
+    void removeItems();
+    void doubleCapacity();
+    void print();
+    ~List();
 
 };
 
 #endif
 
-// You will also need a List class. You will store Item objects in your List object.
-// When you enter a new item, an Item object must be created and added to the List object.
-// Use a dynamic array to hold the Item objects. The dynamic array should start with a
-// capacity of 4 Item objects. Do you need a print function in this class? Think about it.
+// changes
+// thought addItems would take an Item but it takes the parameters and creates the item internally

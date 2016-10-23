@@ -1,5 +1,7 @@
 /*********************************************************************
 
+** Program Filename: Item.hpp
+
 ** Author: Pedro Torres-Picon
 
 ** Date: 10/23/2016
@@ -11,6 +13,8 @@ class, variable and function declarations.
 *********************************************************************/
 
 #include <string>
+#include "helpers.hpp"
+#include <iomanip>
 
 #ifndef ITEM_HPP
 #define ITEM_HPP
@@ -18,21 +22,26 @@ class, variable and function declarations.
 class Item {
 
   private:
-    string name;
-    string unit;
+    std::string name;
     int quantity;
-    int unitPrice;
+    std::string unit;
+    float price;
 
   public:
     Item();
-    Item(int sides);
+    Item(std::string itemName, int qtyNeeded, std::string unitName = "", float unitPrice = 0);
+    std::string getName();
+    float print(); // returns the 'extended price' for the item after printing
+    void setUnit(std::string unitName);
+    void setPrice(float unitPrice);
+    friend bool operator==(Item item1, Item item2);
+    friend Item operator+(Item item1, int num);
+    friend Item operator-(Item item1, int num);
 
 };
 
 #endif
 
-// You will design an Item class. The class should have data elements for the
-// following information: item name, unit (i.e. can, box, pound, or ounce),
-// quantity to buy, and unit price. Consider following things: do you need any
-// functions other than the constructor(s)? How do you calculate the extended
-// price for the item (quantity to buy times unit price)? How do you print it to the screen?
+// changes:
+// make unit of measurement and price optional
+// print function returns the total price for that item
