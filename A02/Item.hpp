@@ -14,7 +14,7 @@ class, variable and function declarations.
 
 #include <string>
 #include "helpers.hpp"
-#include <iomanip>
+#include <iomanip> // output formatting
 
 #ifndef ITEM_HPP
 #define ITEM_HPP
@@ -30,7 +30,6 @@ class Item {
   public:
     Item();
     Item(std::string itemName, int qtyNeeded, std::string unitName = "", float unitPrice = 0);
-    std::string getName();
     float print(); // returns the 'extended price' for the item after printing
     void setUnit(std::string unitName);
     void setPrice(float unitPrice);
@@ -41,7 +40,3 @@ class Item {
 };
 
 #endif
-
-// changes:
-// make unit of measurement and price optional
-// print function returns the total price for that item

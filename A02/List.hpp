@@ -21,8 +21,8 @@ class List {
 
   private:
     Item *itemArr;
-    int numItems;
-    int arrCapacity;
+    int numItems; // variable to hold the number of items in the array
+    int arrCapacity; // variable to hold the total current capacity of the array
 
   public:
     List();
@@ -35,6 +35,3 @@ class List {
 };
 
 #endif
-
-// changes
-// thought addItems would take an Item but it takes the parameters and creates the item internally

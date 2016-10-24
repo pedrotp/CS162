@@ -14,11 +14,30 @@ source code for all the functions in the class.
 
 #include "List.hpp"
 
+/*********************************************************************
+
+** Function: List()
+
+** Description: this is the default constructor for the List class
+that sets all the variables to default values
+
+*********************************************************************/
+
 List::List() {
   itemArr = new Item[4];
   arrCapacity = 4;
   numItems = 0;
 };
+
+/*********************************************************************
+
+** Function: addItems()
+
+** Description: a function that adds items to the list by asking the
+user to enter the name and quantity of the items to add, and also the
+unit and price if it is a new item
+
+*********************************************************************/
 
 void List::addItems() {
 
@@ -35,6 +54,7 @@ void List::addItems() {
   Item tempItem(itemName, qtyNeeded);
   bool found = false;
 
+  // look for an item with the name entered, if found increase its quantity
   for (int i = 0; i < numItems; i++) {
     if (itemArr[i] == tempItem) {
       found = true;
@@ -43,8 +63,10 @@ void List::addItems() {
     }
   }
 
+  //if not found, ask the user for unit and price and add a new item to the storage array
   if (!found) {
 
+    // if the array is at capacity double the capacity array
     if (numItems == arrCapacity) {
       doubleCapacity();
     }
@@ -63,6 +85,15 @@ void List::addItems() {
 
 };
 
+/*********************************************************************
+
+** Function: removeItems()
+
+** Description: a function that removes items from the list by asking
+the user the name and quantity of items to remove
+
+*********************************************************************/
+
 void List::removeItems() {
 
   std::string itemName;
@@ -76,6 +107,7 @@ void List::removeItems() {
   Item tempItem(itemName, qtyRemove);
   bool found = false;
 
+  // look for an item with the name give by the user, if found decrease the quantity by the number entered by the user
   for (int i = 0; i < numItems; i++) {
     if (itemArr[i] == tempItem) {
       found = true;
@@ -90,21 +122,45 @@ void List::removeItems() {
 
 };
 
+/*********************************************************************
+
+** Function: doubleCapacity()
+
+** Description: this function doubles the capacity of the storage
+array by creating a new array and copying all the Items from the
+first onto the second
+
+*********************************************************************/
+
 void List::doubleCapacity() {
 
+  // create a new array with double the capacity of the current one
   Item *newArr = new Item[ arrCapacity * 2 ];
 
+  //copy every item from the current array to the new larger one
   for (int i = 0; i < numItems; i++) {
     newArr[i] = itemArr[i];
   }
 
+  // point the itemArr variable to the new array and deallocate the old array
   Item *tempPtr = itemArr;
   itemArr = newArr;
   delete[] tempPtr;
 
+  // update the arrCapacity variable to reflect the new capacity
   arrCapacity *= 2;
 
 };
+
+/*********************************************************************
+
+** Function: print()
+
+** Description: prints the entire list to the screen with proper
+formatting using the print() function from the individual Items plus
+some extra information in the top and botton of the list
+
+*********************************************************************/
 
 void List::print() {
 
@@ -135,6 +191,15 @@ void List::print() {
   }
 
 };
+
+/*********************************************************************
+
+** Function: ~List()
+
+** Description: this is the destructor, which deallocates the memory
+allocated for the dynamic storage array itemArr
+
+*********************************************************************/
 
 List::~List() {
   delete[] itemArr;
