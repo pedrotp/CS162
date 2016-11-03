@@ -1,10 +1,14 @@
 /*********************************************************************
 
+** Program Filename: Critter.hpp
+
 ** Author: Pedro Torres-Picon
 
-** Date: 10/30/2016
+** Date: 11/02/2016
 
-** Description: Lab 5 -
+** Description: Lab 5 - Part of a predator/prey simulation.
+This is the implementation file for the Critter abstract base class,
+which includes some of the class, variable and function declarations.
 
 *********************************************************************/
 

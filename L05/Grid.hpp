@@ -1,3 +1,17 @@
+/*********************************************************************
+
+** Program Filename: Grid.hpp
+
+** Author: Pedro Torres-Picon
+
+** Date: 11/02/2016
+
+** Description: Lab 5 - Part of a predator/prey simulation.
+This is the interface file for the Grid class, which includes the
+class, variable and function declarations.
+
+*********************************************************************/
+
 #ifndef GRID_HPP
 #define GRID_HPP
 

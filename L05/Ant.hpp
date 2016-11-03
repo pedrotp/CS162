@@ -1,10 +1,15 @@
 /*********************************************************************
 
+** Program Filename: Ant.hpp
+
 ** Author: Pedro Torres-Picon
 
-** Date: 10/30/2016
+** Date: 11/02/2016
 
-** Description: Lab 5 -
+** Description: Lab 5 - Part of a predator/prey simulation.
+This is the implementation file for the Ant class, which is derived 
+from the Critter abstract class. This file includes some of the class,
+variable and function declarations.
 
 *********************************************************************/
 

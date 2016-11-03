@@ -1,5 +1,28 @@
+/*********************************************************************
+
+** Program Filename: Grid.cpp
+
+** Author: Pedro Torres-Picon
+
+** Date: 11/02/2016
+
+** Description: Lab 5 - Part of a predator/prey simulation.
+This is the implementation file for the Grid class, which includes the
+source code for all the functions in the class.
+
+*********************************************************************/
+
 #include "Grid.hpp"
 #include <unistd.h> // usleep
+
+/*********************************************************************
+
+** Description: play()
+
+** This is the main function that runs the simulation from within
+the Grid class
+
+*********************************************************************/
 
 void Grid::play() {
   std::cout << "Hi there, welcome to the Critter game!" << std::endl;
@@ -29,7 +52,17 @@ void Grid::play() {
     std::cout.flush();
     usleep(30000);
   }
+  std::cout << "That's the end. Would you like to run the simulation again? (y/n)" << std::endl;
 };
+
+/*********************************************************************
+
+** Description: makeGrid()
+
+** This function creates a new grid, stores it in a pointer, and
+populates it with the proper number of Doodlebugs and Ants
+
+*********************************************************************/
 
 void Grid::makeGrid() {
   // make and populate a new grid with 0's
@@ -40,7 +73,6 @@ void Grid::makeGrid() {
       grid[i][j] = 0; // loop through the inner arrays and set every Critter pointer to 0
     }
   }
-
 
   // fill the grid with the requested number of doodles in random locations
   for (int i = 0; i < numDoodles; i++) {
@@ -66,6 +98,15 @@ void Grid::makeGrid() {
 
 };
 
+/*********************************************************************
+
+** Description: getData()
+
+** This function asks the user to enter all the data necessary to run
+the simulation, according to the extra credit
+
+*********************************************************************/
+
 void Grid::getData() {
   std::cout << "Please enter the number of steps you want the game to take" << std::endl;
   numSteps = getInt(0);
@@ -80,6 +121,16 @@ void Grid::getData() {
   std::cout << "\nOK, we are generating a " << gridSize << "x" << gridSize << " grid, and populating it with ";
   std::cout << numDoodles << " doodlebugs and " << numAnts << " ants. The game will go on for " << numSteps << " steps.\n" << std::endl;
 };
+
+/*********************************************************************
+
+** Description: print()
+
+** This function clears the terminal screen first, then prints the
+grid to the screen, printing a specific character to represent
+blank spaces, Ants and Doodlebugs.
+
+*********************************************************************/
 
 void Grid::print() {
   std::cout << "\033[2J\033[1;1H";
@@ -97,6 +148,16 @@ void Grid::print() {
   }
 };
 
+
+/*********************************************************************
+
+** Description: getInt()
+
+** Helper function which asks the user for an integer value,
+validates that input and returns it.
+
+*********************************************************************/
+
 int Grid::getInt(int minSize, int maxSize) {
   int userInt;
   bool isValid = false;
@@ -112,6 +173,15 @@ int Grid::getInt(int minSize, int maxSize) {
   }
   return userInt;
 };
+
+/*********************************************************************
+
+** Description: ~Grid()
+
+** This is the destructor for the Grid class that deallocates memory
+for all arrays in the grid, as well as all the pointers to Critter
+
+*********************************************************************/
 
 Grid::~Grid() {
   for (int i = 0; i < gridSize; i++) {
