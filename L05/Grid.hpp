@@ -16,6 +16,7 @@ class, variable and function declarations.
 #define GRID_HPP
 
 #include <iostream>
+#include <limits> // std::numeric_limits
 #include "Ant.hpp"
 #include "Doodlebug.hpp"
 
