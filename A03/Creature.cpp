@@ -23,6 +23,14 @@ sets some internal values according to provided arguments
 
 *********************************************************************/
 
-Creature::Creature() {
+Creature::Creature(int attackNum, int attackSides, int defendNum, int defendSides, int armorPts, int strengthPts) {
 
+};
+
+int attack() {
+
+};
+
+bool defend(int attackStrength){
+  
 };
