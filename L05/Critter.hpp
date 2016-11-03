@@ -12,8 +12,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <iostream> // REMOVE
-
 #ifndef CRITTER_HPP
 #define CRITTER_HPP
 
@@ -31,7 +29,7 @@ class Critter
     int stepCounter; // keeps track of the current step so Critters don't move twice
 
   public:
-    Critter(Critter ***matrPtr, int matrSize, int startX, int startY);
+    Critter(Critter ***matrPtr, int matrSize, int startX, int startY, int startStep = 0);
     std::string type();
     bool step(int currentStep);
     virtual bool move() = 0;

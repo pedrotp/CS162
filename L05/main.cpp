@@ -8,8 +8,6 @@
 
 *********************************************************************/
 
-#include "Ant.hpp"
-#include "Doodlebug.hpp"
 #include "Grid.hpp"
 
 int main() {

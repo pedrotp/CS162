@@ -20,7 +20,7 @@ class Doodlebug : public Critter
     int stepsWithoutEating; // a counter for the number of steps since the last meal
 
   public:
-    Doodlebug(Critter ***matrPtr, int matrSize, int startX, int startY);
+    Doodlebug(Critter ***matrPtr, int matrSize, int startX, int startY, int startStep = 0);
     bool breed();
     bool move();
     bool eat();

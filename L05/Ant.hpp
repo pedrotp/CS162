@@ -17,7 +17,7 @@
 class Ant : public Critter
 {
   public:
-    Ant(Critter ***matrPtr, int matrSize, int startX, int startY);
+    Ant(Critter ***matrPtr, int matrSize, int startX, int startY, int startStep = 0);
     bool breed();
     bool move();
     ~Ant() {};

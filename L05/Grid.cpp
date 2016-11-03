@@ -25,7 +25,9 @@ void Grid::play() {
       }
     }
     print();
-    std::cout << "STEP# " << s << std::endl;
+
+    std::cout.flush();
+    usleep(30000);
   }
 };
 
@@ -65,19 +67,16 @@ void Grid::makeGrid() {
 };
 
 void Grid::getData() {
-  // std::cout << "Please enter the number of steps you want the game to take" << std::endl;
-  // numSteps = getInt(0);
-  // std::cout << "Great. Now enter an integer for the size of the grid area" << std::endl;
-  // std::cout << "(i.e. if you enter 10 we will generate a 10x10 grid)" << std::endl;
-  // gridSize = getInt(0);
-  // std::cout << "Awesome, now please enter the number of doodlebugs you want to start with" << std::endl;
-  // numDoodles = getInt(0, gridSize * gridSize);
-  // std::cout << "Finally, please enter the number of ants you want to start with" << std::endl;
-  // numAnts = getInt(0, (gridSize * gridSize) - numDoodles);
-  numSteps = 100;
-  gridSize = 20;
-  numDoodles = 5;
-  numAnts = 100;
+  std::cout << "Please enter the number of steps you want the game to take" << std::endl;
+  numSteps = getInt(0);
+  std::cout << "Great. Now enter an integer for the size of the grid area" << std::endl;
+  std::cout << "(i.e. if you enter 10 we will generate a 10x10 grid)" << std::endl;
+  gridSize = getInt(0);
+  std::cout << "Awesome, now please enter the number of doodlebugs you want to start with" << std::endl;
+  numDoodles = getInt(0, gridSize * gridSize);
+  std::cout << "Finally, please enter the number of ants you want to start with" << std::endl;
+  numAnts = getInt(0, (gridSize * gridSize) - numDoodles);
+
   std::cout << "\nOK, we are generating a " << gridSize << "x" << gridSize << " grid, and populating it with ";
   std::cout << numDoodles << " doodlebugs and " << numAnts << " ants. The game will go on for " << numSteps << " steps.\n" << std::endl;
 };
@@ -96,8 +95,6 @@ void Grid::print() {
     }
     std::cout << std::endl;
   }
-  std::cout.flush();
-  usleep(100000);
 };
 
 int Grid::getInt(int minSize, int maxSize) {
@@ -108,7 +105,6 @@ int Grid::getInt(int minSize, int maxSize) {
       isValid = true;
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
     } else {
-      // std::cout << std::endl;
       std::cout << "Invalid input. Please enter an integer between " << minSize << " and " << maxSize << " (inclusive)." << std::endl;
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
@@ -120,9 +116,7 @@ int Grid::getInt(int minSize, int maxSize) {
 Grid::~Grid() {
   for (int i = 0; i < gridSize; i++) {
     for (int j = 0; j < gridSize; j++) {
-      if (grid[i][j] != 0) {
-        delete grid[i][j]; // deallocate memory for every dynamically created critter
-      }
+      delete grid[i][j]; // deallocate memory for every dynamically created critter
     }
     delete [] grid[i]; // loop through the grid array and deallocate memory for each inner array
   }
