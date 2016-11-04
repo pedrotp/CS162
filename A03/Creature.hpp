@@ -22,8 +22,8 @@ which includes some of the class, variable and function declarations.
 class Creature
 {
   protected:
-    int[2] attackDice; // pos 0 represents the number of dice, and pos 1 the number of sides
-    int[2] defenseDice; // pos 0 represents the number of dice, and pos 1 the number of sides
+    int attackDice[2]; // pos 0 represents the number of dice, and pos 1 the number of sides
+    int defenseDice[2]; // pos 0 represents the number of dice, and pos 1 the number of sides
     int armor;
     int strength;
 

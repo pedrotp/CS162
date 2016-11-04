@@ -18,7 +18,7 @@ which includes the class, variable and function declarations.
 #include "Creature.hpp"
 
 // Defines the interface of the HarryPotter class
-class HarryPotter
+class HarryPotter : public Creature
 {
   private:
     bool hasDied;

@@ -18,7 +18,7 @@ which includes the class, variable and function declarations.
 #include "Creature.hpp"
 
 // Defines the interface of the Vampire class
-class Vampire
+class Vampire : public Creature
 {
 
   public:

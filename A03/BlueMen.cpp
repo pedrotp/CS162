@@ -23,22 +23,14 @@ calls the base class constructor, and sets some internal values
 
 *********************************************************************/
 
-BlueMen::BlueMen() : Critter(2, 10, 3, 6, 3, 12) {};
+BlueMen::BlueMen() : Creature(2, 10, 3, 6, 3, 12) {};
 
 bool BlueMen::defend(int attackRes) {
 
-  bool result = true;
+  bool result = Creature::defend(attackRes);
 
-  attackRes -= armor;
-  for (int i = 0; i < defenseDice[0]; i++) {
-    attackRes -= rand() % defenseDice[1] + 1;
-  }
-  strength -= attackRes;
-
-  if (strength < 1) {
-    strength = 0;
-    result = false; // if this creature has died, return false
-  } else if (strength < 12 && strength % 4 == 0) { // Mob feature
+  // Mob Feature
+  if (strength == 8 && defenseDice[0] == 3 || strength == 4 && defenseDice[0] == 2) {
     defenseDice[0]--;
   }
 

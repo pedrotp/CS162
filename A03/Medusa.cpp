@@ -23,12 +23,16 @@ calls the base class constructor, and sets some internal values
 
 *********************************************************************/
 
-Medusa::Medusa() : Critter(2, 6, 1, 6, 3, 8) {};
+Medusa::Medusa() : Creature(2, 6, 1, 6, 3, 8) {};
 
 int Medusa::attack() {
+
   int result = Creature::attack();
+  
   if (result == 12) {
     result = 120;
   }
+
   return result;
+
 };
