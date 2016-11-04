@@ -23,14 +23,38 @@ sets some internal values according to provided arguments
 
 *********************************************************************/
 
-Creature::Creature(int attackNum, int attackSides, int defendNum, int defendSides, int armorPts, int strengthPts) {
+Creature::Creature(int attackNum, int attackSides, int defenseNum, int defenseSides, int armorPts, int strengthPts) {
+
+  srand (std::time(NULL));
+
+  attackDice[0] = attackNum;
+  attackDice[1] = attackSides;
+  defenseDice[0] = defenseNum;
+  defenseDice[1] = defenseSides;
+  armor = armorPts;
+  strength = strengthPts;
 
 };
 
-int attack() {
-
+int Creature::attack() {
+  int result = 0;
+  for (int i = 0; i < attackDice[0]; i++) {
+    result += rand() % attackDice[1] + 1;
+  }
+  return result;
 };
 
-bool defend(int attackStrength){
-  
+bool Creature::defend(int attackRes){
+
+  bool result = true;
+  attackRes -= armor;
+  for (int i = 0; i < defenseDice[0]; i++) {
+    attackRes -= rand() % defenseDice[1] + 1;
+  }
+  strength -= attackRes;
+  if (strength < 1) {
+    result = false;
+  }
+  return result;
+
 };

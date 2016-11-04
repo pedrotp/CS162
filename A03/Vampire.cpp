@@ -23,6 +23,8 @@ calls the base class constructor, and sets some internal values
 
 *********************************************************************/
 
-Vampire::Vampire() {
+Vampire::Vampire() : Critter(1, 12, 1, 6, 1, 18) {};
 
-};
+Vampire::defend(int attackRes) {
+
+}

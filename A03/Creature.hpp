@@ -12,9 +12,8 @@ which includes some of the class, variable and function declarations.
 
 *********************************************************************/
 
-#include <string>
-#include <cstdlib>
-#include <ctime>
+#include <cstdlib> // rand()
+#include <ctime> // std::time
 
 #ifndef CREATURE_HPP
 #define CREATURE_HPP
@@ -29,9 +28,9 @@ class Creature
     int strength;
 
   public:
-    Creature(int attackNum, int attackSides, int defendNum, int defendSides, int armorPts, int strengthPts);
-    int attack();
-    bool defend(int attackStrength);
+    Creature(int attackNum, int attackSides, int defenseNum, int defenseSides, int armorPts, int strengthPts);
+    virtual int attack();
+    virtual bool defend(int attackRes);
 };
 
 #endif

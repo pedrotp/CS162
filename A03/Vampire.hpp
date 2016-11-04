@@ -23,7 +23,7 @@ class Vampire
 
   public:
     Vampire();
-    bool defend();
+    bool defend(int attackRes);
 };
 
 #endif
