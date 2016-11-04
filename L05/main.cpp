@@ -42,7 +42,7 @@ bool getYesNo() {
 
 /*********************************************************************
 
-** Description: menu()
+** Description: main()
 
 ** This is the main function that creates a grid and runs the
 simulation
