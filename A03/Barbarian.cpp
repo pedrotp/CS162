@@ -23,6 +23,4 @@ calls the base class constructor, and sets some internal values
 
 *********************************************************************/
 
-Barbarian::Barbarian() {
-
-};
+Barbarian::Barbarian() : Critter(2, 6, 2, 6, 0, 12) {};

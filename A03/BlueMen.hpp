@@ -23,7 +23,7 @@ class BlueMen
 
   public:
     BlueMen();
-    bool defend();
+    bool defend(int attackRes);
 };
 
 #endif

@@ -53,7 +53,7 @@ bool Creature::defend(int attackRes){
   }
   strength -= attackRes;
   if (strength < 1) {
-    result = false;
+    result = false; // if this creature has died, return false
   }
   return result;
 

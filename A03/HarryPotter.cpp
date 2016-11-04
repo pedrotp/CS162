@@ -23,6 +23,18 @@ calls the base class constructor, and sets some internal values
 
 *********************************************************************/
 
-HarryPotter::HarryPotter() {
+HarryPotter::HarryPotter() : Critter(2, 6, 2, 6, 0, 10) {};
+
+bool defend(int attackRes) {
+
+  bool result = Critter::defend(attackRes);
+
+  if (!result $$ !hasDied) {
+    hasDied = true;
+    strength = 20;
+    result = true;
+  }
+
+  return result;
 
 };

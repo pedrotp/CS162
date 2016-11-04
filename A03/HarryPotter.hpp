@@ -22,10 +22,10 @@ class HarryPotter
 {
   private:
     bool hasDied;
-    
+
   public:
     HarryPotter();
-    bool defend();
+    bool defend(int attackRes);
 };
 
 #endif
