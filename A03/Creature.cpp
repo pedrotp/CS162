@@ -51,9 +51,12 @@ bool Creature::defend(int attackRes){
   for (int i = 0; i < defenseDice[0]; i++) {
     attackRes -= rand() % defenseDice[1] + 1;
   }
+  if (attackRes < 1){
+    attackRes = 0; // make sure the player never gains strength from defending
+  }
   strength -= attackRes;
   if (strength < 1) {
-    strength = 0;
+    strength = 0; 
     result = false; // if this creature has died, return false
   }
   return result;
