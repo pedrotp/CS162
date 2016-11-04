@@ -19,6 +19,16 @@ which includes the source code for all the functions in the class.
 #include "Vampire.hpp"
 #include "helpers.hpp"
 
+/*********************************************************************
+
+** Description: newCreature()
+
+** This function displays creature options to the user, allows them
+to select one, and returns a pointer to an instance of the selected
+class
+
+*********************************************************************/
+
 Creature *newCreature() {
 
   Creature *cPtr;
@@ -129,9 +139,6 @@ int main() {
           }
 
         }
-
-        std::cout << "P1: " << p1alive << std::endl; // REMOVE
-        std::cout << "P2: " << p2alive << std::endl; // REMOVE
 
         if (p1alive) {
           std::cout << "Player 1 Wins!" << std::endl;
