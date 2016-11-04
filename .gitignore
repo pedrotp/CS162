@@ -1,2 +1,14 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+# Ignore .zip and .pdf files
 *.zip
 *.pdf
+
+.DS_Store
