@@ -14,6 +14,7 @@ which includes some of the class, variable and function declarations.
 
 #include <cstdlib> // rand()
 #include <ctime> // std::time
+#include <iostream> 
 
 #ifndef CREATURE_HPP
 #define CREATURE_HPP

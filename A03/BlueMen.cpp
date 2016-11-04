@@ -30,7 +30,7 @@ bool BlueMen::defend(int attackRes) {
   bool result = Creature::defend(attackRes);
 
   // Mob Feature
-  if (strength == 8 && defenseDice[0] == 3 || strength == 4 && defenseDice[0] == 2) {
+  if ((strength == 8 && defenseDice[0] == 3) || (strength == 4 && defenseDice[0] == 2)) {
     defenseDice[0]--;
   }
 
