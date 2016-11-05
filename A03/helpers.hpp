@@ -1,3 +1,14 @@
+/*********************************************************************
+
+** Program Filename: Medusa.cpp
+
+** Author: Pedro Torres-Picon
+
+** Date: 11/07/2016
+
+** Description: Assignment 3 - Helper function implementations
+
+*********************************************************************/
 
 #include <iostream>
 #include <limits> // std::numeric_limits

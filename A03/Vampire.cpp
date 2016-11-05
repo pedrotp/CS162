@@ -19,11 +19,13 @@ which includes the source code for all the functions in the class.
 ** Description: Vampire()
 
 ** This is the constructor for the derived class Vampire, which
-calls the base class constructor, and sets some internal values
+calls the base class constructor, and sets some internal values. It
+also modifies the base defend() function to implement the charm
+feature which repels an attack 50% of the time.
 
 *********************************************************************/
 
-Vampire::Vampire() : Creature(1, 12, 1, 6, 1, 18) {};
+Vampire::Vampire() : Creature(1, 12, 1, 6, 1, 18, "Vampire") {};
 
 bool Vampire::defend(int attackRes) {
 
@@ -35,6 +37,9 @@ bool Vampire::defend(int attackRes) {
     // the other 50% of the time the Vampire defends normally
     result = Creature::defend(attackRes);
 
+  } else {
+    std::cout << strength << " strength points remaining." << std::endl;
+    std::cout << "CHARM: The Vampire has charmed you into not attacking!" << std::endl;
   }
 
   return result;

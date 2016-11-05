@@ -14,7 +14,8 @@ which includes some of the class, variable and function declarations.
 
 #include <cstdlib> // rand()
 #include <ctime> // std::time
-#include <iostream> 
+#include <iostream>
+#include <string>
 
 #ifndef CREATURE_HPP
 #define CREATURE_HPP
@@ -27,9 +28,11 @@ class Creature
     int defenseDice[2]; // pos 0 represents the number of dice, and pos 1 the number of sides
     int armor;
     int strength;
+    std::string cType;
 
   public:
-    Creature(int attackNum, int attackSides, int defenseNum, int defenseSides, int armorPts, int strengthPts);
+    Creature(int attackNum, int attackSides, int defenseNum, int defenseSides, int armorPts, int strengthPts, std::string creatureType);
+    std::string type();
     virtual int attack();
     virtual bool defend(int attackRes);
 };

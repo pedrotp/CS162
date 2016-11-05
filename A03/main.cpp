@@ -7,8 +7,7 @@
 ** Date: 11/07/2016
 
 ** Description: Assignment 3 - Part of a fantasy dice combat game.
-This is the implementation file for the HarryPotter derived class,
-which includes the source code for all the functions in the class.
+This is the main file that uses all the classes to run the program
 
 *********************************************************************/
 
@@ -93,22 +92,24 @@ Creature *newCreature() {
 
 };
 
+
 /*********************************************************************
 
 ** Description: main()
 
-** This is the main function that creates a grid and runs the
-simulation
+** This is the main function that creates the creatures, gets user
+input, and runs the game
 
 *********************************************************************/
 
 int main() {
 
+  srand (std::time(NULL));
   bool keepPlaying = true;
 
   while (keepPlaying) {
 
-    std::cout << "Hi there, welcome to Fantasy Fight Club!" << std::endl;
+    std::cout << "\nHi there, welcome to Fantasy Fight Club!" << std::endl;
     std::cout << "Select a character type for player 1:" << std::endl;
     Creature *p1 = newCreature();
 
@@ -128,22 +129,26 @@ int main() {
 
         }
 
+        std::cout << "Player 1 (" << p1->type() << "), will go first.\n" << std::endl;
+
         bool p1alive = true;
         bool p2alive = true;
 
         while (p1alive && p2alive) {
 
-          p1alive = p1->defend(p2->attack());
-          if (p1alive) {
-            p2alive = p2->defend(p1->attack());
+          std::cout << "Player 1 (" << p1->type() << ") attacked! Player 2 (" << p2->type() << ") has ";
+          p2alive = p2->defend(p1->attack());
+          if (p2alive) {
+            std::cout << "Player 2 (" << p2->type() << ") attacked! Player 1 (" << p1->type() << ") has ";
+            p1alive = p1->defend(p2->attack());
           }
 
         }
 
         if (p1alive) {
-          std::cout << "Player 1 Wins!" << std::endl;
+          std::cout << "\nPlayer 1 (" << p1->type() << ") wins!" << std::endl;
         } else {
-          std::cout << "Player 2 Wins!" << std::endl;
+          std::cout << "\nPlayer 2 (" << p2->type() << ") wins!" << std::endl;
         }
 
         delete p2;
@@ -153,7 +158,7 @@ int main() {
       delete p1;
     }
 
-    std::cout << "Would you like to play again? (y/n)" << std::endl;
+    std::cout << "\nWould you like to play again? (y/n)" << std::endl;
     keepPlaying = getYesNo();
 
   }
@@ -161,3 +166,68 @@ int main() {
   return 0;
 
 };
+
+
+/********************** FOR TESTING ONLY *****************************
+*** UNCOMMENT THIS AND COMMENT THE OTHER MAIN METHOD ABOVE TO TEST ***
+**********************************************************************
+
+** Description: main() [TEST]
+
+** This is a test version of the main function that runs a thousand
+simulations of fights between two hard coded characters
+
+*********************************************************************/
+
+// int main() {
+//
+//   srand (std::time(NULL));
+//
+//   int p1wins = 0;
+//   int p2wins = 0;
+//
+//   for (int i = 0; i < 10000; i++) {
+//
+//     Creature *p1 = new /* Creature Type */;
+//     Creature *p2 = new /* Creature Type */;
+//
+//     bool p1alive = true;
+//     bool p2alive = true;
+//
+//     while (p1alive && p2alive) {
+//
+//       std::cout << "Player 1 (" << p1->type() << ") attacked! Player 2 (" << p2->type() << ") has ";
+//       p2alive = p2->defend(p1->attack());
+//       if (p2alive) {
+//         std::cout << "Player 2 (" << p2->type() << ") attacked! Player 1 (" << p1->type() << ") has ";
+//         p1alive = p1->defend(p2->attack());
+//       }
+//
+//     }
+//
+//     if (p1alive) {
+//       p1wins++;
+//       std::cout << "\nPlayer 1 (" << p1->type() << ") wins!" << std::endl;
+//     } else {
+//       p2wins++;
+//       std::cout << "\nPlayer 2 (" << p2->type() << ") wins!" << std::endl;
+//     }
+//
+//     delete p1;
+//     delete p2;
+//
+//     // added a delay so the seed for rand would be different between steps
+//     // std::cout.flush();
+//     // usleep(1500000);
+//
+//     // added a user controlled delay for the same issue
+//     // std::cout << "Press any key to continue..." << std::endl;
+//     // std::cin.get();
+//
+//   }
+//
+//   std::cout << "P1 won " << p1wins << " times." << std::endl;
+//   std::cout << "P2 won " << p2wins << " times." << std::endl;
+//   return 0;
+//
+// };

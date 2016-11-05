@@ -21,7 +21,7 @@ which includes the class, variable and function declarations.
 class HarryPotter : public Creature
 {
   private:
-    bool hasDied;
+    bool hasDied; // variable to check if Harry has already died once
 
   public:
     HarryPotter();
