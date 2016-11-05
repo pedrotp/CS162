@@ -15,27 +15,28 @@ is a first in last out (FILO) data structure.
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include <iostream>
+#include "List.hpp"
 
 // Defines the interface of the Stack class
-class Stack
+class Stack : public List
 {
 
   protected:
-    struct StackNode {
+    struct StackNode { // node definition
       int value;
-      StackNode *next;
-      StackNode(int val) {
+      StackNode *next; // pointer to the next node in the stack
+      StackNode(int val) { // constructor
         value = val;
-        next = nullptr;
+        next = 0;
       }
     };
-    StackNode *top;
+    StackNode *top; // pointer to the top of the stack
 
   public:
     Stack();
-    void push(int val);
-    int pop();
+    ~Stack();
+    void push(int val); // adds a value to the top of the stack
+    int pop(); // removes a value from the top of the stack
 
 };
 

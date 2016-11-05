@@ -15,16 +15,30 @@ is a first in first out (FIFO) data structure.
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
+#include "List.hpp"
 // Defines the interface of the Queue class
-class Queue
+class Queue : public List
 {
 
-  private:
-
+  protected:
+    struct QueueNode { // node definiton
+      int value;
+      QueueNode *prev; // pointer to the previous node in the queue
+      QueueNode *next; // pointer to the previous node in the queue
+      QueueNode(int val) { // constructor
+        value = val;
+        prev = 0;
+        next = 0;
+      }
+    };
+    QueueNode *head; // pointer to the head (front) of the queue
+    QueueNode *tail; // pointer to the tail (back) of the queue
 
   public:
     Queue();
-    ~Queue() {};
+    ~Queue();
+    void push(int val); // adds a value to the tail of the queue
+    int pop(); // removes a value from the head of the queue
 
 };
 
