@@ -1,6 +1,6 @@
 /*********************************************************************
 
-** Program Filename: Medusa.cpp
+** Program Filename: Helpers.cpp
 
 ** Author: Pedro Torres-Picon
 
@@ -16,7 +16,7 @@
 
 ** Description: getInt()
 
-** Gets and validates string input from the user, with the option of
+** Gets and validates integer input from the user, with the option of
 entering a valid range for the int. If no minimum or maximum values
 are entered, they are set to the min and max allowed for integers
 
