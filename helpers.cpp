@@ -1,4 +1,26 @@
+/*********************************************************************
+
+** Program Filename: Helpers.cpp
+
+** Author: Pedro Torres-Picon
+
+** Date: 11/07/2016
+
+** Description: Assignment 3 - Helper function interface file
+
+*********************************************************************/
+
 #include "helpers.hpp"
+
+/*********************************************************************
+
+** Description: getInt()
+
+** Gets and validates integer input from the user, with the option of
+entering a valid range for the int. If no minimum or maximum values
+are entered, they are set to the min and max allowed for integers
+
+*********************************************************************/
 
 int getInt(int minSize, int maxSize) {
 
@@ -19,6 +41,15 @@ int getInt(int minSize, int maxSize) {
   return userInt;
 
 };
+
+/*********************************************************************
+
+** Description: getYesNo()
+
+** Gets and validates yes or no input from the user, and returns
+true if the user selects yes, and false if the user selects no
+
+*********************************************************************/
 
 bool getYesNo() {
   char yn;
