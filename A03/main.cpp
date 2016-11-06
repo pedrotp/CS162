@@ -112,10 +112,13 @@ int main() {
     std::cout << "\nHi there, welcome to Fantasy Fight Club!" << std::endl;
     std::cout << "Select a character type for player 1:" << std::endl;
     Creature *p1 = newCreature();
+    if (!p1) keepPlaying = false;
 
     if (p1) { // exit if user chose 0 in player selection menu
+
       std::cout << "Select a character type for player 2:" << std::endl;
       Creature *p2 = newCreature();
+      if (!p2) keepPlaying = false;
 
       if (p2) {
         // 50% of the time p1 and p2 are flipped, so whoever goes first is random
@@ -153,13 +156,14 @@ int main() {
 
         delete p2;
 
+        std::cout << "\nWould you like to play again? (y/n)" << std::endl;
+        keepPlaying = getYesNo();
+
       }
 
       delete p1;
-    }
 
-    std::cout << "\nWould you like to play again? (y/n)" << std::endl;
-    keepPlaying = getYesNo();
+    }
 
   }
 
