@@ -88,7 +88,7 @@ int Stack::pop() {
 
   } else {
 
-    std::cout << "Error: Stack is already empty, nothing to pop." << std::endl;
+    std::cout << "\nError: Stack is already empty, nothing to pop." << std::endl;
 
   }
 

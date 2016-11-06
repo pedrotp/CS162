@@ -13,6 +13,7 @@ the program.
 *********************************************************************/
 
 #include <string>
+#include <limits>
 #include "Stack.hpp"
 #include "Queue.hpp"
 

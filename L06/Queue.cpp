@@ -94,7 +94,7 @@ int Queue::pop() {
 
   } else {
 
-    std::cout << "Error: Queue is already empty, nothing to pop." << std::endl;
+    std::cout << "\nError: Queue is already empty, nothing to pop." << std::endl;
 
   }
 
