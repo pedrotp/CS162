@@ -72,21 +72,21 @@
           break;
 
         case 3:
-        std::cout << "\nFirst, bubble sorting the array just in case..." << std::endl;
-        bubbleSort(array, size);
-        std::cout << "RESULT: ";
-        printArr(array, size);
+          std::cout << "\nFirst, bubble sorting the array just in case..." << std::endl;
+          bubbleSort(array, size);
+          std::cout << "RESULT: ";
+          printArr(array, size);
 
-        std::cout << "\n\nPlease enter an integer to search for: ";
-        searchItem = getInt();
-        std::cout << "Binary searching for " << searchItem << "..." << std::endl;
-        item = binarySearch(array, size, searchItem); // reuse the item variable
-        if (item < 0) {
-          std::cout << "The item " << searchItem << " was not found in the array." << std::endl;
-        } else {
-          std::cout << "Success! The item " << searchItem << " was found in position " << item << "." << std::endl;
-        }
-        break;
+          std::cout << "\n\nPlease enter an integer to search for: ";
+          searchItem = getInt();
+          std::cout << "Binary searching for " << searchItem << "..." << std::endl;
+          item = binarySearch(array, size, searchItem); // reuse the item variable
+          if (item < 0) {
+            std::cout << "The item " << searchItem << " was not found in the array." << std::endl;
+          } else {
+            std::cout << "Success! The item " << searchItem << " was found in position " << item << "." << std::endl;
+          }
+          break;
 
       }
 

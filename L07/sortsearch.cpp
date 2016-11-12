@@ -36,8 +36,8 @@ int binarySearch (int *array, int size, int target) {
   int last = size - 1;
   int middle;
   int pos = -1;
-  while (pos == -1 && first <= last) {
-    middle = (last - first) / 2;
+  while (pos == -1 && first <= last) { // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    middle = (last + first) / 2;
     if (array[middle] == target) {
       pos = middle;
     } else if (array[middle] > target) {
