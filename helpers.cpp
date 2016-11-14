@@ -70,3 +70,21 @@ bool getYesNo() {
   }
   return !!(yn == 'y');
 };
+
+/*********************************************************************
+
+** Description: printArr()
+
+** Takes an array pointer and an integer size for the array, and
+prints the array to the screen in a human readable format
+
+*********************************************************************/
+
+void printArr (int *array, int size) {
+  std::cout << "[";
+  for (int i = 0; i < size - 1; i++) {
+    std::cout << array[i] << ", ";
+  }
+  if (size > 0) std::cout << array[size - 1];
+  std::cout << "]";
+};
