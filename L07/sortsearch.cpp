@@ -88,7 +88,8 @@ page 598 of the Gaddis textbook
 ** Parameters: an array pointer, the integer size, the integer we are
 going to search for
 
-** Pre-Conditions: none
+** Pre-Conditions: all values in the array should be integers, sorted
+in ascending order
 
 ** Post-Conditions: none
 

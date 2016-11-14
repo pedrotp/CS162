@@ -21,6 +21,7 @@ int main () {
   int algChoice;
   std::string fileName;
   std::ifstream ifs;
+  std::ofstream ofs;
   int *array;
   int item; // variable that holds each item being read from the file
   int searchItem; // variable to hold the item the user wants to search for
@@ -84,8 +85,20 @@ int main () {
 
         std::cout << "Bubble sorting the array..." << std::endl;
         bubbleSort(array, size);
-        std::cout << "RESULT: ";
+        std::cout << "\nRESULT: ";
         printArr(array, size);
+        std::cout << "\n\nWhat would you like to name the file where we will store the sorted array?" << std::endl;
+        std::cout << "(Enter just the name you wish to use, we will add the .txt extension at the end)" << std::endl;
+        fileName = ""; // reuse the fileName variable
+        while (fileName == "") {
+          std::getline(std::cin, fileName);
+        }
+        fileName += ".txt";
+        ofs.open(fileName.c_str());
+        for (int index = 0; index < size; index++) {
+          ofs << array[index] << " ";
+        }
+        std::cout << "OK, results stored in the file " << fileName << std::endl;
         break;
 
       case 3:
