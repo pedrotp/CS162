@@ -46,13 +46,15 @@ interval DWORD 10 ; the interval (in lines) used in printNum and lineBreak
 .code
 
 ;---------------------------------------------------------
+
   ; main
-  ;
+
   ; Uses all other procedures to run the entire program
   ; Receives: none
   ; Returns: none
-	; Preconditions: none
-	; Registers changed: none
+  ; Preconditions: none
+  ; Registers changed: none
+
 ;---------------------------------------------------------
 
 main PROC
@@ -95,14 +97,16 @@ main PROC
 main ENDP
 
 ;---------------------------------------------------------
+
   ; intro
-  ;
+
   ; Displays introductory message, greets the user, gives
-	; instructions to use the program
+  ; instructions to use the program
   ; Receives: offset of 'user_name' variable
   ; Returns: user's name in 'user_name' variable
-	; Preconditions: none
-	; Registers changed: edx, ecx, eax
+  ; Preconditions: none
+  ; Registers changed: edx, ecx, eax
+
 ;---------------------------------------------------------
 
 intro PROC
@@ -152,14 +156,16 @@ intro PROC
 intro ENDP
 
 ;---------------------------------------------------------
+
   ; getData
-  ;
+  
   ; Get the request from the user and validate that is is
-	; between 10 and 200 inclusive
+  ; between 10 and 200 inclusive
   ; Receives: offset of 'request' variable
   ; Returns:  user entered number in 'request' variable
-	; Preconditions: none
-	; Registers changed: edx, ecx, eax, ebx, ebp
+  ; Preconditions: none
+  ; Registers changed: edx, ecx, eax, ebx, ebp
+
 ;---------------------------------------------------------
 
 getData PROC
@@ -194,14 +200,16 @@ getData PROC
 getData ENDP
 
 ;---------------------------------------------------------
+
   ; validate
-  ;
+  
   ; Validate that a number in eax is within a range
   ; Receives: the number in eax
   ; Returns:  1 if valid, 0 if invalid in ebx
-	; Preconditions: range boundaries stored in min and max
+  ; Preconditions: range boundaries stored in min and max
   ; constants
-	; Registers changed: ecx, edx, ebx, ebp
+  ; Registers changed: ecx, edx, ebx, ebp
+
 ;---------------------------------------------------------
 
 validate PROC
@@ -242,14 +250,16 @@ validate PROC
 validate ENDP
 
 ;---------------------------------------------------------
+
   ; fillArray
-  ;
+  
   ; Fills an array passed by reference with random values,
   ; inspired by ArrayFill, page 298 of Irvine book
   ; Receives: offset of array and size of array
   ; Returns: nothing, fills array as side effect
-	; Preconditions: none
-	; Registers changed: eax, edx, ecx, ebp, esi
+  ; Preconditions: none
+  ; Registers changed: eax, edx, ecx, ebp, esi
+
 ;---------------------------------------------------------
 
 fillArray PROC
@@ -283,17 +293,18 @@ fillArray PROC
 fillArray ENDP
 
 ;---------------------------------------------------------
+
   ; printArray (by row, EXTRA CREDIT)
-  ;
+  
   ; Prints to the screen an array passed by reference
   ; Receives: offset of array, size of array and array
   ; title (string) to be displayed
   ; Returns: nothing, prints array as side effect
-	; Preconditions: none
-	; Registers changed: eax, edx, ecx, ebp, esi
+  ; Preconditions: none
+  ; Registers changed: eax, edx, ecx, ebp, esi
 
-	; NOTE: uncomment the printArray function below, and
-	; comment this one out to see ordering by column
+  ; NOTE: uncomment the printArray function below, and
+  ; comment this one out to see ordering by column
 
 ;---------------------------------------------------------
 
@@ -349,67 +360,71 @@ printArray ENDP
 
 
 ;---------------------------------------------------------
+
   ; printArray (by column, original, no EC)
-  ;
+ 
   ; Prints to the screen an array passed by reference
   ; Receives: offset of array, size of array and array
   ; title (string) to be displayed
   ; Returns: nothing, prints array as side effect
-	; Preconditions: none
-	; Registers changed: eax, edx, ecx, ebp, esi
-;---------------------------------------------------------
-
-; printArray PROC
-;
-; 		push	ebp
-; 		mov		ebp, esp
-; 		pushad
-;
-; 		mov		esi, [ebp+12]
-; 		mov		ecx, [ebp+8]
-; 		cmp		ecx, 0
-; 		je		endPrint
-; 		call 	CrLf
-; 		mov		edx, OFFSET title_preamble
-; 		call	WriteString
-; 		mov		edx, [ebp+16]
-; 		call	WriteString
-; 		call	CrLf
-;
-; 	printLoop:
-; 		mov		eax, [esi]
-; 		call	WriteDec
-; 		mov		edx, OFFSET space
-; 		call	WriteString
-; 		call	WriteString
-; 		call	WriteString
-;
-; 		push	interval
-; 		push	[ebp+8]
-; 		call	lineBreak
-;
-; 		add		esi, TYPE DWORD
-; 		loop	printLoop
-;
-; 	endPrint:
-; 		popad
-; 		pop		ebp
-;
-; 		ret		12
-;
-; printArray ENDP
+  ; Preconditions: none
+  ; Registers changed: eax, edx, ecx, ebp, esi
 
 ;---------------------------------------------------------
+
+ ;printArray PROC
+;
+ 		;push	ebp
+ 		;mov		ebp, esp
+ 		;pushad
+;
+ 		;mov		esi, [ebp+12]
+ 		;mov		ecx, [ebp+8]
+ 		;cmp		ecx, 0
+ 		;je		endPrint
+ 		;call 	CrLf
+ 		;mov		edx, OFFSET title_preamble
+ 		;call	WriteString
+ 		;mov		edx, [ebp+16]
+ 		;call	WriteString
+ 		;call	CrLf
+;
+ 	;printLoop:
+ 		;mov		eax, [esi]
+ 		;call	WriteDec
+ 		;mov		edx, OFFSET space
+ 		;call	WriteString
+ 		;call	WriteString
+ 		;call	WriteString
+;
+ 		;push	interval
+ 		;push	[ebp+8]
+ 		;call	lineBreak
+;
+ 		;add		esi, TYPE DWORD
+ 		;loop	printLoop
+;
+ 	;endPrint:
+ 		;popad
+ 		;pop		ebp
+;
+ 		;ret		12
+;
+ ;printArray ENDP
+
+;---------------------------------------------------------
+
   ; printNum (used by printArray by row)
-  ;
+  
   ; Checks if the current iteration of the loop is a
   ; multiple of a certain interval and prints the appropriate
-	; items to achieve row ordering
+  ; items to achieve row ordering
   ; Receives: variable that holds the current interval, and
-	; the array by reference
+  ; the array by reference
   ; Returns: nothing, prints an item as side effect
-	; Preconditions: none
-	; Registers changed: eax, ebp, ebx, edx
+  ; Preconditions: none
+  ; Registers changed: eax, ebp, ebx, edx
+
 ;---------------------------------------------------------
 
 printNum PROC
@@ -443,14 +458,16 @@ printNum PROC
 printNum ENDP
 
 ;---------------------------------------------------------
+
   ; lineBreak (used by printArray by column)
-  ;
+ 
   ; Checks if the current iteration of the loop is a
   ; multiple of a certain interval and inserts a page break
   ; Receives: variable that holds the interval for a break
   ; Returns: nothing, adds a line break as a side effect
-	; Preconditions: none
-	; Registers changed: eax, ebp, ecx, ebx, edx
+  ; Preconditions: none
+  ; Registers changed: eax, ebp, ecx, ebx, edx
+
 ;---------------------------------------------------------
 
 lineBreak PROC
@@ -481,14 +498,16 @@ lineBreak PROC
 lineBreak ENDP
 
 ;---------------------------------------------------------
+
   ; sortArray
-  ;
+ 
   ; Sorts an array passed by reference, with a simple
   ; bubble sort algorithm
   ; Receives: offset of array and size of array
   ; Returns: nothing, sorts array as side effect
-	; Preconditions: none
-	; Registers changed: eax, edx, ecx, ebp, esi
+  ; Preconditions: none
+  ; Registers changed: eax, edx, ecx, ebp, esi
+
 ;---------------------------------------------------------
 
 sortArray PROC ; receives the array to be sorted and the size
@@ -530,14 +549,16 @@ sortArray PROC ; receives the array to be sorted and the size
 sortArray ENDP
 
 ;---------------------------------------------------------
+
   ; swap
-  ;
+ 
   ; Swaps the value in a provided offset with the following
   ; value in a DWORD array
   ; Receives: offset of value to be swapped
   ; Returns: nothing, swaps values as side effect
-	; Preconditions: value needs to be in an array of DWORD
-	; Registers changed: eax, ebx, ebp, esi
+  ; Preconditions: value needs to be in an array of DWORD
+  ; Registers changed: eax, ebx, ebp, esi
+
 ;---------------------------------------------------------
 
 swap PROC ; receives the two array items to be swapped by reference
@@ -560,14 +581,16 @@ swap PROC ; receives the two array items to be swapped by reference
 swap ENDP
 
 ;---------------------------------------------------------
+
   ; printMedian
-  ;
+  
   ; Calculates the median of a set of values in an array,
   ; and prints it to the screen
   ; Receives: offset of array and size of array
   ; Returns: nothing, prints the median as side effect
-	; Preconditions: none
-	; Registers changed: eax, ebx, edx, ebp, esi
+  ; Preconditions: none
+  ; Registers changed: eax, ebx, edx, ebp, esi
+
 ;---------------------------------------------------------
 
 printMedian PROC
@@ -621,13 +644,15 @@ printMedian PROC
 printMedian ENDP
 
 ;---------------------------------------------------------
+
   ; farewell
-  ;
+ 
   ; Displays a message to say good bye to the user
   ; Receives: offset of user_name variable
   ; Returns:  none
-	; Preconditions: user's name stored in user_name
-	; Registers changed: edx, ebp
+  ; Preconditions: user's name stored in user_name
+  ; Registers changed: edx, ebp
+
 ;---------------------------------------------------------
 
 farewell PROC
