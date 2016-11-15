@@ -58,7 +58,6 @@ main PROC
 
 		call Randomize
 
-    push OFFSET user_name
 		call intro
 
 		push OFFSET request
@@ -106,10 +105,6 @@ main ENDP
 
 intro PROC
 
-    push  ebp
-    mov   ebp, esp
-    pushad
-
 		mov		edx, OFFSET intro_1
 		call	WriteString
 		call	CrLf
@@ -125,13 +120,13 @@ intro PROC
 
 		mov		edx, OFFSET prompt_1
 		call	WriteString
-		mov		edx, [ebp+8]
-		mov		ecx, SIZEOF [edx]
+		mov		edx, OFFSET user_name
+		mov		ecx, SIZEOF user_name
 		call	ReadString
 
 		mov		edx, OFFSET greeting_1
 		call	WriteString
-		mov		edx, [ebp+8]
+		mov		edx, OFFSET user_name
 		call	WriteString
 		mov		edx, OFFSET greeting_2
 		call	WriteString
@@ -143,10 +138,7 @@ intro PROC
 		call	WriteString
 		call	CrLf
 
-    popad
-    pop   ebp
-
-		ret   4
+		ret 
 
 intro ENDP
 
