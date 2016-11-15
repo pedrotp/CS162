@@ -16,6 +16,7 @@ min 	equ 10
 max 	equ 200
 lo 		equ 100
 hi		equ	999
+name_size equ 30
 
 .data
 
@@ -37,9 +38,9 @@ median_is BYTE "The median is: ", 0
 good_bye BYTE "That's all for now. Until next time! Good bye ", 0
 space BYTE " ", 0
 
-user_name BYTE 30 DUP(?) ; the user's name
+user_name BYTE name_size DUP(?) ; the user's name
 request DWORD ? ; a variable to store the number enter by the user
-array DWORD 200 DUP(?) ; array of max size
+array DWORD max DUP(?) ; array of max size
 breakInterval DWORD 10 ; the interval (in lines) at which a line break will be inserted
 
 .code
@@ -58,6 +59,7 @@ main PROC
 
 		call Randomize
 
+		push OFFSET user_name
 		call intro
 
 		push OFFSET request
@@ -85,7 +87,7 @@ main PROC
 		push request
 		call printArray
 
-    push OFFSET user_name
+		push OFFSET user_name
 		call farewell
 
 		exit	; exit to operating system
@@ -105,10 +107,9 @@ main ENDP
 
 intro PROC
 
-		push  ebp
-		mov   ebp, esp
+		push	ebp
+		mov		ebp, esp
 		pushad
-		mov 	eax, [ebp+8]
 
 		mov		edx, OFFSET intro_1
 		call	WriteString
@@ -125,13 +126,13 @@ intro PROC
 
 		mov		edx, OFFSET prompt_1
 		call	WriteString
-		mov		edx, eax
-		mov		ecx, SIZEOF [eax]
+		mov		edx, [ebp+8]
+		mov		ecx, name_size
 		call	ReadString
 
 		mov		edx, OFFSET greeting_1
 		call	WriteString
-		mov		edx, eax
+		mov		edx, [ebp+8]
 		call	WriteString
 		mov		edx, OFFSET greeting_2
 		call	WriteString
@@ -146,7 +147,7 @@ intro PROC
 		popad
 		pop 	ebp
 
-		ret
+		ret		4
 
 intro ENDP
 
@@ -179,6 +180,11 @@ getData PROC
 		jle		getNumber
 
 		mov		[ecx], eax
+
+		call	CrLf
+		mov		edx, OFFSET result_1
+		call	WriteString
+		call	CrLf
 
 		popad
 		pop 	ebp
@@ -335,7 +341,7 @@ printArray PROC
 		popad
 		pop		ebp
 
-		ret		8
+		ret		12
 
 printArray ENDP
 
@@ -387,7 +393,7 @@ printArray ENDP
 ; 		popad
 ; 		pop		ebp
 ;
-; 		ret		8
+; 		ret		12
 ;
 ; printArray ENDP
 
