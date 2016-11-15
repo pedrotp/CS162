@@ -100,10 +100,15 @@ main ENDP
   ; Receives: offset of 'user_name' variable
   ; Returns: user's name in 'user_name' variable
 	; Preconditions: none
-	; Registers changed: edx, ecx
+	; Registers changed: edx, ecx, eax
 ;---------------------------------------------------------
 
 intro PROC
+
+		push  ebp
+		mov   ebp, esp
+		pushad
+		mov 	eax, [ebp+8]
 
 		mov		edx, OFFSET intro_1
 		call	WriteString
@@ -120,13 +125,13 @@ intro PROC
 
 		mov		edx, OFFSET prompt_1
 		call	WriteString
-		mov		edx, OFFSET user_name
-		mov		ecx, SIZEOF user_name
+		mov		edx, eax
+		mov		ecx, SIZEOF [eax]
 		call	ReadString
 
 		mov		edx, OFFSET greeting_1
 		call	WriteString
-		mov		edx, OFFSET user_name
+		mov		edx, eax
 		call	WriteString
 		mov		edx, OFFSET greeting_2
 		call	WriteString
@@ -138,7 +143,10 @@ intro PROC
 		call	WriteString
 		call	CrLf
 
-		ret 
+		popad
+		pop 	ebp
+
+		ret
 
 intro ENDP
 
@@ -171,6 +179,7 @@ getData PROC
 		jle		getNumber
 
 		mov		[ecx], eax
+
 		popad
 		pop 	ebp
 
@@ -268,7 +277,7 @@ fillArray PROC
 fillArray ENDP
 
 ;---------------------------------------------------------
-  ; printArray
+  ; printArray (by row, EXTRA CREDIT)
   ;
   ; Prints to the screen an array passed by reference
   ; Receives: offset of array, size of array and array
@@ -276,6 +285,10 @@ fillArray ENDP
   ; Returns: nothing, prints array as side effect
 	; Preconditions: none
 	; Registers changed: eax, edx, ecx, ebp, esi
+
+	; NOTE: uncomment the printArray function below, and
+	; comment this one out to see ordering by column
+
 ;---------------------------------------------------------
 
 printArray PROC
@@ -326,16 +339,69 @@ printArray PROC
 
 printArray ENDP
 
+
 ;---------------------------------------------------------
-  ; lineBreak
+  ; printArray (by column, original, no EC)
+  ;
+  ; Prints to the screen an array passed by reference
+  ; Receives: offset of array, size of array and array
+  ; title (string) to be displayed
+  ; Returns: nothing, prints array as side effect
+	; Preconditions: none
+	; Registers changed: eax, edx, ecx, ebp, esi
+;---------------------------------------------------------
+
+; printArray PROC
+;
+; 		push	ebp
+; 		mov		ebp, esp
+; 		pushad
+;
+; 		mov		esi, [ebp+12]
+; 		mov		ecx, [ebp+8]
+; 		cmp		ecx, 0
+; 		je		endPrint
+; 		call 	CrLf
+; 		mov		edx, OFFSET title_preamble
+; 		call	WriteString
+; 		mov		edx, [ebp+16]
+; 		call	WriteString
+; 		call	CrLf
+;
+; 	printLoop:
+; 		mov		eax, [esi]
+; 		call	WriteDec
+; 		mov		edx, OFFSET space
+; 		call	WriteString
+; 		call	WriteString
+; 		call	WriteString
+;
+; 		push	breakInterval
+; 		push	[ebp+8]
+; 		call	lineBreak
+;
+; 		add		esi, TYPE DWORD
+; 		loop	printLoop
+;
+; 	endPrint:
+; 		popad
+; 		pop		ebp
+;
+; 		ret		8
+;
+; printArray ENDP
+
+;---------------------------------------------------------
+  ; printNum (used by printArray by row)
   ;
   ; Checks if the current iteration of the loop is a
-  ; multiple of a certain interval and inserts a page break
+  ; multiple of a certain interval and prints the appropriate
+	; items to achieve row ordering
   ; Receives: variable that holds the current interval, and
-	; the preferred interval for a break
-  ; Returns: nothing, adds a line break as a side effect
+	; the array by reference
+  ; Returns: nothing, prints an item as side effect
 	; Preconditions: none
-	; Registers changed: eax, ebp, ecx, ebx, edx
+	; Registers changed: eax, ebp, ebx, edx
 ;---------------------------------------------------------
 
 printNum PROC
@@ -367,6 +433,44 @@ printNum PROC
 		ret		8
 
 printNum ENDP
+
+;---------------------------------------------------------
+  ; lineBreak (used by printArray by column)
+  ;
+  ; Checks if the current iteration of the loop is a
+  ; multiple of a certain interval and inserts a page break
+  ; Receives: variable that holds the interval for a break
+  ; Returns: nothing, adds a line break as a side effect
+	; Preconditions: none
+	; Registers changed: eax, ebp, ecx, ebx, edx
+;---------------------------------------------------------
+
+lineBreak PROC
+
+		push	ebp
+		mov		ebp, esp
+		pushad
+
+ 		mov 	eax, [ebp+8]
+ 		sub		eax, ecx ; place the current number of printed items in eax
+ 		cmp		eax, 0
+ 		je		noLineBreak ; do not insert line break if this is the first iteration in the loop
+
+ 		inc		eax
+		sub		edx, edx ; clean edx for division
+		mov		ebx, [ebp+12] ; move divisor into ebx
+ 		div		ebx
+ 		cmp 	edx, 0
+ 		jne		noLineBreak ; if the current number of printed items is not divisible by 10, skip adding the space
+ 		call 	CrLf
+
+	noLineBreak:
+		popad
+		pop		ebp
+
+		ret		8
+
+lineBreak ENDP
 
 ;---------------------------------------------------------
   ; sortArray

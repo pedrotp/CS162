@@ -138,7 +138,7 @@ intro PROC
 		call	WriteString
 		call	CrLf
 
-		ret   
+		ret
 
 intro ENDP
 
@@ -268,7 +268,7 @@ fillArray PROC
 fillArray ENDP
 
 ;---------------------------------------------------------
-  ; printArray
+  ; printArray (by column)
   ;
   ; Prints to the screen an array passed by reference
   ; Receives: offset of array, size of array and array
