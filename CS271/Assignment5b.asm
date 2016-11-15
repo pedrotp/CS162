@@ -41,7 +41,7 @@ space BYTE " ", 0
 user_name BYTE name_size DUP(?) ; the user's name
 request DWORD ? ; a variable to store the number enter by the user
 array DWORD max DUP(?) ; array of max size
-breakInterval DWORD 10 ; the interval (in lines) at which a line break will be inserted
+interval DWORD 10 ; the interval (in lines) used in printNum and lineBreak
 
 .code
 
@@ -323,6 +323,8 @@ printArray PROC
 		printLoop:
 			mov 	edx, ebx
 			add 	edx, eax
+
+			push 	interval
 			push 	esi
 			push 	edx
 			call	printNum
@@ -382,7 +384,7 @@ printArray ENDP
 ; 		call	WriteString
 ; 		call	WriteString
 ;
-; 		push	breakInterval
+; 		push	interval
 ; 		push	[ebp+8]
 ; 		call	lineBreak
 ;
@@ -418,7 +420,7 @@ printNum PROC
 
  		mov 	eax, [ebp+8]
 		sub		edx, edx ; clean edx for division
-		mov		ebx, 10 ; move divisor into ebx
+		mov		ebx, [ebp+16] ; move interval into ebx
  		div		ebx
  		cmp 	edx, 0
  		jne		noPrint; if the current number of printed items is not divisible by 10, skip adding the space
@@ -436,7 +438,7 @@ printNum PROC
 		popad
 		pop		ebp
 
-		ret		8
+		ret		12
 
 printNum ENDP
 
