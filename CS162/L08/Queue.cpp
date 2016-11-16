@@ -24,8 +24,9 @@ Queue and sets the front and back pointers to 0
 *********************************************************************/
 
 Queue::Queue() {
-  front = 0;
-  back = 0;
+
+  front = new QueueNode(-1);
+  back = front;
 };
 
 /*********************************************************************
@@ -39,63 +40,76 @@ the memory for each node when the Queue is destroyed
 
 Queue::~Queue() {
 
-  QueueNode *queuePtr = back;
-  while (queuePtr) {
+  QueueNode *queuePtr = front;
+
+  while (queuePtr->next != front) {
     QueueNode *garbage = queuePtr;
-    if (queuePtr != queuePtr->next)
     queuePtr = garbage->next;
     delete garbage;
   }
 
+  delete queuePtr;
+
 };
 
 /*********************************************************************
 
-** Description: push()
+** Description: addBack()
 
-** This function takes an integer value, adds it as the value of a
-new node, and sets that node as the new tail node, updating all pointers
-accordingly
+** This function adds a value to the back of the queue. If there is
+already an empty node at the back, it sets the value of that node to
+the added value, and updates pointers accordingly. If not, a new node
+is created with the value, and pointers are updated accordingly.
 
 *********************************************************************/
 
-void Queue::push(int val) {
+void Queue::addBack(int val) {
 
-  QueueNode *queuePtr = tail;
-  tail = new QueueNode(val);
-  if (queuePtr) {
-    tail->next = queuePtr;
-    queuePtr->prev = tail;
-  } else {
-    head = tail;
+  if (back->next->value == -1) {
+    back->next->value = val;
+  } else { // back-> next == front
+    back->next = new QueueNode(val);
+    back->next->next = front;
+    back->next->prev = back;
   }
+  back = back->next;
 
 };
 
 /*********************************************************************
 
-** Description: pop()
+** Description: getFront()
 
-** This function removes the head node from the front of the stack,
-sets the previous node as the new head node, returns the value of the
-removed node, and updates all pointers accordingly
+** This function returns the value of the current front node, or -1
+as an error value if the queue is empty
 
 *********************************************************************/
 
-int Queue::pop() {
+int Queue::getFront() {
 
-  int result = -1;
+  return front->value;
 
-  if (head) {
+};
 
-    QueueNode *queuePtr = head;
-    result = queuePtr->value;
-    head = queuePtr->prev;
-    delete queuePtr;
+/*********************************************************************
 
-  } else {
+** Description: removeFront()
 
-    std::cout << "\nError: Queue is already empty, nothing to pop." << std::endl;
+** This function sets the value of the current front node to -1, sets
+the next node as the new front, returns the value of the removed node,
+and updates all pointers accordingly. If the queue is empty, it returns
+-1 as an error value
+
+*********************************************************************/
+
+int Queue::removeFront() {
+
+  int result = front->value;
+
+  if (result != -1) {
+
+    front->value = -1;
+    front = front->next;
 
   }
 
