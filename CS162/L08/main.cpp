@@ -9,15 +9,24 @@
 ** Description: Lab 8 - A program that showcases an implementation of
 a Queue data structure using a doubly-linked circular structure. This
 is the main file that uses the Queue class and helper functions to
-run the program.
+run the program and test the functionality.
 
 *********************************************************************/
 
-#include <iostream>
 #include <string>
 #include <limits>
 
 #include "Queue.hpp"
+
+/*********************************************************************
+
+** Description: getInt()
+
+** Gets and validates integer input from the user, with the option of
+entering a valid range for the int. If no minimum or maximum values
+are entered, they are set to the min and max allowed for integers
+
+*********************************************************************/
 
 int getInt(int minSize = std::numeric_limits<int>::min(), int maxSize = std::numeric_limits<int>::max()) {
 
@@ -38,6 +47,15 @@ int getInt(int minSize = std::numeric_limits<int>::min(), int maxSize = std::num
   return userInt;
 
 };
+
+/*********************************************************************
+
+** Description: main()
+
+** This is the driver function that runs the program, takes user input,
+and shows user output to test the functionality of the queue
+
+*********************************************************************/
 
 int main () {
 
@@ -99,7 +117,11 @@ int main () {
 
       case 'd':
       case 'D':
-        std::cout << "You pressed D" << std::endl;
+        std::cout << std::endl;
+        if (myQueue.displayContents() == -1) {
+            std::cout << "Error: The queue is empty, nothing to display\n";
+        }
+        std::cout << std::endl;
         break;
 
       case 'x':
@@ -109,7 +131,7 @@ int main () {
         break;
 
       default:
-        std::cout << "\nWhoops! Invalid entry, please enter one of the menu choices." << std::endl;
+        std::cout << "\nWhoops! Invalid entry, please enter one of the menu choices.\n" << std::endl;
         break;
 
     }
@@ -117,4 +139,5 @@ int main () {
   }
 
   return 0;
-}
+
+};

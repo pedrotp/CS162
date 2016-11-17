@@ -15,6 +15,8 @@ is a first in first out (FIFO) data structure.
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
+#include <iostream>
+
 // Defines the QueueNode struct
 struct QueueNode { // node definiton
   int value;
@@ -41,6 +43,7 @@ class Queue
     void addBack(int val); // adds a value to the back of the queue
     int getFront(); // returns the value at the front of the queue
     int removeFront(); // removes the value from the front of the queue, and returns it
+    int displayContents(); // displays the contents of the queue
 
 };
 

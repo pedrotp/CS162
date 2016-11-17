@@ -67,10 +67,11 @@ void Queue::addBack(int val) {
 
   if (back->next->value == -1) {
     back->next->value = val;
-  } else { // back-> next == front
+  } else { // back->next == front
     back->next = new QueueNode(val);
     back->next->next = front;
     back->next->prev = back;
+    front->prev = back->next;
   }
   back = back->next;
 
@@ -115,4 +116,36 @@ int Queue::removeFront() {
 
   return result;
 
+};
+
+/*********************************************************************
+
+** Description: displayContents()
+
+** This function displays all the values in the queue starting at the
+front, and going all the way to the back. It skips empty nodes between
+the back and front. If the queue was displayed, it returns 0, if the
+queue was empty, it returns -1 as an error value.
+
+*********************************************************************/
+
+int Queue::displayContents() {
+  int error = 0;
+  if (front->value != -1) {
+
+    std::cout << front->value << " ";
+
+    QueueNode *queuePtr = front;
+
+    while (queuePtr != back) {
+      queuePtr = queuePtr->next;
+      std::cout << queuePtr->value << " ";
+    }
+
+  } else {
+    error = -1;
+  }
+
+  return error;
+  
 };
