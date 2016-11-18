@@ -23,7 +23,7 @@ sets some internal values according to provided arguments
 
 *********************************************************************/
 
-Creature::Creature(int attackNum, int attackSides, int defenseNum, int defenseSides, int armorPts, int strengthPts, std::string creatureType) {
+Creature::Creature(int attackNum, int attackSides, int defenseNum, int defenseSides, int armorPts, int strengthPts, std::string creatureName) {
 
   // srand (std::time(NULL));
 
@@ -33,25 +33,38 @@ Creature::Creature(int attackNum, int attackSides, int defenseNum, int defenseSi
   defenseDice[1] = defenseSides;
   armor = armorPts;
   strength = strengthPts;
-  cType = creatureType;
+  cName = creatureName;
 
 };
 
 
 /*********************************************************************
 
-** Description: type()
+** Description: name()
 
-** Basic getter thar returns the creature's type as a string
+** Basic getter that returns the creature's name as a string
 
 *********************************************************************/
 
-std::string Creature::type() {
+std::string Creature::name() {
 
-  return cType;
+  return cName;
 
 };
 
+/*********************************************************************
+
+** Description: setName()
+
+** Basic setter that sets the creature's name to a user supplied string
+
+*********************************************************************/
+
+void Creature::setName(std::string creatureName) {
+
+  cName = creatureName;
+
+};
 
 /*********************************************************************
 

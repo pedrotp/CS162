@@ -38,7 +38,7 @@ class Queue : public List
     Queue();
     ~Queue();
     void push(Creature *val); // adds a value to the tail of the queue
-     Creature *pop(); // removes a value from the head of the queue
+    Creature *pop(); // removes a value from the head of the queue
 
 };
 

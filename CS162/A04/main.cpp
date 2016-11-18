@@ -110,10 +110,10 @@ int main() {
   while (keepPlaying) {
 
     std::cout << "\nHi there, welcome to Fantasy Fight Club - Tournament Edition!" << std::endl;
-    std::cout << "You will build two lineups of creatures that will fight until one of them runs out of players." << std::endl;
-    std::cout << "How many creatures should we have in each lineup?" << std::endl;
+    std::cout << "\nYou will build two lineups of creatures that will fight until one of them runs out of players." << std::endl;
+    std::cout << "\nHow many creatures should we have in each lineup?" << std::endl;
     int numCreatures = getInt(0);
-    std::cout << "Great. Let's go build those two lineups, of " << numCreatures << " creatures each." << std::endl;
+    std::cout << "\nGreat. Let's go build those two lineups, of " << numCreatures << " creatures each." << std::endl;
 
     Creature *p1;
     Creature *p2;
@@ -128,11 +128,12 @@ int main() {
       std::cout << "\nPlease select a type for creature #" << i << ":" << std::endl;
       p1 = newCreature();
       team1.push(p1);
-      std::cout << p1->type() << " added to the lineup!" << std::endl;
+      std::cout << p1->name() << " added to the lineup!" << std::endl;
+      p1->setName("Team " + name1 + " (" + p1->name() + ")");
     }
 
     // BUILD TEAM 2
-    std::cout << "\nFirst, select a name for Team 2:" << std::endl;
+    std::cout << "\nOK, now select a name for Team 2:" << std::endl;
     std::string name2;
     std::getline(std::cin,name2);
     std::cout << "\nGreat, now you need to fill Team " << name2 << "'s lineup with " << numCreatures << " creatures" << std::endl;
@@ -141,7 +142,8 @@ int main() {
       std::cout << "\nPlease select a type for creature #" << i << ":" << std::endl;
       p2 = newCreature();
       team2.push(p2);
-      std::cout << p2->type() << " added to the lineup!" << std::endl;
+      std::cout << p2->name() << " added to the lineup!" << std::endl;
+      p2->setName("Team " + name2 + " (" + p2->name() + ")");
     }
 
     // 50% of the time p1 and p2 are flipped, so whoever goes first is random
@@ -155,7 +157,7 @@ int main() {
     //
     // }
 
-    // std::cout << "Team (" << p1->type() << "), will go first.\n" << std::endl;
+    // std::cout << "Team (" << p1->name() << "), will go first.\n" << std::endl;
 
     int score1 = 0;
     int score2 = 0;
@@ -169,31 +171,30 @@ int main() {
 
       if (p1 && p2) {
 
-        std::cout << "\nTeam " << name1 << " (" << p1->type() << ") vs ";
-        std::cout << "Team " << name2 << " (" << p2->type() << ")" << std::endl;
+        std::cout << "\n" << p1->name() << " vs " << p2->name() << "\n" << std::endl;
 
         bool p1alive = true;
         bool p2alive = true;
 
         while (p1alive && p2alive) {
 
-          // std::cout << "Team 1 (" << p1->type() << ") attacked! Player 2 (" << p2->type() << ") has ";
+          std::cout << p1->name() << " attacked! " << p2->name() << " lost strength";
           p2alive = p2->defend(p1->attack());
           if (p2alive) {
-            // std::cout << "Player 2 (" << p2->type() << ") attacked! Player 1 (" << p1->type() << ") has ";
+            std::cout << p2->name() << " attacked! " << p1->name() << " lost strength";
             p1alive = p1->defend(p2->attack());
           }
 
         }
 
         if (p1alive) {
-          std::cout << "Team " << name1 << " (" << p1->type() << ") wins!\n" << std::endl;
+          std::cout << p1->name() << " wins!\n" << std::endl;
           // p1->recover(); // energy restored to x
           team1.push(p1);
           score1++;
           losers.push(p2);
         } else {
-          std::cout << "Team " << name2 << " (" << p2->type() << ") wins!\n" << std::endl;
+          std::cout << p2->name() << " wins!\n" << std::endl;
           // p2->recover(); // energy restored to x
           team2.push(p2);
           score2++;
@@ -202,13 +203,13 @@ int main() {
 
 
       } else if (p2 == 0) {
+        // Team 1 is the winner
         gameOver = true;
         std::cout << "\nTeam " << name1 << " is the tournament winner!\n" << std::endl;
-        // team1 won
       } else if (p1 == 0) {
+        // Team 2 is the winner
         gameOver = true;
         std::cout << "\nTeam " << name2 << " is the tournament winner!\n" << std::endl;
-        // team2 won
       }
 
     }
@@ -221,22 +222,22 @@ int main() {
     // give user the option to see the contents of the loser pile
     std::cout << "Would you like to see the list of losers?" << std::endl;
     if (getYesNo()) {
-      while (p1 = losers.pop()) {
-        std::cout << "Team " << name << " (" << p1->type() << ")" << std::endl;
+      while ( (p1 = losers.pop()) ) {
+        std::cout << p1->name() << std::endl;
         delete p1;
       }
     }
 
     // delete everything
-    while (p1 = losers.pop()) {
+    while ( (p1 = losers.pop()) ) {
       delete p1;
     }
 
-    while (p1 = team1.pop()) {
+    while ( (p1 = team1.pop()) ) {
       delete p1;
     }
 
-    while (p1 = team2.pop()) {
+    while ( (p1 = team2.pop()) ) {
       delete p1;
     }
 
@@ -248,68 +249,3 @@ int main() {
   return 0;
 
 };
-
-
-/********************** FOR TESTING ONLY *****************************
-*** UNCOMMENT THIS AND COMMENT THE OTHER MAIN METHOD ABOVE TO TEST ***
-**********************************************************************
-
-** Description: main() [TEST]
-
-** This is a test version of the main function that runs a thousand
-simulations of fights between two hard coded characters
-
-*********************************************************************/
-
-// int main() {
-//
-//   srand (std::time(NULL));
-//
-//   int p1wins = 0;
-//   int p2wins = 0;
-//
-//   for (int i = 0; i < 10000; i++) {
-//
-//     Creature *p1 = new /* Creature Type */;
-//     Creature *p2 = new /* Creature Type */;
-//
-//     bool p1alive = true;
-//     bool p2alive = true;
-//
-//     while (p1alive && p2alive) {
-//
-//       std::cout << "Player 1 (" << p1->type() << ") attacked! Player 2 (" << p2->type() << ") has ";
-//       p2alive = p2->defend(p1->attack());
-//       if (p2alive) {
-//         std::cout << "Player 2 (" << p2->type() << ") attacked! Player 1 (" << p1->type() << ") has ";
-//         p1alive = p1->defend(p2->attack());
-//       }
-//
-//     }
-//
-//     if (p1alive) {
-//       p1wins++;
-//       std::cout << "\nPlayer 1 (" << p1->type() << ") wins!" << std::endl;
-//     } else {
-//       p2wins++;
-//       std::cout << "\nPlayer 2 (" << p2->type() << ") wins!" << std::endl;
-//     }
-//
-//     delete p1;
-//     delete p2;
-//
-//     // added a delay so the seed for rand would be different between steps
-//     // std::cout.flush();
-//     // usleep(1500000);
-//
-//     // added a user controlled delay for the same issue
-//     // std::cout << "Press any key to continue..." << std::endl;
-//     // std::cin.get();
-//
-//   }
-//
-//   std::cout << "P1 won " << p1wins << " times." << std::endl;
-//   std::cout << "P2 won " << p2wins << " times." << std::endl;
-//   return 0;
-//
-// };
