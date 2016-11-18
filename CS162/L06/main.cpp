@@ -134,6 +134,7 @@ int main() {
       } else if (command == "exit") {
 
         std::cout << "\nGood bye!\n" << std::endl;
+        delete myList;
 
       } else {
 
