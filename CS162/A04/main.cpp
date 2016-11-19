@@ -90,6 +90,54 @@ Creature *newCreature() {
 
 };
 
+/*********************** FOR TESTING ONLY ***************************
+
+** Description: randomCreature()
+
+** For testing purposes, this function generates a random creature
+type and returns a pointer to it
+
+*********************************************************************
+
+Creature *newCreature() {
+
+  Creature *cPtr;
+
+  switch (rand() % 5 + 1) {
+
+    case 1:
+      cPtr = new Barbarian;
+      std::cout << "\nYou chose: Barbarian!\n" << std::endl;
+      break;
+
+    case 2:
+      cPtr = new BlueMen;
+      std::cout << "\nYou chose: Blue Men!\n" << std::endl;
+      break;
+
+    case 3:
+      cPtr = new HarryPotter;
+      std::cout << "\nYou chose: Harry Potter!\n" << std::endl;
+      break;
+
+    case 4:
+      cPtr = new Medusa;
+      std::cout << "\nYou chose: Medusa!\n" << std::endl;
+      break;
+
+    case 5:
+      cPtr = new Vampire;
+      std::cout << "\nYou chose: Vampire!\n" << std::endl;
+      break;
+
+  }
+
+  return cPtr;
+
+};
+
+*********************************************************************/
+
 
 /*********************************************************************
 
@@ -104,8 +152,9 @@ int main() {
 
   srand (std::time(NULL));
   bool keepPlaying = true;
-  Queue team1, team2;
-  Stack losers;
+  std::string name1, name2; // team names
+  Queue team1, team2; // team lineups
+  Stack losers; // losers pile
 
   while (keepPlaying) {
 
@@ -120,7 +169,6 @@ int main() {
 
     // BUILD TEAM 1
     std::cout << "\nFirst, select a name for Team 1:" << std::endl;
-    std::string name1;
     std::getline(std::cin,name1);
     std::cout << "\nGreat, now you need to fill Team " << name1 << "'s lineup with " << numCreatures << " creatures" << std::endl;
 
@@ -134,7 +182,6 @@ int main() {
 
     // BUILD TEAM 2
     std::cout << "\nOK, now select a name for Team 2:" << std::endl;
-    std::string name2;
     std::getline(std::cin,name2);
     std::cout << "\nGreat, now you need to fill Team " << name2 << "'s lineup with " << numCreatures << " creatures" << std::endl;
 
@@ -145,6 +192,27 @@ int main() {
       std::cout << p2->name() << " added to the lineup!" << std::endl;
       p2->setName("Team " + name2 + " (" + p2->name() + ")");
     }
+
+    /************************************** FOR TESTING ONLY ******************************************
+    comment out the two BUILD TEAM sections above and uncomment this section to generate random lineups
+    ***************************************************************************************************
+
+    name1 = "1";
+    name2 = "2";
+
+    for (int i = 1; i <= numCreatures; i++) {
+
+      p1 = randomCreature();
+      team1.push(p1);
+      p1->setName("Team " + name1 + " (" + p1->name() + ")");
+
+      p2 = randomCreature();
+      team2.push(p2);
+      p2->setName("Team " + name2 + " (" + p2->name() + ")");
+
+    }
+
+    **************************************************************************************************/
 
     int score1 = 0;
     int score2 = 0;
