@@ -146,23 +146,11 @@ int main() {
       p2->setName("Team " + name2 + " (" + p2->name() + ")");
     }
 
-    // 50% of the time p1 and p2 are flipped, so whoever goes first is random
-    // int coinToss = rand() % 100 + 1;
-    //
-    // if (coinToss > 50) {
-    //
-    //   Creature *tempPtr = p1;
-    //   p1 = p2;
-    //   p2 = tempPtr;
-    //
-    // }
-
-    // std::cout << "Team (" << p1->name() << "), will go first.\n" << std::endl;
-
     int score1 = 0;
     int score2 = 0;
 
-    // while both teams have players
+    std::cout << "\n******* TOURNAMENT BEGINS *******" << std::endl;
+
     bool gameOver = false;
     while (!gameOver) {
 
@@ -171,74 +159,88 @@ int main() {
 
       if (p1 && p2) {
 
-        std::cout << "\n" << p1->name() << " vs " << p2->name() << "\n" << std::endl;
+        std::cout << "\n" << p1->name() << " vs " << p2->name() << ": ";
 
         bool p1alive = true;
         bool p2alive = true;
 
         while (p1alive && p2alive) {
 
-          std::cout << p1->name() << " attacked! " << p2->name() << " lost strength";
           p2alive = p2->defend(p1->attack());
           if (p2alive) {
-            std::cout << p2->name() << " attacked! " << p1->name() << " lost strength";
             p1alive = p1->defend(p2->attack());
           }
 
         }
 
         if (p1alive) {
-          std::cout << p1->name() << " wins!\n" << std::endl;
+
+          std::cout << p1->name() << " wins!" << std::endl;
           // p1->recover(); // energy restored to x
           team1.push(p1);
           score1++;
           losers.push(p2);
+
         } else {
-          std::cout << p2->name() << " wins!\n" << std::endl;
+
+          std::cout << p2->name() << " wins!" << std::endl;
           // p2->recover(); // energy restored to x
           team2.push(p2);
           score2++;
           losers.push(p1);
+
         }
 
 
       } else if (p2 == 0) {
+
         // Team 1 is the winner
         gameOver = true;
-        std::cout << "\nTeam " << name1 << " is the tournament winner!\n" << std::endl;
+        std::cout << "\n****** TOURNAMENT WINNERS ******\n" << std::endl;
+        std::cout << "  Team " << name1 << "\n" << std::endl;
+        if (p1) delete p1;
+
       } else if (p1 == 0) {
+
         // Team 2 is the winner
         gameOver = true;
-        std::cout << "\nTeam " << name2 << " is the tournament winner!\n" << std::endl;
+        std::cout << "\n****** TOURNAMENT WINNERS ******\n" << std::endl;
+        std::cout << "  Team " << name2 << std::endl;
+        if (p2) delete p2;
+
       }
 
     }
 
     std::cout << "\n******** FINAL SCORES ********\n" << std::endl;
-    std::cout << "Team " << name1 << ": " << score1 << std::endl;
-    std::cout << "Team " << name1 << ": " << score1 << std::endl;
+    std::cout << "  Team " << name1 << ": " << score1 << std::endl;
+    std::cout << "  Team " << name2 << ": " << score2 << std::endl;
     std::cout << "\n******************************\n" << std::endl;
 
     // give user the option to see the contents of the loser pile
     std::cout << "Would you like to see the list of losers?" << std::endl;
+
     if (getYesNo()) {
+
+      std::cout << "\n*********** LOSERS ***********\n" << std::endl;
+
       while ( (p1 = losers.pop()) ) {
+
         std::cout << p1->name() << std::endl;
         delete p1;
-      }
-    }
 
-    // delete everything
-    while ( (p1 = losers.pop()) ) {
-      delete p1;
+      }
+
+      std::cout << "\n******************************" << std::endl;
+
     }
 
     while ( (p1 = team1.pop()) ) {
       delete p1;
     }
 
-    while ( (p1 = team2.pop()) ) {
-      delete p1;
+    while ( (p2 = team2.pop()) ) {
+      delete p2;
     }
 
     std::cout << "\nPlay again? (y/n)" << std::endl;

@@ -34,10 +34,11 @@ bool HarryPotter::defend(int attackRes) {
   bool result = Creature::defend(attackRes);
 
   if (!result && !hasDied) {
-    std::cout << "HOGWARTS: Harry has come back to life!" << std::endl;
+
     hasDied = true;
     strength = 20;
     result = true;
+    
   }
 
   return result;

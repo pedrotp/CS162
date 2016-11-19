@@ -39,10 +39,10 @@ the memory for each node when the Queue is destroyed
 
 Queue::~Queue() {
 
-  QueueNode *queuePtr = tail;
+  QueueNode *queuePtr = head;
   while (queuePtr) {
     QueueNode *garbage = queuePtr;
-    queuePtr = garbage->next;
+    queuePtr = garbage->prev;
     delete garbage->value;
     delete garbage;
   }
@@ -91,10 +91,14 @@ Creature* Queue::pop() {
     QueueNode *queuePtr = head;
     result = queuePtr->value;
     head = queuePtr->prev;
-    delete queuePtr->value;
+    if (head) {
+      head->next = 0;
+    } else {
+      tail = 0;
+    }
     delete queuePtr;
 
-  } 
+  }
 
   return result;
 

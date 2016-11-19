@@ -85,7 +85,6 @@ Creature* Stack::pop() {
     StackNode *stackPtr = top;
     result = stackPtr->value;
     top = stackPtr->next;
-    delete stackPtr->value;
     delete stackPtr;
 
   }

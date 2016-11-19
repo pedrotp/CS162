@@ -12,13 +12,12 @@ which includes some of the class, variable and function declarations.
 
 *********************************************************************/
 
-#include <cstdlib> // rand()
-#include <ctime> // std::time
-#include <iostream>
-#include <string>
-
 #ifndef CREATURE_HPP
 #define CREATURE_HPP
+
+#include <cstdlib> // rand()
+#include <ctime> // std::time
+#include <string>
 
 // Defines the interface of the Creature class
 class Creature

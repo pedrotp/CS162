@@ -116,10 +116,7 @@ bool Creature::defend(int attackRes){
     strength = 0;
     result = false; // if this creature has died, return false
   }
-  // std::cout << strength << " strength points remaining." << std::endl;
-  if (attackRes > 80) {
-    // std::cout << "GLARE: Medusa has turned you to stone!" << std::endl;
-  }
+
   return result;
 
 };
