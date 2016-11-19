@@ -122,6 +122,16 @@ bool Creature::defend(int attackRes){
 
 };
 
+/*********************************************************************
+
+** Description: recover()
+
+** This function is used to restore the creature's strength points a
+random amount between the current strength points and the max strength
+points that it started with. It returns the number of points restored.
+
+*********************************************************************/
+
 int Creature::recover() {
 
   int pointsRecovered = 0;
@@ -130,7 +140,7 @@ int Creature::recover() {
 
     pointsRecovered = rand() % (maxStrength - strength) + 1;
     strength += pointsRecovered;
-    
+
   }
 
   return pointsRecovered;
