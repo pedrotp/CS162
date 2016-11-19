@@ -21,7 +21,7 @@ is a first in last out (FILO) data structure.
 class Stack
 {
 
-  protected:
+  private:
     struct StackNode { // node definition
       Creature* value;
       StackNode *next; // pointer to the next node in the stack

@@ -21,7 +21,7 @@ is a first in first out (FIFO) data structure.
 class Queue
 {
 
-  protected:
+  private:
     struct QueueNode { // node definiton
       Creature *value;
       QueueNode *prev; // pointer to the previous node in the queue
