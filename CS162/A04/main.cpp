@@ -197,7 +197,7 @@ int main() {
         // Team 1 is the winner
         gameOver = true;
         std::cout << "\n****** TOURNAMENT WINNERS ******\n" << std::endl;
-        std::cout << "  Team " << name1 << "\n" << std::endl;
+        std::cout << "  Team " << name1 << std::endl;
         if (p1) delete p1;
 
       } else if (p1 == 0) {
