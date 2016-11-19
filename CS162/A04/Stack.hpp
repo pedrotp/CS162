@@ -15,10 +15,10 @@ is a first in last out (FILO) data structure.
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include "List.hpp"
+#include "Creature.hpp"
 
 // Defines the interface of the Stack class
-class Stack : public List
+class Stack
 {
 
   protected:

@@ -15,9 +15,10 @@ is a first in first out (FIFO) data structure.
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
-#include "List.hpp"
+#include "Creature.hpp"
+
 // Defines the interface of the Queue class
-class Queue : public List
+class Queue
 {
 
   protected:
