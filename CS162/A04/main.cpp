@@ -173,18 +173,26 @@ int main() {
 
         }
 
+        int recovery;
+
         if (p1alive) {
 
-          std::cout << p1->name() << " wins!" << std::endl;
-          // p1->recover(); // energy restored to x
+          std::cout << p1->name() << " wins!";
+          if ( (recovery = p1->recover()) ) {
+            std::cout << " (strength +" << recovery << ")"; // strength restored
+          }
+          std::cout << std::endl;
           team1.push(p1);
           score1++;
           losers.push(p2);
 
         } else {
 
-          std::cout << p2->name() << " wins!" << std::endl;
-          // p2->recover(); // energy restored to x
+          std::cout << p2->name() << " wins!";
+          if ( (recovery = p2->recover()) ) {
+            std::cout << " (strength +" << recovery << ")"; // strength restored
+          }
+          std::cout << std::endl;
           team2.push(p2);
           score2++;
           losers.push(p1);

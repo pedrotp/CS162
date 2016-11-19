@@ -26,6 +26,7 @@ class Creature
     int attackDice[2]; // pos 0 represents the number of dice, and pos 1 the number of sides
     int defenseDice[2]; // pos 0 represents the number of dice, and pos 1 the number of sides
     int armor;
+    int maxStrength;
     int strength;
     std::string cName;
 
@@ -35,6 +36,7 @@ class Creature
     void setName(std::string creatureName); // setter for cName
     virtual int attack();
     virtual bool defend(int attackRes);
+    int recover();
 };
 
 #endif

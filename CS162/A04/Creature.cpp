@@ -32,7 +32,8 @@ Creature::Creature(int attackNum, int attackSides, int defenseNum, int defenseSi
   defenseDice[0] = defenseNum;
   defenseDice[1] = defenseSides;
   armor = armorPts;
-  strength = strengthPts;
+  maxStrength = strengthPts;
+  strength = maxStrength;
   cName = creatureName;
 
 };
@@ -118,5 +119,20 @@ bool Creature::defend(int attackRes){
   }
 
   return result;
+
+};
+
+int Creature::recover() {
+
+  int pointsRecovered = 0;
+
+  if (strength < maxStrength) {
+
+    pointsRecovered = rand() % (maxStrength - strength) + 1;
+    strength += pointsRecovered;
+    
+  }
+
+  return pointsRecovered;
 
 };
