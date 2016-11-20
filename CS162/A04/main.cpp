@@ -213,7 +213,7 @@ int main() {
 
     for (int i = 1; i <= numCreatures; i++) {
 
-      p1 = autoCreature(5);
+      p1 = autoCreature();
       team1.push(p1);
       p1->setName("Team " + name1 + " (" + p1->name() + ")");
 
@@ -325,14 +325,6 @@ int main() {
       std::cout << "\n******************************" << std::endl;
 
     }
-
-    // while ( (p1 = team1.pop()) ) {
-    //   delete p1;
-    // }
-    //
-    // while ( (p2 = team2.pop()) ) {
-    //   delete p2;
-    // }
 
     std::cout << "\nPlay again? (y/n)" << std::endl;
     keepPlaying = getYesNo();
