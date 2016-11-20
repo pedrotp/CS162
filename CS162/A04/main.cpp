@@ -225,6 +225,9 @@ int main() {
 
     *************************************************************************************************/
 
+    std::cout << "\n\nAll set! Press any key to start the tournament..." << std::endl;
+    system("read");
+
     int score1 = 0;
     int score2 = 0;
 
@@ -282,6 +285,7 @@ int main() {
 
         }
 
+        std::cout << "* SCORE UPDATE [ Team " << name1 << ": " << score1 << ", Team " << name2 << ": " << score2 << " ]" << std::endl;
 
       } else if (p2 == 0) {
 
