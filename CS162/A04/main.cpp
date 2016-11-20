@@ -92,18 +92,24 @@ Creature *newCreature() {
 
 /*********************** FOR TESTING ONLY ***************************
 
-** Description: randomCreature()
+** Description: autoCreature()
 
-** For testing purposes, this function generates a random creature
-type and returns a pointer to it
+** For testing purposes, this function generates a specificed creature
+type programatically without user input. If a number between 1 and 5
+is provided as an argument, it returns a creature pointer of the
+corresponding creature type. If no arguments are provided, or zero is
+provided as an argument, a random creature type is returned.
 
-*********************************************************************
+********************************************************************/
 
-Creature *newCreature() {
+Creature *autoCreature(int num = 0) {
 
   Creature *cPtr;
+  if (num < 1 || num > 5) {
+    num = rand() % 5 + 1;
+  }
 
-  switch (rand() % 5 + 1) {
+  switch (num) {
 
     case 1:
       cPtr = new Barbarian;
@@ -136,7 +142,7 @@ Creature *newCreature() {
 
 };
 
-*********************************************************************/
+/********************************************************************/
 
 
 /*********************************************************************
@@ -167,6 +173,8 @@ int main() {
     Creature *p1;
     Creature *p2;
 
+///*
+
     // BUILD TEAM 1
     std::cout << "\nFirst, select a name for Team 1:" << std::endl;
     std::getline(std::cin,name1);
@@ -193,26 +201,28 @@ int main() {
       p2->setName("Team " + name2 + " (" + p2->name() + ")");
     }
 
+//*/
+
     /************************************** FOR TESTING ONLY ******************************************
     comment out the two BUILD TEAM sections above and uncomment this section to generate random lineups
-    ***************************************************************************************************
+    **************************************************************************************************
 
     name1 = "1";
     name2 = "2";
 
     for (int i = 1; i <= numCreatures; i++) {
 
-      p1 = randomCreature();
+      p1 = autoCreature(5);
       team1.push(p1);
       p1->setName("Team " + name1 + " (" + p1->name() + ")");
 
-      p2 = randomCreature();
+      p2 = autoCreature();
       team2.push(p2);
       p2->setName("Team " + name2 + " (" + p2->name() + ")");
 
     }
 
-    **************************************************************************************************/
+    *************************************************************************************************/
 
     int score1 = 0;
     int score2 = 0;
