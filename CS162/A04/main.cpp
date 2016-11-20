@@ -34,6 +34,7 @@ Creature *newCreature() {
 
   Creature *cPtr;
 
+  // show user creature choices
   std::cout << "\n1: Barbarian" << std::endl;
   std::cout << "2: BlueMen" << std::endl;
   std::cout << "3: Harry Potter" << std::endl;
@@ -81,12 +82,12 @@ Creature *newCreature() {
       std::cout << "\nVampire:" << std::endl;
       std::cout << "Suave, debonair, but vicious and surprisingly resilient!\n" << std::endl;
 
-      cPtr = newCreature();
+      cPtr = newCreature(); // recursively show the menu again
       break;
 
   }
 
-  return cPtr;
+  return cPtr;  // return a pointer to the newly created creature
 
 };
 
@@ -232,17 +233,19 @@ int main() {
     bool gameOver = false;
     while (!gameOver) {
 
+      // pop the two current players from the front of the lineups
       p1 = team1.pop();
       p2 = team2.pop();
 
-      if (p1 && p2) {
+      if (p1 && p2) { // check if both pop operations produced fighers (no null pointers)
 
+        // announce the two players
         std::cout << "\n" << p1->name() << " vs " << p2->name() << ": ";
 
         bool p1alive = true;
         bool p2alive = true;
 
-        while (p1alive && p2alive) {
+        while (p1alive && p2alive) { // fight until one player loses
 
           p2alive = p2->defend(p1->attack());
           if (p2alive) {
@@ -251,7 +254,7 @@ int main() {
 
         }
 
-        int recovery;
+        int recovery; // variable to hold the number of points recovered for the winner
 
         if (p1alive) {
 
@@ -260,6 +263,7 @@ int main() {
             std::cout << " (strength +" << recovery << ")"; // strength restored
           }
           std::cout << std::endl;
+
           team1.push(p1);
           score1++;
           losers.push(p2);
@@ -271,6 +275,7 @@ int main() {
             std::cout << " (strength +" << recovery << ")"; // strength restored
           }
           std::cout << std::endl;
+
           team2.push(p2);
           score2++;
           losers.push(p1);
@@ -321,13 +326,13 @@ int main() {
 
     }
 
-    while ( (p1 = team1.pop()) ) {
-      delete p1;
-    }
-
-    while ( (p2 = team2.pop()) ) {
-      delete p2;
-    }
+    // while ( (p1 = team1.pop()) ) {
+    //   delete p1;
+    // }
+    //
+    // while ( (p2 = team2.pop()) ) {
+    //   delete p2;
+    // }
 
     std::cout << "\nPlay again? (y/n)" << std::endl;
     keepPlaying = getYesNo();
