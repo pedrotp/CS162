@@ -28,6 +28,8 @@ class Queue
     void push(int val); // adds a value to the tail of the queue
     int pop(); // removes a value from the head of the queue
     int front();
+    bool empty();
+    int size();
 
 };
 

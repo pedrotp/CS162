@@ -68,3 +68,31 @@ int Queue::front() {
   return item;
 
 };
+
+/*********************************************************************
+
+** Description: empty()
+
+** This function returns true if the queue is empty, false if it's not
+
+*********************************************************************/
+
+bool Queue::empty() {
+
+  return storage.empty();
+
+};
+
+/*********************************************************************
+
+** Description: size()
+
+** This function returns the number of items currently in the queue
+
+*********************************************************************/
+
+int Queue::size() {
+
+  return storage.size();
+
+};

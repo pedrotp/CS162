@@ -64,12 +64,13 @@ int main () {
 
   srand (std::time(NULL));
 
-  Queue buffer;
-  Stack palindrome;
   std::cout << "\nHey there! Welcome to the Stack and Queue test program" << std::endl;
 
   bool exitFlag = false;
   while (!exitFlag) {
+
+    Queue buffer;
+    Stack palindrome;
 
     std::cout << "\nWhat do you want to do?" << std::endl;
     std::cout << "\n1. Test the Buffer" << std::endl;
@@ -80,6 +81,7 @@ int main () {
     int insChance;
     int remChance;
     int rounds;
+    int totals = 0;
     int item;
 
     switch (getInt(0,2)) {
@@ -98,7 +100,7 @@ int main () {
         std::cout << "\nGreat. Please enter the % chance of an item being removed from the queue:" << std::endl;
         remChance = getInt(0,100);
         std::cout << "\nOk. How many rounds should we run?" << std::endl;
-        rounds = getInt(0,100);
+        rounds = getInt(1); // at least 1 round
         std::cout << std::endl;
 
         for (int i = 0; i < rounds; i++) {
@@ -106,26 +108,24 @@ int main () {
           std::cout << "\nRound " << i + 1 << ":" << std::endl;
 
           item = rand() % 100 + 1;
-          if (item < insChance) {
+          if (item <= insChance) {
             buffer.push(item);
             std::cout << "Item added to the buffer." << std::endl;
           }
 
           item = rand() % 100 + 1;
-          if (item < remChance && buffer.front() != -1) {
+          if (item <= remChance && !buffer.empty()) {
             buffer.pop();
             std::cout << "Item removed from the buffer." << std::endl;
           }
 
+          std::cout << "Buffer size: " << buffer.size() << std::endl;
+          totals += buffer.size();
+          std::cout << "** The average size for this and all previous rounds is: " << totals / (i + 1) << std::endl;
+
         }
 
-        if (buffer.front() != -1) {
-          std::cout << "\nThe final contents of the buffer are: " << buffer.pop();
-          while (buffer.front() != -1) {
-            std::cout << ", " << buffer.pop();
-          }
-          std::cout << std::endl;
-        }
+        std::cout << "\nThe final size of the buffer is: " << buffer.size() << std::endl;
 
         break;
 
@@ -143,7 +143,7 @@ int main () {
         while (!palindrome.empty()) {
           std::cout << palindrome.pop();
         }
-        std::cout << "\n" << std::endl;
+        std::cout << std::endl;
 
     }
 
