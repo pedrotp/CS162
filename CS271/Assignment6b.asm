@@ -20,10 +20,10 @@ set_max equ 13
 
 printString MACRO buffer
 
-   push edx
-	 mov edx, OFFSET buffer
-	 call WriteString
-	 pop edx
+	push edx
+	mov edx, OFFSET buffer
+	call WriteString
+	pop edx
 
 ENDM
 
@@ -82,10 +82,10 @@ play_again DWORD 1
 
 main PROC
 
-		call  Randomize ; seed for random numbers
-		call  intro
+	call  Randomize ; seed for random numbers
+	call  intro
 
-  ; quizLoop:
+	; quizLoop:
     push  OFFSET problem_num
     push  OFFSET set_size
     push  OFFSET subset_size
@@ -99,8 +99,8 @@ main PROC
     ; cmp   play_again, 0
     ; jne   quizLoop
 
-		call  farewell
-		exit	; exit to operating system
+	call  farewell
+	exit	; exit to operating system
 
 main ENDP
 
@@ -120,23 +120,23 @@ main ENDP
 intro PROC
 
     printString intro_1
-		call	CrLf
+	call	CrLf
 
-		printString intro_2
-		call	CrLf
+	printString intro_2
+	call	CrLf
 
-		printString ec_1
-		call	CrLf
+	printString ec_1
+	call	CrLf
 
-		printString ec_2
-		call	CrLf
-		call	CrLf
+	printString ec_2
+	call	CrLf
+	call	CrLf
 
     printString instructions
-		call	CrLf
-		call 	CrLf
+	call	CrLf
+	call 	CrLf
 
-		ret
+	ret
 
 intro ENDP
 
@@ -155,39 +155,42 @@ intro ENDP
 
 showProblem PROC
 
-    push  ebp
-    mov   ebp, esp
+    push	ebp
+    mov		ebp, esp
     pushad
 
-    mov   eax, set_max
-    sub   eax, set_min
-    call  RandomRange
-    add   eax, set_min
-    mov   [ebp+12], eax
+    mov		eax, set_max
+    sub		eax, set_min
+    call	RandomRange
+    add		eax, set_min
+    mov		[ebp+12], eax ; set size
 
-    call  RandomRange
-    inc   eax
-    mov   [ebp+8], eax
+    call	RandomRange
+    inc		eax
+    mov		[ebp+8], eax ; subset size
 
     printString title_1
-    inc   [ebp+16]
-    mov   eax, [ebp+16]
-    call  WriteDec
+	mov		esi, [ebp+16]
+	mov		eax, [esi]
+	inc		eax
+    call	WriteDec
+	mov		[esi], eax
     printString title_2
     call 	CrLf
 
     printString prompt_1
-    mov   eax, [ebp+8]
-    call  WriteDec
+    mov		eax, [ebp+8]
+    call	WriteDec
     printString prompt_2
-    mov   eax, [ebp+12]
+    mov		eax, [ebp+12]
+	call	WriteDec
     printString prompt_3
     call 	CrLf
 
     popad
-    pop   ebp
+    pop		ebp
 
-		ret   8
+	ret		8
 
 showProblem ENDP
 
@@ -205,65 +208,66 @@ showProblem ENDP
 
 getData PROC
 
-    push  ebp
-    mov   ebp, esp
+    push	ebp
+    mov		ebp, esp
     pushad
 
   getInput:
-    mov   edx, [ebp+8]
-    mov   ecx, [ebp+12]
-    call  ReadString
-    cmp   eax, 0
-    je    emptyString
+    mov		edx, [ebp+8]
+    mov		ecx, [ebp+12]
+    call	ReadString
+    cmp		eax, 0
+    je		emptyString
 
-    mov   ecx, eax
-    mov   esi, [ebp+8]
+    mov		ecx, eax
+    mov		esi, [ebp+8]
 
-    push  ecx ; save input size before loop
+    push	ecx ; save input size before loop
     cld
   checkDigits:
-    sub   eax, eax ; clean up eax
+    sub		eax, eax ; clean up eax
     lodsb
-    cmp   al, 48
-    jb    notDigits
-    cmp   al, 57
-    ja    notDigits
-    loop  checkDigits
+    cmp		al, 48
+    jb		notDigits
+    cmp		al, 57
+    ja		notDigits
+    loop	checkDigits
 
-    pop   ecx
-    mov   esi, [ebp+8]
-    mov   edi, [ebp+16]
-    mov   [edi], 0
+    pop		ecx
+    mov		esi, [ebp+8]
+    mov		edi, [ebp+16]
+	mov		edx, 0
+    mov		[edi], edx
     cld
   parseNum:
-    sub   eax, eax ; clean up eax
+    sub		eax, eax ; clean up eax
     lodsb
-    sub   al, 48
-    mov   ebx, eax
-    mov   eax, [edi]
-    mov   edx, 10
-    mul   edx
-    add   eax, ebx
-    mov   [edi], eax
-    loop  parseNum
-    jmp   allDone
+    sub		al, 48
+    mov		ebx, eax
+    mov		eax, [edi]
+    mov		edx, 10
+    mul		edx
+    add		eax, ebx
+    mov		[edi], eax
+    loop	parseNum
+    jmp		allDone
 
   notDigits:
-    pop   ecx
+    pop		ecx
     printString error_1
-    jmp   getInput
+    jmp		getInput
 
   emptyString:
     printString error_2
-    jmp   getInput
+    jmp		getInput
 
   allDone:
-    call  WriteDec
+    call	WriteDec
 
     popad
-    pop   ebp
+    pop		ebp
 
-  	ret   12
+  	ret		12
 
 getData ENDP
 
