@@ -86,8 +86,8 @@ main PROC
 	call  intro
 
 	; quizLoop:
-		push	set_max
-		push	set_min
+	push	set_max
+	push	set_min
     push  OFFSET problem_num
     push  OFFSET set_size
     push  OFFSET subset_size
@@ -122,23 +122,23 @@ main ENDP
 intro PROC
 
     printString intro_1
-		call	CrLf
+	call	CrLf
 
-		printString intro_2
-		call	CrLf
+	printString intro_2
+	call	CrLf
 
-		printString ec_1
-		call	CrLf
+	printString ec_1
+	call	CrLf
 
-		printString ec_2
-		call	CrLf
-		call	CrLf
+	printString ec_2
+	call	CrLf
+	call	CrLf
 
     printString instructions
-		call	CrLf
-		call 	CrLf
+	call	CrLf
+	call 	CrLf
 
-		ret
+	ret
 
 intro ENDP
 
@@ -172,11 +172,11 @@ showProblem PROC
     mov		[ebp+8], eax ; subset size
 
     printString title_1
-		mov		esi, [ebp+16]
-		mov		eax, [esi]
-		inc		eax
+	mov		esi, [ebp+16]
+	mov		eax, [esi]
+	inc		eax
     call	WriteDec
-		mov		[esi], eax
+	mov		[esi], eax
     printString title_2
     call 	CrLf
 
@@ -185,14 +185,14 @@ showProblem PROC
     call	WriteDec
     printString prompt_2
     mov		eax, [ebp+12]
-		call	WriteDec
+	call	WriteDec
     printString prompt_3
     call 	CrLf
 
     popad
     pop		ebp
-
-		ret		20
+	
+	ret		20
 
 showProblem ENDP
 
@@ -214,7 +214,7 @@ getData PROC
     mov		ebp, esp
 	pushad
 
-  getInput:
+getInput:
     mov		edx, [ebp+8]
     mov		ecx, [ebp+12]
     call	ReadString
@@ -226,7 +226,7 @@ getData PROC
 
     push	ecx ; save input size before loop
     cld
-  checkDigits:
+checkDigits:
     sub		eax, eax ; clean up eax
     lodsb
     cmp		al, 48
@@ -241,7 +241,7 @@ getData PROC
 	mov		edx, 0
     mov		[edi], edx
     cld
-  parseNum:
+parseNum:
     sub		eax, eax ; clean up eax
     lodsb
     sub		al, 48
@@ -254,18 +254,18 @@ getData PROC
     loop	parseNum
     jmp		allDone
 
-  notDigits:
+notDigits:
     pop		ecx
     printString error_1
 	call	CrLf
     jmp		getInput
 
-  emptyString:
+emptyString:
     printString error_2
 	call 	CrLf
     jmp		getInput
 
-  allDone:
+allDone:
     popad
     pop		ebp
 
@@ -280,8 +280,8 @@ getData ENDP
   ; calculates the factorial for a given number
   ; Receives: a number and a memory location
   ; Returns:  the factorial in the memory location
-  ; Preconditions: the memory location is initialized to 1
-  ; Registers changed:
+  ; Preconditions: number is a positive integer
+  ; Registers changed: ebp, esp, eax, esi, edi, ebx
 
 ;---------------------------------------------------------
 
