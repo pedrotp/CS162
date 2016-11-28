@@ -18,10 +18,19 @@ input_size equ 10
 
 printString MACRO buffer
 
-	push edx
-	mov edx, OFFSET buffer
-	call WriteString
-	pop edx
+push 	edx
+mov 	edx, OFFSET buffer
+call 	WriteString
+pop 	edx
+
+ENDM
+
+printDec MACRO integer
+
+push 	eax
+mov 	eax, integer
+call 	WriteDec
+pop 	eax
 
 ENDM
 
@@ -31,7 +40,6 @@ ENDM
 intro_1 BYTE "Hi, my name is Pedro Torres Picon", 0
 intro_2 BYTE "This program is called Combinations Quizzer", 0
 ec_1 BYTE "**EXTRA CREDIT: Each problem is numbered, score is kept", 0
-ec_2 BYTE "**EXTRA CREDIT: Factorials are computed in the floating point unit", 0
 instructions BYTE "I will ask you to calculate the number of combinations of r items taken from a set of n items. You give me your best guess, and I'll let you know if you're right.", 0
 title_1 BYTE "Problem ", 0
 title_2 BYTE ": ", 0
@@ -45,15 +53,13 @@ result_2 BYTE " combinations of ", 0
 result_3 BYTE " items in a set of ", 0
 error_1	BYTE "Whoops! Input must be an unsigned positive integer. Please try again.", 0
 error_2 BYTE "Hm, looks like you entered an empty string. Please try again.", 0
-prompt_again BYTE "Would you like another problem? (y/n)", 0
+prompt_again BYTE "Would you like another problem? (y/n) ", 0
 error_3 BYTE "Uh oh, I don't know what that means. Please respond with y or n.", 0
 score_1 BYTE "************ FINAL SCORE ************", 0
 score_2 BYTE "  RIGHT ANSWERS: ", 0
 score_3 BYTE "  WRONG ANSWERS: ", 0
 score_4 BYTE "*************************************", 0
 good_bye BYTE "That's all for now. Until next time! Good bye", 0
-
-space BYTE " ", 0
 
 problem_num DWORD 0
 set_min DWORD 3
@@ -63,7 +69,8 @@ subset_size DWORD ? ; r
 input BYTE input_size DUP(?) ; the user's raw string input
 answer DWORD ? ; the user's answer
 result DWORD ? ; the actual result
-score DWORD 0
+num_right DWORD 0
+num_wrong DWORD 0
 play_again DWORD 1
 
 .code
@@ -82,27 +89,42 @@ play_again DWORD 1
 
 main PROC
 
-	call  Randomize ; seed for random numbers
-	call  intro
+call  Randomize ; seed for random numbers
+call  intro
 
-	; quizLoop:
-	push	set_max
-	push	set_min
-    push  OFFSET problem_num
-    push  OFFSET set_size
-    push  OFFSET subset_size
-    call  showProblem
+quizLoop:
+push	set_max
+push	set_min
+push  OFFSET problem_num
+push  OFFSET set_size
+push  OFFSET subset_size
+call  showProblem
 
-    push  OFFSET answer
-    push  input_size
-    push  OFFSET input
-    call  getData
+push  OFFSET answer
+push  input_size
+push  OFFSET input
+call  getData
 
-    ; cmp   play_again, 0
-    ; jne   quizLoop
+push	OFFSET result
+push	set_size
+push	subset_size
+call	combinations
 
-	call  farewell
-	exit	; exit to operating system
+push 	OFFSET input
+push	OFFSET play_again
+push 	OFFSET num_right
+push 	OFFSET num_wrong
+push 	set_size
+push	subset_size
+push 	result
+push	answer
+call	showResults
+
+cmp   play_again, 0
+jne   quizLoop
+
+call  farewell
+exit	; exit to operating system
 
 main ENDP
 
@@ -121,24 +143,24 @@ main ENDP
 
 intro PROC
 
-    printString intro_1
-	call	CrLf
+printString intro_1
+call	CrLf
 
-	printString intro_2
-	call	CrLf
+printString intro_2
+call	CrLf
 
-	printString ec_1
-	call	CrLf
+printString ec_1
+call	CrLf
 
-	printString ec_2
-	call	CrLf
-	call	CrLf
+printString ec_2
+call	CrLf
+call	CrLf
 
-    printString instructions
-	call	CrLf
-	call 	CrLf
+printString instructions
+call	CrLf
+call 	CrLf
 
-	ret
+ret
 
 intro ENDP
 
@@ -157,42 +179,42 @@ intro ENDP
 
 showProblem PROC
 
-    push	ebp
-    mov		ebp, esp
-    pushad
+push	ebp
+mov		ebp, esp
+pushad
 
-    mov		eax, [ebp+24]
-    sub		eax, [ebp+20]
-    call	RandomRange
-    add		eax, [ebp+20]
-    mov		[ebp+12], eax ; set size
+mov		eax, [ebp+24]
+sub		eax, [ebp+20]
+call	RandomRange
+add		eax, [ebp+20]
+mov		[ebp+12], eax ; set size
 
-    call	RandomRange
-    inc		eax
-    mov		[ebp+8], eax ; subset size
+call	RandomRange
+inc		eax
+mov		[ebp+8], eax ; subset size
 
-    printString title_1
-	mov		esi, [ebp+16]
-	mov		eax, [esi]
-	inc		eax
-    call	WriteDec
-	mov		[esi], eax
-    printString title_2
-    call 	CrLf
+printString title_1
+mov		esi, [ebp+16]
+mov		eax, [esi]
+inc		eax
+call	WriteDec
+mov		[esi], eax
+printString title_2
+call 	CrLf
 
-    printString prompt_1
-    mov		eax, [ebp+8]
-    call	WriteDec
-    printString prompt_2
-    mov		eax, [ebp+12]
-	call	WriteDec
-    printString prompt_3
-    call 	CrLf
+printString prompt_1
+mov		eax, [ebp+8]
+call	WriteDec
+printString prompt_2
+mov		eax, [ebp+12]
+call	WriteDec
+printString prompt_3
+call 	CrLf
 
-    popad
-    pop		ebp
-	
-	ret		20
+popad
+pop		ebp
+
+ret		20
 
 showProblem ENDP
 
@@ -210,68 +232,126 @@ showProblem ENDP
 
 getData PROC
 
-    push	ebp
-    mov		ebp, esp
-	pushad
+push	ebp
+mov		ebp, esp
+pushad
 
 getInput:
-    mov		edx, [ebp+8]
-    mov		ecx, [ebp+12]
-    call	ReadString
-    cmp		eax, 0
-    je		emptyString
+mov		edx, [ebp+8]
+mov		ecx, [ebp+12]
+call	ReadString
+cmp		eax, 0
+je		emptyString
 
-    mov		ecx, eax
-    mov		esi, [ebp+8]
+mov		ecx, eax
+mov		esi, [ebp+8]
 
-    push	ecx ; save input size before loop
-    cld
+push	ecx ; save input size before loop
+cld
 checkDigits:
-    sub		eax, eax ; clean up eax
-    lodsb
-    cmp		al, 48
-    jb		notDigits
-    cmp		al, 57
-    ja		notDigits
-    loop	checkDigits
+sub		eax, eax ; clean up eax
+lodsb
+cmp		al, 48
+jb		notDigits
+cmp		al, 57
+ja		notDigits
+loop	checkDigits
 
-    pop		ecx
-    mov		esi, [ebp+8]
-    mov		edi, [ebp+16]
-	mov		edx, 0
-    mov		[edi], edx
-    cld
+pop		ecx
+mov		esi, [ebp+8]
+mov		edi, [ebp+16]
+mov		edx, 0
+mov		[edi], edx
+cld
 parseNum:
-    sub		eax, eax ; clean up eax
-    lodsb
-    sub		al, 48
-    mov		ebx, eax
-    mov		eax, [edi]
-    mov		edx, 10
-    mul		edx
-    add		eax, ebx
-    mov		[edi], eax
-    loop	parseNum
-    jmp		allDone
+sub		eax, eax ; clean up eax
+lodsb
+sub		al, 48
+mov		ebx, eax
+mov		eax, [edi]
+mov		edx, 10
+mul		edx
+add		eax, ebx
+mov		[edi], eax
+loop	parseNum
+jmp		allDone
 
 notDigits:
-    pop		ecx
-    printString error_1
-	call	CrLf
-    jmp		getInput
+pop		ecx
+printString error_1
+call	CrLf
+jmp		getInput
 
 emptyString:
-    printString error_2
-	call 	CrLf
-    jmp		getInput
+printString error_2
+call 	CrLf
+jmp		getInput
 
 allDone:
-    popad
-    pop		ebp
+popad
+pop		ebp
 
-  	ret		12
+ret		12
 
 getData ENDP
+
+;---------------------------------------------------------
+
+  ; combinations
+
+  ; calculates the factorial for a given number
+  ; Receives: a number and a memory location
+  ; Returns:  the factorial in the memory location
+  ; Preconditions: number is a positive integer
+  ; Registers changed: ebp, esp, eax, esi, edi, ebx
+
+;---------------------------------------------------------
+
+combinations PROC
+
+push 		ebp
+mov 		ebp, esp
+sub 		esp, 12
+pushad
+
+mov			ebx, [ebp+8] ; r in ebx
+mov			eax, [ebp+12] ; n in eax
+
+mov			edi, ebp
+sub			edi, 4
+push		edi
+push		eax
+call		factorial ; n! in ebp-4
+
+mov			edi, ebp
+sub			edi, 8
+push		edi
+push		ebx
+call		factorial ; r! in ebp-8
+
+mov			edi, ebp
+sub			edi, 12
+push		edi
+sub			eax, ebx
+push		eax
+call		factorial ; (n-r)! in ebp-12
+
+mov			eax, [ebp-8]
+mov 		ebx, [ebp-12]
+mul 		ebx
+mov 		ecx, eax ; r!(n-r)! in ecx
+
+mov 		eax, [ebp-4]
+div			ecx
+mov			[ebp+16], eax
+
+popad
+mov			esp, ebp
+pop 		ebp
+
+ret			12
+
+combinations ENDP
 
 ;---------------------------------------------------------
 
@@ -287,39 +367,134 @@ getData ENDP
 
 factorial PROC
 
-	push 		ebp
-	mov 		ebp, esp
-	sub 		esp, 4
-	pushad
+push 		ebp
+mov 		ebp, esp
+sub 		esp, 4
+pushad
 
-	mov			eax, [ebp+8]
-	mov			esi, [ebp+12]
-	cmp 		eax, 1
-	jbe 		oneOrBelow
+mov			eax, [ebp+8]
+mov			esi, [ebp+12]
+cmp 		eax, 1
+jbe 		oneOrBelow
 
-	dec			eax
-	mov			edi, ebp
-	sub			edi, 4
-	push 		edi
-	push 		eax
-	call 		factorial
-	inc			eax
-	mov			ebx, [ebp-4]
-	mul			ebx
-	mov			DWORD PTR [esi], eax
-	jmp			endFactorial
+dec			eax
+mov			edi, ebp
+sub			edi, 4
+push 		edi
+push 		eax
+call 		factorial
+inc			eax
+mov			ebx, [ebp-4]
+mul			ebx
+mov			DWORD PTR [esi], eax
+jmp			endFactorial
 
 oneOrBelow:
-	mov			DWORD PTR [esi], 1
+mov			DWORD PTR [esi], 1
 
 endFactorial:
-	popad
-	mov			esp, ebp
-	pop 		ebp
+popad
+mov			esp, ebp
+pop 		ebp
 
-	ret			8
+ret			8
 
 factorial ENDP
+
+;---------------------------------------------------------
+
+  ; showResults
+
+  ; Checks whether user was right or wrong, displays results,
+  ; updates the score and asks the user whether they want to
+	; play again or not
+  ; Receives: answer, result, set_size and subset_size by
+	; value, score and play_again by reference
+  ; Returns: 1 or 0 in play_again
+  ; Preconditions: all inputs are valid
+  ; Registers changed:
+
+;---------------------------------------------------------
+
+; push 	OFFSET input +36
+; push	OFFSET play_again +32
+; push 	OFFSET num_right +28
+; push 	OFFSET num_wrong +24
+; push 	set_size +20
+; push	subset_size +16
+; push 	result +12
+; push	answer +8
+; call	showResults
+
+showResults PROC
+
+push	ebp
+mov		ebp, esp
+pushad
+
+call	CrLf
+mov 	eax, [ebp+8] ; answer in eax
+mov 	ebx, [ebp+12] ; result in ebx
+cmp		eax, ebx
+jne		incorrect
+
+correct:
+printString correct
+call	CrLf
+add		[ebp+28], 1
+jmp		printResult
+
+incorrect:
+printString incorrect
+call	CrLf
+add		[ebp+24], 1
+
+printResult:
+printString result_1
+printDec 	ebx
+printString result_2
+printDec 	[ebp+16]
+printString	result_3
+printDec	[ebp+20]
+call	CrLf
+call 	CrLf
+
+promptLoop:
+printString prompt_again
+mov		edx, [ebp+36]
+mov		ecx, 5
+call	ReadString
+cmp		eax, 1
+jne		inputError ; error if the users inputs more than 1 character
+
+mov 	esi, edx
+sub		eax, eax ; clean up eax
+lodsb
+cmp		al, 121
+je		endResults
+cmp		al, 89
+je		endResults
+cmp		al, 110
+je 		inputN
+cmp		al, 78
+je 		inputN
+
+inputError:
+call	CrLf
+printString error_3
+call 	CrLf
+jmp 	promptLoop
+
+inputN:
+mov		[ebp+32], 0
+
+endResults:
+popad
+pop		ebp
+
+ret		32
+
+showResults ENDP
 
 ;---------------------------------------------------------
 
@@ -335,11 +510,11 @@ factorial ENDP
 
 farewell PROC
 
-	call	CrLf
-	printString good_bye
-	call	CrLf
+call	CrLf
+printString good_bye
+call	CrLf
 
-	ret
+ret
 
 farewell ENDP
 
