@@ -15,8 +15,6 @@ INCLUDE Irvine32.inc
 ; constant definitions
 
 input_size equ 10
-set_min equ 3
-set_max equ 13
 
 printString MACRO buffer
 
@@ -41,14 +39,14 @@ prompt_1 BYTE "How many combinations of ", 0
 prompt_2 BYTE " items, taken from a set of ", 0
 prompt_3 BYTE " items, are there?", 0
 correct BYTE "CORRECT! You genius, you.", 0
-incorrect BYTE "Sorry, that is incorrect. Sad face."
+incorrect BYTE "Sorry, that is incorrect. Sad face.", 0
 result_1 BYTE "There are ", 0
 result_2 BYTE " combinations of ", 0
 result_3 BYTE " items in a set of ", 0
 error_1	BYTE "Whoops! Input must be an unsigned positive integer. Please try again.", 0
 error_2 BYTE "Hm, looks like you entered an empty string. Please try again.", 0
 prompt_again BYTE "Would you like another problem? (y/n)", 0
-error_3 BYTE "Uh oh, I don't know what that means", 0
+error_3 BYTE "Uh oh, I don't know what that means. Please respond with y or n.", 0
 score_1 BYTE "************ FINAL SCORE ************", 0
 score_2 BYTE "  RIGHT ANSWERS: ", 0
 score_3 BYTE "  WRONG ANSWERS: ", 0
@@ -58,6 +56,8 @@ good_bye BYTE "That's all for now. Until next time! Good bye", 0
 space BYTE " ", 0
 
 problem_num DWORD 0
+set_min DWORD 3
+set_max DWORD 13
 set_size DWORD ? ; n
 subset_size DWORD ? ; r
 input BYTE input_size DUP(?) ; the user's raw string input
@@ -86,6 +86,8 @@ main PROC
 	call  intro
 
 	; quizLoop:
+		push	set_max
+		push	set_min
     push  OFFSET problem_num
     push  OFFSET set_size
     push  OFFSET subset_size
@@ -120,23 +122,23 @@ main ENDP
 intro PROC
 
     printString intro_1
-	call	CrLf
+		call	CrLf
 
-	printString intro_2
-	call	CrLf
+		printString intro_2
+		call	CrLf
 
-	printString ec_1
-	call	CrLf
+		printString ec_1
+		call	CrLf
 
-	printString ec_2
-	call	CrLf
-	call	CrLf
+		printString ec_2
+		call	CrLf
+		call	CrLf
 
     printString instructions
-	call	CrLf
-	call 	CrLf
+		call	CrLf
+		call 	CrLf
 
-	ret
+		ret
 
 intro ENDP
 
@@ -159,10 +161,10 @@ showProblem PROC
     mov		ebp, esp
     pushad
 
-    mov		eax, set_max
-    sub		eax, set_min
+    mov		eax, [ebp+24]
+    sub		eax, [ebp+20]
     call	RandomRange
-    add		eax, set_min
+    add		eax, [ebp+20]
     mov		[ebp+12], eax ; set size
 
     call	RandomRange
@@ -170,11 +172,11 @@ showProblem PROC
     mov		[ebp+8], eax ; subset size
 
     printString title_1
-	mov		esi, [ebp+16]
-	mov		eax, [esi]
-	inc		eax
+		mov		esi, [ebp+16]
+		mov		eax, [esi]
+		inc		eax
     call	WriteDec
-	mov		[esi], eax
+		mov		[esi], eax
     printString title_2
     call 	CrLf
 
@@ -183,14 +185,14 @@ showProblem PROC
     call	WriteDec
     printString prompt_2
     mov		eax, [ebp+12]
-	call	WriteDec
+		call	WriteDec
     printString prompt_3
     call 	CrLf
 
     popad
     pop		ebp
 
-	ret		8
+		ret		20
 
 showProblem ENDP
 
@@ -236,7 +238,7 @@ getData PROC
     pop		ecx
     mov		esi, [ebp+8]
     mov		edi, [ebp+16]
-	mov		edx, 0
+		mov		edx, 0
     mov		[edi], edx
     cld
   parseNum:
@@ -255,21 +257,64 @@ getData PROC
   notDigits:
     pop		ecx
     printString error_1
+		call	CrLf
     jmp		getInput
 
   emptyString:
     printString error_2
+		call 	CrLf
     jmp		getInput
 
   allDone:
-    call	WriteDec
-
     popad
     pop		ebp
 
   	ret		12
 
 getData ENDP
+
+;---------------------------------------------------------
+
+  ; factorial
+
+  ; calculates the factorial for a given number
+  ; Receives: a number and a memory location
+  ; Returns:  the factorial in the memory location
+  ; Preconditions: the memory location is initialized to 1
+  ; Registers changed:
+
+;---------------------------------------------------------
+
+factorial PROC
+
+	push 		ebp
+	mov 		ebp, esp
+	pushad
+	sub 		esp, 4
+
+	mov			eax, [ebp+8]
+	mov			esi, [ebp+12]
+	cmp 		eax, 1
+	jbe 		oneOrBelow
+
+	dec			eax
+	push 		OFFSET [ebp-4]
+	push 		eax
+	call 		factorial
+	inc			eax
+	mul			[ebp-4]
+	mov			[esi], eax
+
+oneOrBelow:
+	mov			[esi], 1
+
+endFactorial:
+	popad
+	pop 		ebp
+
+	ret			8
+
+factorial ENDP
 
 ;---------------------------------------------------------
 
