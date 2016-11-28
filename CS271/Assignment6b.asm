@@ -14,9 +14,11 @@ INCLUDE Irvine32.inc
 
 ; constant definitions
 
-input_size equ 30
+input_size equ 10
+set_min equ 3
+set_max equ 13
 
-macStr MACRO buffer
+printString MACRO buffer
 
    push edx
 	 mov edx, OFFSET buffer
@@ -32,7 +34,6 @@ intro_1 BYTE "Hi, my name is Pedro Torres Picon", 0
 intro_2 BYTE "This program is called Combinations Quizzer", 0
 ec_1 BYTE "**EXTRA CREDIT: Each problem is numbered, score is kept", 0
 ec_2 BYTE "**EXTRA CREDIT: Factorials are computed in the floating point unit", 0
-
 instructions BYTE "I will ask you to calculate the number of combinations of r items taken from a set of n items. You give me your best guess, and I'll let you know if you're right.", 0
 title_1 BYTE "Problem ", 0
 title_2 BYTE ": ", 0
@@ -44,9 +45,10 @@ incorrect BYTE "Sorry, that is incorrect. Sad face."
 result_1 BYTE "There are ", 0
 result_2 BYTE " combinations of ", 0
 result_3 BYTE " items in a set of ", 0
-error_1	 BYTE "Whoops! Input must be a positive integer. Please try again.", 0
-prompt_4 BYTE "Would you like another problem? (y/n)", 0
-error_2 BYTE "Uh oh, I don't know what that means", 0
+error_1	BYTE "Whoops! Input must be an unsigned positive integer. Please try again.", 0
+error_2 BYTE "Hm, looks like you entered an empty string. Please try again.", 0
+prompt_again BYTE "Would you like another problem? (y/n)", 0
+error_3 BYTE "Uh oh, I don't know what that means", 0
 score_1 BYTE "************ FINAL SCORE ************", 0
 score_2 BYTE "  RIGHT ANSWERS: ", 0
 score_3 BYTE "  WRONG ANSWERS: ", 0
@@ -55,11 +57,14 @@ good_bye BYTE "That's all for now. Until next time! Good bye", 0
 
 space BYTE " ", 0
 
+problem_num DWORD 0
 set_size DWORD ? ; n
 subset_size DWORD ? ; r
 input BYTE input_size DUP(?) ; the user's raw string input
 answer DWORD ? ; the user's answer
 result DWORD ? ; the actual result
+score DWORD 0
+play_again DWORD 1
 
 .code
 
@@ -77,12 +82,24 @@ result DWORD ? ; the actual result
 
 main PROC
 
-		; call Randomize ; needed?
+		call  Randomize ; seed for random numbers
+		call  intro
 
-		call intro
+  ; quizLoop:
+    push  OFFSET problem_num
+    push  OFFSET set_size
+    push  OFFSET subset_size
+    call  showProblem
 
-		call farewell
+    push  OFFSET answer
+    push  input_size
+    push  OFFSET input
+    call  getData
 
+    ; cmp   play_again, 0
+    ; jne   quizLoop
+
+		call  farewell
 		exit	; exit to operating system
 
 main ENDP
@@ -93,41 +110,31 @@ main ENDP
 
   ; Displays introductory message, greets the user, gives
   ; instructions to use the program
-  ; Receives: offset of 'user_name' variable
-  ; Returns: user's name in 'user_name' variable
+  ; Receives: none
+  ; Returns: none
   ; Preconditions: none
-  ; Registers changed: edx, ecx, eax
+  ; Registers changed: edx
 
 ;---------------------------------------------------------
 
 intro PROC
 
-		pushad
-
-		mov		edx, OFFSET intro_1
-		call	WriteString
+    printString intro_1
 		call	CrLf
 
-		mov		edx, OFFSET intro_2
-		call	WriteString
+		printString intro_2
 		call	CrLf
 
-		mov		edx, OFFSET ec_1
-		call	WriteString
+		printString ec_1
 		call	CrLf
 
-		mov		edx, OFFSET ec_2
-		call	WriteString
+		printString ec_2
 		call	CrLf
 		call	CrLf
 
-		; instructions
-		mov		edx, OFFSET instructions
-		call	WriteString
+    printString instructions
 		call	CrLf
 		call 	CrLf
-
-		popad
 
 		ret
 
@@ -135,21 +142,147 @@ intro ENDP
 
 ;---------------------------------------------------------
 
+  ; showProblem
+
+  ; Generates two random numbers, displays a new problem
+  ; to the user
+  ; Receives: addresses of set_size and subset_size
+  ; Returns: two random numbers stored in received variables
+  ; Preconditions: Randomize has been called
+  ; Registers changed: ebp, eax, edx
+
+;---------------------------------------------------------
+
+showProblem PROC
+
+    push  ebp
+    mov   ebp, esp
+    pushad
+
+    mov   eax, set_max
+    sub   eax, set_min
+    call  RandomRange
+    add   eax, set_min
+    mov   [ebp+12], eax
+
+    call  RandomRange
+    inc   eax
+    mov   [ebp+8], eax
+
+    printString title_1
+    inc   [ebp+16]
+    mov   eax, [ebp+16]
+    call  WriteDec
+    printString title_2
+    call 	CrLf
+
+    printString prompt_1
+    mov   eax, [ebp+8]
+    call  WriteDec
+    printString prompt_2
+    mov   eax, [ebp+12]
+    printString prompt_3
+    call 	CrLf
+
+    popad
+    pop   ebp
+
+		ret   8
+
+showProblem ENDP
+
+;---------------------------------------------------------
+
+  ; getData
+
+  ; Gets the user's answer from standard input
+  ; Receives: offset of the result variable
+  ; Returns:  validated input in the result variable
+  ; Preconditions:
+  ; Registers changed:
+
+;---------------------------------------------------------
+
+getData PROC
+
+    push  ebp
+    mov   ebp, esp
+    pushad
+
+  getInput:
+    mov   edx, [ebp+8]
+    mov   ecx, [ebp+12]
+    call  ReadString
+    cmp   eax, 0
+    je    emptyString
+
+    mov   ecx, eax
+    mov   esi, [ebp+8]
+
+    push  ecx ; save input size before loop
+    cld
+  checkDigits:
+    sub   eax, eax ; clean up eax
+    lodsb
+    cmp   al, 48
+    jb    notDigits
+    cmp   al, 57
+    ja    notDigits
+    loop  checkDigits
+
+    pop   ecx
+    mov   esi, [ebp+8]
+    mov   edi, [ebp+16]
+    mov   [edi], 0
+    cld
+  parseNum:
+    sub   eax, eax ; clean up eax
+    lodsb
+    sub   al, 48
+    mov   ebx, eax
+    mov   eax, [edi]
+    mov   edx, 10
+    mul   edx
+    add   eax, ebx
+    mov   [edi], eax
+    loop  parseNum
+    jmp   allDone
+
+  notDigits:
+    pop   ecx
+    printString error_1
+    jmp   getInput
+
+  emptyString:
+    printString error_2
+    jmp   getInput
+
+  allDone:
+    call  WriteDec
+
+    popad
+    pop   ebp
+
+  	ret   12
+
+getData ENDP
+
+;---------------------------------------------------------
+
   ; farewell
 
   ; Displays a message to say good bye to the user
-  ; Receives: offset of user_name variable
+  ; Receives: none
   ; Returns:  none
-  ; Preconditions: user's name stored in user_name
-  ; Registers changed: edx, ebp
+  ; Preconditions: none
+  ; Registers changed: edx
 
 ;---------------------------------------------------------
 
 farewell PROC
 
 	call	CrLf
-	mov		edx, OFFSET good_bye
-	call	WriteString
+	printString good_bye
 	call	CrLf
 
 	ret
