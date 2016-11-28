@@ -244,7 +244,7 @@ getInput:
 	mov		ecx, [ebp+12]
 	call	ReadString
 	cmp		eax, 0
-	je		emptyString
+	je		emptyString ; if the string is empty, show an error
 
 	mov		ecx, eax
 	mov		esi, [ebp+8]
@@ -258,7 +258,7 @@ checkDigits:
 	jb		notDigits
 	cmp		al, 57
 	ja		notDigits
-	loop	checkDigits
+	loop	checkDigits ; check if all items are digits
 
 	pop		ecx
 	mov		esi, [ebp+8]
@@ -276,7 +276,7 @@ parseNum:
 	mul		edx
 	add		eax, ebx
 	mov		[edi], eax
-	loop	parseNum
+	loop	parseNum ; parse the number
 	jmp		allDone
 
 notDigits:
@@ -302,10 +302,12 @@ getData ENDP
 
   ; combinations
 
-  ; calculates the factorial for a given number
-  ; Receives: a number and a memory location
-  ; Returns:  the factorial in the memory location
-  ; Preconditions: number is a positive integer
+  ; calculates the number of combinations of a certain
+	; subset size in a set of a give size
+  ; Receives: set_size and subset_size by value, and
+	; result by reference
+  ; Returns:  the number of combinations in result
+  ; Preconditions: subset_size < set_size
   ; Registers changed: ebp, esp, eax, esi, edi, ebx
 
 ;---------------------------------------------------------
@@ -347,7 +349,7 @@ combinations PROC
 	mov 		eax, [ebp-4]
 	div			ecx
 	mov			esi, [ebp+16]
-	mov			[esi], eax
+	mov			[esi], eax ; store the result
 
 	popad
 	mov			esp, ebp
@@ -413,10 +415,10 @@ factorial ENDP
   ; updates the score and asks the user whether they want to
 	; play again or not
   ; Receives: answer, result, set_size and subset_size by
-	; value, score and play_again by reference
+	; value. num_right, num_wrong, input and play_again by ref.
   ; Returns: 1 or 0 in play_again
   ; Preconditions: all inputs are valid
-  ; Registers changed:
+  ; Registers changed: ebp, eax, ebx, esi, ecx, edx
 
 ;---------------------------------------------------------
 
@@ -447,7 +449,7 @@ showResults PROC
 	mov		esi, [ebp+28]
 	mov		ecx, [esi]
 	inc		ecx
-	mov		[esi], ecx
+	mov		[esi], ecx ; increase and update num_right
 	jmp		printResult
 
 incorrectAns:
@@ -456,7 +458,7 @@ incorrectAns:
 	mov		esi, [ebp+24]
 	mov		ecx, [esi]
 	inc		ecx
-	mov		[esi], ecx
+	mov		[esi], ecx ; increase and update num_wrong
 
 printResult:
 	printString result_1
@@ -470,7 +472,7 @@ printResult:
 
 promptLoop:
 	printString prompt_again
-	mov		edx, [ebp+36]
+	mov		edx, [ebp+36] ; offset of the input buffer
 	mov		ecx, 5
 	call	ReadString
 	call	CrLf
@@ -511,10 +513,10 @@ showResults ENDP
   ; farewell
 
   ; Displays a message to say good bye to the user
-  ; Receives: none
+  ; Receives: num_wrong and num_right by value
   ; Returns:  none
   ; Preconditions: none
-  ; Registers changed: edx
+  ; Registers changed: edx, eax
 
 ;---------------------------------------------------------
 
@@ -528,7 +530,7 @@ farewell PROC
 	printString score_2
 	printDec [ebp+12]
 	call	CrLf
-	printString score_3 
+	printString score_3
 	printDec [ebp+8]
 	call	CrLf
 	printString score_4
