@@ -92,23 +92,23 @@ main PROC
 	call	Randomize ; seed for random numbers
 	call	intro
 
-quizLoop:
+quizLoop: ; repeat as long as user wants to
 	push	set_max
 	push	set_min
 	push	OFFSET problem_num
 	push	OFFSET set_size
 	push	OFFSET subset_size
-	call	showProblem
+	call	showProblem ; show user the problem
 
 	push	OFFSET answer
 	push	input_size
 	push	OFFSET input
-	call	getData
+	call	getData ; get answer from the user
 
 	push	OFFSET result
 	push	set_size
 	push	subset_size
-	call	combinations
+	call	combinations ; calculate the result
 
 	push 	OFFSET input
 	push	OFFSET play_again
@@ -118,14 +118,15 @@ quizLoop:
 	push	subset_size
 	push 	result
 	push	answer
-	call	showResults
+	call	showResults ; show the user the result
 
 	cmp		play_again, 0
-	jne		quizLoop
+	jne		quizLoop ; loop if the user has not chosen to quit
 
 	push	num_right
 	push	num_wrong
-	call	farewell
+	call	farewell ; show the user a summary of scores
+
 	exit	; exit to operating system
 
 main ENDP
@@ -184,12 +185,12 @@ showProblem PROC
 
 	mov		eax, [ebp+24]
 	sub		eax, [ebp+20]
-	call	RandomRange
+	call	RandomRange ; generate first random number (n)
 	add		eax, [ebp+20]
 	mov		edi, [ebp+12]
 	mov		[edi], eax ; set size
 
-	call	RandomRange
+	call	RandomRange ; generate second random number (r)
 	inc		eax
 	mov		edi, [ebp+8]
 	mov		[edi], eax ; subset size
@@ -198,7 +199,7 @@ showProblem PROC
 	mov		esi, [ebp+16]
 	mov		eax, [esi]
 	inc		eax
-	call	WriteDec
+	call	WriteDec ; problem numbers for extra credit
 	mov		[esi], eax
 	printString title_2
 	call 	CrLf
@@ -242,23 +243,23 @@ getData PROC
 getInput:
 	mov		edx, [ebp+8]
 	mov		ecx, [ebp+12]
-	call	ReadString
+	call	ReadString ; get input in raw string form
 	cmp		eax, 0
-	je		emptyString ; if the string is empty, show an error
+	je		emptyString
 
 	mov		ecx, eax
 	mov		esi, [ebp+8]
 
 	push	ecx ; save input size before loop
 	cld
-checkDigits:
+checkDigits: ; check if all items are digits
 	sub		eax, eax ; clean up eax
 	lodsb
 	cmp		al, 48
 	jb		notDigits
 	cmp		al, 57
 	ja		notDigits
-	loop	checkDigits ; check if all items are digits
+	loop	checkDigits
 
 	pop		ecx
 	mov		esi, [ebp+8]
@@ -266,7 +267,7 @@ checkDigits:
 	mov		edx, 0
 	mov		[edi], edx
 	cld
-parseNum:
+parseNum: ; if all bytes are digits, parse the whole number
 	sub		eax, eax ; clean up eax
 	lodsb
 	sub		al, 48
@@ -276,16 +277,16 @@ parseNum:
 	mul		edx
 	add		eax, ebx
 	mov		[edi], eax
-	loop	parseNum ; parse the number
+	loop	parseNum
 	jmp		allDone
 
-notDigits:
+notDigits: ; if non-digits are found, show an error
 	pop		ecx
 	printString error_1
 	call	CrLf
 	jmp		getInput
 
-emptyString:
+emptyString: ; if the string is empty, show an error
 	printString error_2
 	call 	CrLf
 	jmp		getInput
@@ -375,24 +376,25 @@ factorial PROC
 
 	push 		ebp
 	mov 		ebp, esp
-	sub 		esp, 4
+	sub 		esp, 4 ; create a local DWORD variable
 	pushad
 
 	mov			eax, [ebp+8]
 	mov			esi, [ebp+12]
 	cmp 		eax, 1
-	jbe 		oneOrBelow
+	jbe 		oneOrBelow ; if the number provided is 1 or 0, return 1
 
+	; otherwise, multiply the number (n) by a recursive call to factorial of n - 1
 	dec			eax
 	mov			edi, ebp
 	sub			edi, 4
-	push 		edi
-	push 		eax
+	push 		edi ; pass the address of the local variable to the recursive factorial call
+	push 		eax ; pass n - 1 to the recursive call
 	call 		factorial
 	inc			eax
 	mov			ebx, [ebp-4]
 	mul			ebx
-	mov			DWORD PTR [esi], eax
+	mov			DWORD PTR [esi], eax ; store result in provided mem location
 	jmp			endFactorial
 
 oneOrBelow:
@@ -420,17 +422,16 @@ factorial ENDP
   ; Preconditions: all inputs are valid
   ; Registers changed: ebp, eax, ebx, esi, ecx, edx
 
-;---------------------------------------------------------
+	; [ebp+36]	OFFSET input
+	; [ebp+32]	OFFSET play_again
+	; [ebp+28] 	OFFSET num_right
+	; [ebp+24] 	OFFSET num_wrong
+	; [ebp+20] 	set_size
+	; [ebp+16]	subset_size
+	; [ebp+12]	result
+	; [ebp+8]		answer
 
-; push 	OFFSET input +36
-; push	OFFSET play_again +32
-; push 	OFFSET num_right +28
-; push 	OFFSET num_wrong +24
-; push 	set_size +20
-; push	subset_size +16
-; push 	result +12
-; push	answer +8
-; call	showResults
+;---------------------------------------------------------
 
 showResults PROC
 
@@ -528,16 +529,16 @@ farewell PROC
 	printString score_1
 	call	CrLf
 	printString score_2
-	printDec [ebp+12]
+	printDec [ebp+12] ; show num right
 	call	CrLf
 	printString score_3
-	printDec [ebp+8]
+	printDec [ebp+8] ; show num wrong
 	call	CrLf
 	printString score_4
 	call	CrLf
 	call	CrLf
 
-	printString good_bye
+	printString good_bye ; say good bye
 	call	CrLf
 
 	pop		ebp
