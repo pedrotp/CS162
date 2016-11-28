@@ -212,7 +212,7 @@ getData PROC
 
     push	ebp
     mov		ebp, esp
-    pushad
+	pushad
 
   getInput:
     mov		edx, [ebp+8]
@@ -238,7 +238,7 @@ getData PROC
     pop		ecx
     mov		esi, [ebp+8]
     mov		edi, [ebp+16]
-		mov		edx, 0
+	mov		edx, 0
     mov		[edi], edx
     cld
   parseNum:
@@ -257,12 +257,12 @@ getData PROC
   notDigits:
     pop		ecx
     printString error_1
-		call	CrLf
+	call	CrLf
     jmp		getInput
 
   emptyString:
     printString error_2
-		call 	CrLf
+	call 	CrLf
     jmp		getInput
 
   allDone:
@@ -289,8 +289,8 @@ factorial PROC
 
 	push 		ebp
 	mov 		ebp, esp
-	pushad
 	sub 		esp, 4
+	pushad
 
 	mov			eax, [ebp+8]
 	mov			esi, [ebp+12]
@@ -298,18 +298,23 @@ factorial PROC
 	jbe 		oneOrBelow
 
 	dec			eax
-	push 		OFFSET [ebp-4]
+	mov			edi, ebp
+	sub			edi, 4
+	push 		edi
 	push 		eax
 	call 		factorial
 	inc			eax
-	mul			[ebp-4]
-	mov			[esi], eax
+	mov			ebx, [ebp-4]
+	mul			ebx
+	mov			DWORD PTR [esi], eax
+	jmp			endFactorial
 
 oneOrBelow:
-	mov			[esi], 1
+	mov			DWORD PTR [esi], 1
 
 endFactorial:
 	popad
+	mov			esp, ebp
 	pop 		ebp
 
 	ret			8
