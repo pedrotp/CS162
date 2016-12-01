@@ -18,7 +18,7 @@ int FibonacciNR::Fibonacci(const int &n) {
    int first =0;
    int second=1;
    int counter=2;
-   while(counter &lt; n)
+   while(counter < n)
    {
        int temp=second;
        second=first+second;
@@ -33,5 +33,5 @@ int FibonacciNR::Fibonacci(const int &n) {
 
 void FibonacciNR::PrintFibonacci() {
    const int result = Fibonacci(*n_);
-   std::cout&lt;&lt;*n_&lt;&lt;"th fibonacci Number:"&lt;&lt;result&lt;&lt;std::endl;
+  std::cout << *n_ << "th fibonaci number: " << result << std::endl;
 }

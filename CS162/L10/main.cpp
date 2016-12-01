@@ -1,37 +1,40 @@
 #include <iostream>
 #include <stdlib.h>
-#include "FibonacciR.h"
-#include "FibonacciNR.h"
+#include <ctime>
+#include "FibonacciR.hpp"
+#include "FibonacciNR.hpp"
 using namespace std;
 
-void Usage(){
-   cout<<"Correct Usage:"<<endl;
-   cout<<"./Fibonacci [n]"<<endl;
-}
+int main() {
 
-int main(int argc, char** args) {
-   try{
-       const char* input; //Note: char by default initializes to '\0'
-       if(args[1]!=0)
-       {
-           cout<<"1st passed arguement: '"<<args[1]<<"'"<<endl;
-           input= args[1];
-       }
-       int n= atoi(input);
-       cout<<"Finding '"<<n<<"'th "<<"fibonacci number...."<<endl;
-       cout<<"Calling Recursive Fibonacci implementation"<<endl;
-       FibonacciR fr(n);
-       fr.PrintFibonacci();
-       cout<<"Calling Non-Recursive Fibonacci implementation"<<endl;
-       FibonacciNR fnr(n);
-       fnr.PrintFibonacci();
-       cout << "Done!!!!" << endl;
-       return 0;
-   }
-   catch(...)
-   {
-       cout<<"Oops an error occured! Please check usage"<<endl;
-       Usage();
-       return 1;
-   }
+int n = 10;
+
+  while (n <= 100) {
+
+    clock_t t1, t2;
+
+    cout << "Finding " << n << "th fibonacci number....\n" << endl;
+
+    // cout << "Calling Recursive Fibonacci implementation" << endl;
+    // FibonacciR fibr(n);
+    // t1 = clock();
+    // fibr.PrintFibonacci();
+    // t1 = clock() - t1;
+    // cout << "Time to execute: " << t1 << " clicks (" << t1/CLOCKS_PER_SEC << " seconds)\n" << endl;
+
+    cout << "Calling Non-Recursive Fibonacci implementation" << endl;
+    FibonacciNR fibnr(n);
+    t2 = clock();
+    fibnr.PrintFibonacci();
+    t2 = clock() - t2;
+    cout << "Time to execute: " << t2 << " clicks (" << t2/CLOCKS_PER_SEC << " seconds)\n" << endl;
+
+    n += 10;
+
+  }
+
+    cout << "\nThat's all folks!\n" << endl;
+
+  return 0;
+
 }

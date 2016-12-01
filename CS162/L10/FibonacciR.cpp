@@ -21,5 +21,5 @@ int FibonacciR::Fibonacci(const int &n){
 
 void FibonacciR::PrintFibonacci(){
 	int FibonaciNum=Fibonacci(*n_);
-	std::cout<<*n_<<"th fibonaci number: "<<FibonaciNum<<std::endl;
+	std::cout << *n_ << "th fibonaci number: "<< FibonaciNum << std::endl;
 }
