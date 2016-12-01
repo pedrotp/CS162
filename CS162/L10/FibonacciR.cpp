@@ -5,13 +5,13 @@
 FibonacciR::FibonacciR() {
 }
 
-FibonacciR::FibonacciR(const int &n):n_(&n){
+FibonacciR::FibonacciR(const unsigned long long &n):n_(&n){
 }
 
 FibonacciR::~FibonacciR() {
 }
 
-int FibonacciR::Fibonacci(const int &n){
+unsigned long long FibonacciR::Fibonacci(const unsigned long long &n){
 	if(n==0)
 		return 0;
 	else if(n==1)
@@ -20,6 +20,6 @@ int FibonacciR::Fibonacci(const int &n){
 }
 
 void FibonacciR::PrintFibonacci(){
-	int FibonaciNum=Fibonacci(*n_);
+	unsigned long long FibonaciNum=Fibonacci(*n_);
 	std::cout << *n_ << "th fibonaci number: "<< FibonaciNum << std::endl;
 }

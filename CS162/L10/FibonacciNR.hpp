@@ -6,13 +6,13 @@
 
   class FibonacciNR {
   public:
-     FibonacciNR(const int &n);
+     FibonacciNR(const unsigned long long &n);
      virtual ~FibonacciNR();
      void PrintFibonacci();
   private:
      FibonacciNR();
-     int Fibonacci(const int &n);
-     const int* n_;
+     unsigned long long Fibonacci(const unsigned long long &n);
+     const unsigned long long* n_;
   };
-  
+
 #endif

@@ -6,11 +6,11 @@ class FibonacciR {
 
 private:
    FibonacciR();
-   int Fibonacci(const int &n);
-   const int *n_;
+   unsigned long long Fibonacci(const unsigned long long &n);
+   const unsigned long long *n_;
 
 public:
-   FibonacciR(const int &n);
+   FibonacciR(const unsigned long long &n);
    virtual ~FibonacciR();
    void PrintFibonacci();
 
