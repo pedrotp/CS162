@@ -1,3 +1,19 @@
+/*********************************************************************
+
+** Program Filename: FibonacciNR.cpp
+
+** Author: Pedro Torres-Picon
+
+** Date: 12/05/2016
+
+** Description: Lab 10 - This is the implementation file for a FibonacciNR
+class, which executes a non-recursive function which uses iteration
+to calculate fibonacci numbers. This file the source code for all the
+functions in the class.
+
+** Source: https://www.codeproject.com/tips/109443/fibonacci-recursive-and-non-recursive-c
+
+*********************************************************************/
 
 #include "FibonacciNR.hpp"
 #include <iostream>
