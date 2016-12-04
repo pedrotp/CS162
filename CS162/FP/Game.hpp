@@ -16,21 +16,28 @@ function declarations.
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include <iostream>
+#include <map>
+#include <string>
+
 // Defines the interface of the Game class
 class Game
 {
-
   protected:
     struct Player {
-
-
-      Player(int val) { // constructor
-
+      std::string name;
+      std::map<std::string, bool> goals;
+      std::set<std::string> inventory;
+      Player(std::string n) { // constructor
+        name = n;
+        license = false;
       }
     };
+    Player *p;
 
   public:
     Game();
+    ~Game();
     void play();
 
 };

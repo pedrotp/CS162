@@ -16,7 +16,6 @@ variable and function declarations.
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
-#include <iostream>
 #include "Game.hpp"
 
 // Defines the interface of the Room class
