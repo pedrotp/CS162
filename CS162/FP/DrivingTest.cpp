@@ -1,6 +1,6 @@
 /*********************************************************************
 
-** Program Filename: Space.hpp
+** Program Filename: DrivingTest.hpp
 
 ** Author: Pedro Torres-Picon
 
@@ -8,17 +8,17 @@
 
 ** Description: Final Project - Part of a single-player game depicting
 the challenge of navigating the DMV. This is the implementation file
-for the Space abstract base class, which includes the source code for
-all the functions in the class.
+for the DrivingTest class, which is derived from the Room class. This
+file includes the source code for all the functions in the class.
 
 *********************************************************************/
 
-#include "Space.hpp"
+#include "DrivingTest.hpp"
 
-Space::Space() {
+DrivingTest::DrivingTest(Player* p1) : Room(p1){
 
 };
 
-Space::~Space() {
+Room* DrivingTest::play() {
 
 };

@@ -1,6 +1,6 @@
 /*********************************************************************
 
-** Program Filename: Space.hpp
+** Program Filename: WrittenTest.hpp
 
 ** Author: Pedro Torres-Picon
 
@@ -8,23 +8,24 @@
 
 ** Description: Final Project - Part of a single-player game depicting
 the challenge of navigating the DMV. This is the interface file for
-the Space abstract base class, which includes some of the class,
-variable and function declarations.
+the WrittenTest class, which is a subclass of Room. This file includes
+all the class, variable and function declarations.
 
 *********************************************************************/
 
-#ifndef SPACE_HPP
-#define SPACE_HPP
+#ifndef WRITTENTEST_HPP
+#define WRITTENTEST_HPP
 
-// Defines the interface of the Space class
-class Space
+#include "Room.hpp"
+
+// Defines the interface of the WrittenTest class
+class WrittenTest : public Room
 {
-  protected:
-
 
   public:
-    Space();
-    ~Space();
+    WrittenTest(Player* p1);
+    Room* play();
+
 };
 
 #endif
