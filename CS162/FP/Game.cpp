@@ -48,7 +48,7 @@ Game::~Game() {
 
 void Game::showHeader() {
   std::cout << "\033[2J\033[1;1H";
-  std::cout << "The current time is 5:" << DMVtime << " PM" << std::endl;
+  std::cout << "The current time is 5:" << std::setw(2) << std::setfill('0') << DMVtime << " PM" << std::endl;
   std::cout << "Inventory:";
   if (p.inventory.empty()) {
     std::cout << "(empty)";
@@ -68,11 +68,11 @@ void Game::play() {
     DMVtime++;
   }
   if (p.inventory.find("drivers_license") != p.inventory.end()) {
-    std::cout << "Congrats on getting your driver's license! Drive safely.\n" << std::endl;
+    std::cout << "\nCongrats on getting your driver's license! Drive safely.\n" << std::endl;
   } else if (currentRoom == 0) {
-    std::cout << "Good bye! Come back any time to try to get your driver's license again.\n" << std::endl;
+    std::cout << "\nGood bye! Come back any time to try to get your driver's license again.\n" << std::endl;
   } else if (DMVtime == 60) {
-    std::cout << "Oh no, you're out of time! It's 6:00 PM and the DMV is closed.\n" << std::endl;
+    std::cout << "\nOh no, you're out of time! It's 6:00 PM and the DMV is closed.\n" << std::endl;
   }
 
 };
