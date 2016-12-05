@@ -32,6 +32,8 @@ Game::Game() {
     }
   }
 
+  currentRoom = rooms["Waiting Room"];
+
 };
 
 Game::~Game() {
@@ -42,5 +44,9 @@ Game::~Game() {
 
 }
 void Game::play() {
+
+  while (currentRoom != 0) {
+    currentRoom = currentRoom->play();
+  }
 
 };

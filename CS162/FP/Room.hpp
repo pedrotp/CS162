@@ -20,7 +20,7 @@ variable and function declarations.
 #include <set>
 #include <string>
 #include <iostream>
-#include <cstdlib>
+#include <unistd.h>
 
 class Room;
 
