@@ -17,8 +17,30 @@ functions in the class.
 
 Game::Game() {
 
+  rooms["Waiting Room"] = new WaitingRoom(&p);
+  rooms["Driving Test"] = new DrivingTest(&p);
+  rooms["Forms Dept"] = new FormsDept(&p);
+  rooms["Photo Lab"] = new PhotoLab(&p);
+  rooms["Vision Test"] = new VisionTest(&p);
+  rooms["Written Test"] = new WrittenTest(&p);
+
+  for (std::map<std::string, Room*>::iterator it1 = rooms.begin(); it1 != rooms.end(); ++it1) {
+    for (std::map<std::string, Room*>::iterator it2 = rooms.begin(); it2 != rooms.end(); ++it2) {
+      if (it1->first != it2->first) {
+        it1->second->setDoor(*it2);
+      }
+    }
+  }
+
 };
 
+Game::~Game() {
+
+  for (std::map<std::string, Room*>::iterator it = rooms.begin(); it != rooms.end(); ++it) {
+    delete it->second;
+  }
+
+}
 void Game::play() {
 
 };

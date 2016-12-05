@@ -21,4 +21,8 @@ PhotoLab::PhotoLab(Player* p1) : Room(p1){
 
 Room* PhotoLab::play() {
 
+  Room* r;
+
+  return r;
+  
 };

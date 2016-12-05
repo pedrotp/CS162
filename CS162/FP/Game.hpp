@@ -16,24 +16,20 @@ function declarations.
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <iostream>
-#include <map>
-#include <string>
+#include "DrivingTest.hpp"
+#include "FormsDept.hpp"
+#include "PhotoLab.hpp"
+#include "VisionTest.hpp"
+#include "WaitingRoom.hpp"
+#include "WrittenTest.hpp"
 
 // Defines the interface of the Game class
 class Game
 {
   protected:
-    struct Player {
-      std::string name;
-      std::map<std::string, bool> goals;
-      std::set<std::string> inventory;
-      Player(std::string n) { // constructor
-        name = n;
-        license = false;
-      }
-    };
-    Player *p;
+    Player p;
+    std::map<std::string, Room*> rooms;
+    Room* currentRoom;
 
   public:
     Game();

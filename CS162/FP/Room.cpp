@@ -17,17 +17,12 @@ all the functions in the class.
 
 Room::Room(Player* p1) {
 
-  s1 = s2 = s3 = s4 = s5 = 0;
   p = p1;
 
 };
 
-void Room::setRooms(Room* p1, Room* p2, Room* p3, Room* p4, Room* p5); {
+void Room::setDoor(std::pair<std::string, Room*> door) {
 
-  s1 = p1;
-  s2 = p2;
-  s3 = p3;
-  s4 = p4;
-  s5 = p5;
+  doors.insert(door);
 
 };

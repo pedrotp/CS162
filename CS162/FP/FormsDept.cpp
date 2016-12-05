@@ -21,4 +21,8 @@ FormsDept::FormsDept(Player* p1) : Room(p1){
 
 Room* FormsDept::play() {
 
+  Room* r;
+
+  return r;
+
 };

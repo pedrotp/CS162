@@ -21,4 +21,8 @@ WrittenTest::WrittenTest(Player* p1) : Room(p1){
 
 Room* WrittenTest::play() {
 
+    Room* r;
+
+    return r;
+    
 };

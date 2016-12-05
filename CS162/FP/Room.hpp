@@ -16,7 +16,21 @@ variable and function declarations.
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
-#include "Game.hpp"
+#include <map>
+#include <set>
+#include <string>
+#include <iostream>
+#include <cstdlib>
+
+class Room;
+
+struct Player {
+
+  std::map<std::string, Room*> rooms;
+  std::map<std::string, bool> goals;
+  std::set<std::string> inventory;
+
+};
 
 // Defines the interface of the Room class
 class Room
@@ -24,16 +38,12 @@ class Room
 
   protected:
     Player* p;
-    Room* s1;
-    Room* s2;
-    Room* s3;
-    Room* s4;
-    Room* s5;
+    std::map<std::string, Room*> doors;
 
   public:
     Room(Player* p1);
     virtual ~Room() {};
-    void setRooms(Room* p1 = 0, Room* p2 = 0, Room* p3 = 0, Room* p4 = 0, Room* p5 = 0);
+    void setDoor(std::pair<std::string, Room*> door);
     virtual Room* play() = 0;
 
 };
