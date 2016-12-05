@@ -21,8 +21,9 @@ PhotoLab::PhotoLab(Player* p1) : Room(p1){
 
 Room* PhotoLab::play() {
 
-  Room* r;
+  std::cout << "Current room: Photo Lab\n\n" << std::endl;
 
-  return r;
-  
+  return nextStep();
+
+
 };

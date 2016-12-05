@@ -21,8 +21,8 @@ FormsDept::FormsDept(Player* p1) : Room(p1){
 
 Room* FormsDept::play() {
 
-  Room* r;
-
-  return r;
+  std::cout << "Current room: Forms Department\n\n" << std::endl;
+  
+  return nextStep();
 
 };

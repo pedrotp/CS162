@@ -21,8 +21,8 @@ DrivingTest::DrivingTest(Player* p1) : Room(p1){
 
 Room* DrivingTest::play() {
 
-  Room* r;
+  std::cout << "Current room: Driving Test Track\n\n" << std::endl;
 
-  return r;
+  return nextStep();
 
 };

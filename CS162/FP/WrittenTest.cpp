@@ -21,8 +21,8 @@ WrittenTest::WrittenTest(Player* p1) : Room(p1){
 
 Room* WrittenTest::play() {
 
-    Room* r;
+  std::cout << "Current room: Written Test Room\n\n" << std::endl;
 
-    return r;
-    
+  return nextStep();
+
 };

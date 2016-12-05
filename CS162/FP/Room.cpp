@@ -26,3 +26,25 @@ void Room::setDoor(std::pair<std::string, Room*> door) {
   doors.insert(door);
 
 };
+
+Room* Room::nextStep() {
+
+  Room* nextR = 0;
+
+  int i = 0;
+  std::cout << "\nWhere do you want to go next?\n" << std::endl;
+  for (std::map<std::string, Room*>::iterator it = doors.begin(); it != doors.end(); it++) {
+    std::cout << i + 1 << ": " << it->first << "\n";
+    i++;
+  }
+  std::cout << "(Press 0 to quit the game)\n" << std::endl;
+  int choice = getInt(0, doors.size());
+  if (choice) {
+    std::map<std::string, Room*>::iterator it = doors.begin();
+    std::advance(it, choice - 1);
+    nextR = it->second;
+  }
+
+  return nextR;
+
+};

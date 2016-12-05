@@ -21,15 +21,13 @@ WaitingRoom::WaitingRoom(Player* p1) : Room(p1){
 
 Room* WaitingRoom::play() {
 
-  Room* nextroom = 0;
-
-  std::cout << "\nWelcome to the DMV waiting room!" << std::endl;
+  std::cout << "Current room: Waiting Room\n\n" << std::endl;
   std::cout << "Please wait, I will be with you in a moment\n" << std::endl;
 
   // wait
-  int waitTime = (rand() % 6);
+  int waitTime = (rand() % 3 + 3);
   for (int i = 0; i < waitTime; i++) {
-      std::cout << "...";
+      std::cout << "..." << std::endl;
       usleep(1000000);
   }
   std::cout << std::endl;
@@ -39,6 +37,6 @@ Room* WaitingRoom::play() {
   // "I'd like to renew my existing license"
   // "Never mind (head to another room)"
 
-  return nextroom;
+  return nextStep();
 
 };

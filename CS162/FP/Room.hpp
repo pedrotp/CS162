@@ -21,6 +21,7 @@ variable and function declarations.
 #include <string>
 #include <iostream>
 #include <unistd.h>
+#include "helpers.hpp"
 
 class Room;
 
@@ -44,6 +45,7 @@ class Room
     Room(Player* p1);
     virtual ~Room() {};
     void setDoor(std::pair<std::string, Room*> door);
+    Room* nextStep();
     virtual Room* play() = 0;
 
 };

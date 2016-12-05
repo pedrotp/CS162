@@ -21,8 +21,8 @@ VisionTest::VisionTest(Player* p1) : Room(p1){
 
 Room* VisionTest::play() {
 
-  Room* r;
+  std::cout << "Current room: Vision Test Room\n\n" << std::endl;
 
-  return r;
-  
+  return nextStep();
+
 };

@@ -30,10 +30,12 @@ class Game
     Player p;
     std::map<std::string, Room*> rooms;
     Room* currentRoom;
+    int DMVtime;
 
   public:
     Game();
     ~Game();
+    void showHeader();
     void play();
 
 };
