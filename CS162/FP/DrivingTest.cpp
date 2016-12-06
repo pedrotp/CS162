@@ -16,7 +16,7 @@ file includes the source code for all the functions in the class.
 #include "DrivingTest.hpp"
 
 DrivingTest::DrivingTest(Player* p1) : Room(p1){
-  xCoord = 14;
+  xCoord = 15;
   yCoord = 5;
 
 };
@@ -32,10 +32,10 @@ user to represent white/black/ant
 
 *********************************************************************/
 
-void DrivingTest::displayTrack(int track[15][25]) {
+void DrivingTest::displayTrack(int track[16][25]) {
   std::cout << "\033[2J\033[1;1H";
   std::cout << "\n           END           " << std::endl;
-  for (int x = 0; x < 15; x++) {
+  for (int x = 0; x < 16; x++) {
     for (int y = 0; y < 25; y++) {
       switch (track[x][y]) {
         case 0:
@@ -52,7 +52,7 @@ void DrivingTest::displayTrack(int track[15][25]) {
     std::cout << std::endl;
   }
   std::cout << "   BEGIN                 " << std::endl;
-}
+};
 
 Room* DrivingTest::play() {
 
@@ -60,8 +60,8 @@ Room* DrivingTest::play() {
 
   if (checkInv("form_57b") && checkInv("form_409h") && checkInv("vision_cert")) {
 
-    bool crashed = false;
-    int track[15][25] = { // the test track
+    bool crashed = false, passed = false;
+    int track[16][25] = { // the test track
       {0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,},
       {0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,},
       {0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,},
@@ -76,15 +76,43 @@ Room* DrivingTest::play() {
       {0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,},
       {0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,},
       {0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,},
-      {0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,},
+      {0,0,0,0,1,2,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,},
+      {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,}
     };
 
     std::cout << "Welcome, please take the driver's seat. Get to the end of the track to pass the test.\n" << std::endl;
     std::cout << "Press any key to begin..." << std::endl;
     system("read");
-    displayTrack(track);
 
-    if (!crashed) {
+    char dir;
+    int prevX, prevY;
+    while (!passed && !crashed) {
+      prevX = xCoord;
+      prevY = yCoord;
+      displayTrack(track);
+      dir = getChar();
+      if (dir == 'w' || dir == 'W') { // UP
+        xCoord--;
+      } else if (dir == 'a' || dir == 'A') { // LEFT
+        yCoord--;
+      } else if (dir == 's' || dir == 'S') { // RIGHT
+        yCoord++;
+      } else if (dir == 'z' || dir == 'Z') { // DOWN
+        xCoord++;
+      }
+      if (yCoord != prevY || xCoord != prevX) {
+        if (xCoord == 0) {
+          passed = true;
+        } else if (!track[xCoord][yCoord]) {
+          crashed = true;
+        } else if (track[xCoord][yCoord]) {
+          track[prevX][prevY] = 1;
+          track[xCoord][yCoord] = 2;
+        }
+      }
+    }
+
+    if (passed) {
 
       std::cout << "\n\nYou passed! Great driving. Take this signature to the Forms Department to certify your results." << '\n';
       p->inventory.insert("dtest_signature");

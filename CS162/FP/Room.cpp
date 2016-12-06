@@ -43,8 +43,7 @@ Room* Room::nextStep() {
     p->inventory.insert("form_57b");
     p->inventory.insert("vision_cert");
     p->inventory.insert("form_409h");
-    p->inventory.insert("form_90a");
-    nextR = this;
+    nextR = doors["Driving Test"];
   } else if (choice) {
     std::map<std::string, Room*>::iterator it = doors.begin();
     std::advance(it, choice - 1);

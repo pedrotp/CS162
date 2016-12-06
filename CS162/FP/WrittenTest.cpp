@@ -30,8 +30,8 @@ Room* WrittenTest::play() {
     std::cout << "[Written Test in progress...]" << std::endl;
     usleep(3000000);
     int score = rand() % 26 + 75;
-
-    if (score > 80) {
+    p->currentTime += 10;
+    if (score >= 80) {
 
       std::cout << "You passed! You have the knowledge and are ready to hit the road. Here are your test results." << '\n';
       p->inventory.insert("wtest_results");
