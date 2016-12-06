@@ -70,3 +70,29 @@ bool getYesNo() {
   }
   return !!(yn == 'y');
 };
+
+/*********************************************************************
+
+** Description: getChar()
+
+** Gets, validates and returns char input from the user
+
+*********************************************************************/
+
+char getChar() {
+  std::string in;
+  char ch;
+  bool isValid = false;
+  while (!isValid) {
+    std::getline(std::cin, in);
+    if (in.size() == 1) {
+      ch = in.at(0);
+      isValid = true;
+    } else {
+      std::cout << "Invalid input. Please a single character." << std::endl;
+    }
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+  }
+  return ch;
+};
