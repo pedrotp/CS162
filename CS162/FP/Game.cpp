@@ -17,6 +17,8 @@ functions in the class.
 
 Game::Game() {
 
+  srand(std::time(NULL));
+
   p.currentTime = 0;
 
   rooms["Waiting Room"] = new WaitingRoom(&p);

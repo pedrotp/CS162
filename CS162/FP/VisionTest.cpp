@@ -23,7 +23,7 @@ Room* VisionTest::play() {
 
   std::cout << "Current room: Vision Test Room\n\n" << std::endl;
 
-  std::cout << "Welcome, I'm your optometrist" << std::endl;
+  std::cout << "Welcome, I'm your optometrist\n" << std::endl;
 
   if (checkInv("form_57b")) {
     bool correct = true;
@@ -33,7 +33,7 @@ Room* VisionTest::play() {
     while (i < 8 && correct) {
 
       char ch = rand() % 26 + 97;
-      std::cout << ch << std::end;
+      std::cout << ch << std::endl;
       char char_input = getChar();
       if (char_input != ch) {
         correct = false;
@@ -41,7 +41,7 @@ Room* VisionTest::play() {
       i++;
 
     }
-    p.currentTime != 10;
+    p->currentTime += 10;
     if (correct) {
 
       std::cout << "Great job! You have 20/20 vision. Here is your certificate." << '\n';

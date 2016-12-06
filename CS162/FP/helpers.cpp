@@ -90,9 +90,9 @@ char getChar() {
       isValid = true;
     } else {
       std::cout << "Invalid input. Please a single character." << std::endl;
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
     }
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
   }
   return ch;
 };

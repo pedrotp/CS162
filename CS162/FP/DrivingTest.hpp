@@ -22,9 +22,14 @@ all the class, variable and function declarations.
 class DrivingTest : public Room
 {
 
+  private:
+    int xCoord; // the car's x coordinate in the track
+    int yCoord; // the car's y coordinate in the track
+
   public:
     DrivingTest(Player* p1);
     Room* play();
+    void displayTrack(int track[15][25]);
 
 };
 

@@ -43,7 +43,7 @@ Room* WaitingRoom::play() {
 
   std::cout << "Thanks for waiting. How can I help you?\n" << std::endl;
 
-  if (p->turn == 0) {
+  if (p->currentTime == 0) {
     std::cout << "A driver's license? Sure! I can help with that" << std::endl;
     showReqs();
   } else if (!checkInv()) {
@@ -69,7 +69,7 @@ Room* WaitingRoom::play() {
     std::cout << "!(! (.)(.) !  Address:__________________________  !\n";
     std::cout << "! !   _\\_! !  Date of birth:____________________  !\n";
     std::cout << "! !_____/   !   Height:______ Weight:_______ Lbs. !\n";
-    std::cout << "! //    \\\\  !  Color Eyes:______ Color hair:_____  !\n";
+    std::cout << "! //    \\\\  !  Color Eyes:______ Color hair:____  !\n";
     std::cout << "!----------  LICENSE# PRNDSL1234OD                !\n";
     std::cout << "!_________________________________________________!\n";
     std::cout << std::endl;
