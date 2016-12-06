@@ -24,6 +24,7 @@ class WaitingRoom : public Room
 
   public:
     WaitingRoom(Player* p1);
+    void showReqs();
     Room* play();
 
 };

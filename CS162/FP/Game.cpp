@@ -17,7 +17,7 @@ functions in the class.
 
 Game::Game() {
 
-  DMVtime = 0;
+  p.currentTime = 0;
 
   rooms["Waiting Room"] = new WaitingRoom(&p);
   rooms["Driving Test"] = new DrivingTest(&p);
@@ -48,13 +48,15 @@ Game::~Game() {
 
 void Game::showHeader() {
   std::cout << "\033[2J\033[1;1H";
-  std::cout << "The current time is 5:" << std::setw(2) << std::setfill('0') << DMVtime << " PM" << std::endl;
-  std::cout << "Inventory:";
+  std::cout << "The current time is 5:" << std::setw(2) << std::setfill('0') << p.currentTime << " PM" << std::endl;
+  std::cout << "Inventory: ";
   if (p.inventory.empty()) {
     std::cout << "(empty)";
   } else {
-    for (std::set<std::string>::iterator it = p.inventory.begin(); it != p.inventory.end(); it++) {
-      std::cout << " " << *it;
+    std::set<std::string>::iterator it = p.inventory.begin();
+    std::cout << *it;
+    for (it++; it != p.inventory.end(); it++) {
+      std::cout << ", " << *it;
     }
   }
   std::cout << std::endl;
@@ -62,17 +64,17 @@ void Game::showHeader() {
 
 void Game::play() {
 
-  while (currentRoom != 0 && DMVtime != 60) {
+  while (currentRoom != 0 && p.currentTime != 60) {
     showHeader();
     currentRoom = currentRoom->play();
-    DMVtime++;
+    p.currentTime++;
   }
   if (p.inventory.find("drivers_license") != p.inventory.end()) {
-    std::cout << "\nCongrats on getting your driver's license! Drive safely.\n" << std::endl;
+    std::cout << "\nCongrats! Drive safely.\n" << std::endl;
   } else if (currentRoom == 0) {
     std::cout << "\nGood bye! Come back any time to try to get your driver's license again.\n" << std::endl;
-  } else if (DMVtime == 60) {
-    std::cout << "\nOh no, you're out of time! It's 6:00 PM and the DMV is closed.\n" << std::endl;
+  } else if (p.currentTime == 60) {
+    std::cout << "\nOh no, you're out of time! It's 6:00 PM and the DMV is closed. \n" << std::endl;
   }
 
 };

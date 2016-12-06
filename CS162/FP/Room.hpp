@@ -28,8 +28,7 @@ class Room;
 
 struct Player {
 
-  std::map<std::string, Room*> rooms;
-  std::map<std::string, bool> goals;
+  int currentTime;
   std::set<std::string> inventory;
 
 };
@@ -47,6 +46,7 @@ class Room
     virtual ~Room() {};
     void setDoor(std::pair<std::string, Room*> door);
     Room* nextStep();
+    bool checkInv(std::string item = "license_reqs"); // checks if an item is in the inventory
     virtual Room* play() = 0;
 
 };
