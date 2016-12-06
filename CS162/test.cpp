@@ -1,15 +1,15 @@
 #include <iostream>
+#include <curses.h>
 
 int main () {
 
-  srand (std::time(NULL));
-  int test = 0;
-
-  for (int i = 0; i < 1000; i++) {
-    test += rand() % 100 + 1;
-  }
-
-  std::cout << test / 1000 << std::endl;
+  int ch;
+  do {
+    // std::cin.clear();
+    // std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+    std::cout << "CHAR: " << ch << std::endl;
+    ch = getch();
+  } while (ch != KEY_RIGHT);
 
   return 0;
 
