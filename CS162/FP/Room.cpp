@@ -68,7 +68,7 @@ Room* Room::nextStep() {
   }
   std::cout << "(Press 0 to quit the game)\n" << std::endl;
   int choice = getInt(0, 6);
-  if (choice == 6) { // cheat code (for grading) that fills all the requirements for the driving test
+  if (choice == 6) { // cheat code (for testing) that fills all the requirements for the driving test
 
     if (p->inventory.size() < 4) p->inventory.insert("form_57b");
     if (p->inventory.size() < 4) p->inventory.insert("vision_cert");
