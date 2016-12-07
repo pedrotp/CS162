@@ -15,9 +15,27 @@ file includes the source code for all the functions in the class.
 
 #include "PhotoLab.hpp"
 
-PhotoLab::PhotoLab(Player* p1) : Room(p1){
+/*********************************************************************
 
+** Description: PhotoLab()
+
+** This is the constructor for the PhotoLab class, which
+passes the p variable to the constructor for the Room abstract
+base class
+
+*********************************************************************/
+
+PhotoLab::PhotoLab(Player* p1) : Room(p1){
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This function runs the PhotoLab mini-game, which allows the user
+to "take a picture", provided they have proper photo ID
+
+*********************************************************************/
 
 Room* PhotoLab::play() {
 

@@ -15,9 +15,27 @@ file includes the source code for all the functions in the class.
 
 #include "WaitingRoom.hpp"
 
+/*********************************************************************
+
+** Description: WaitingRoom()
+
+** This is the constructor for the WaitingRoom class, which
+passes the p variable to the constructor for the Room abstract
+base class
+
+*********************************************************************/
+
 WaitingRoom::WaitingRoom(Player* p1) : Room(p1){
 
 };
+
+/*********************************************************************
+
+** Description: showReqs()
+
+** This function shows the user the requirements to get a license
+
+*********************************************************************/
 
 void WaitingRoom::showReqs() {
   std::cout << "Here are the requirements I need to issue you a license:" << '\n';
@@ -28,6 +46,16 @@ void WaitingRoom::showReqs() {
   std::cout << "\n** All forms can be obtained in the forms dept with the proper documents **\n" << '\n';
   std::cout << "Come back with all of these requirements and I'll give you your license!\n" << std::endl;
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This function runs the WaitingRoom mini-game, which tells the user
+the requirements they need to get a license, and gives them a license
+if they meet these requirements
+
+*********************************************************************/
 
 Room* WaitingRoom::play() {
 

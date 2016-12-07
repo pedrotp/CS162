@@ -15,9 +15,27 @@ file includes the source code for all the functions in the class.
 
 #include "WrittenTest.hpp"
 
-WrittenTest::WrittenTest(Player* p1) : Room(p1){
+/*********************************************************************
 
+** Description: WrittenTest()
+
+** This is the constructor for the WrittenTest class, which
+passes the p variable to the constructor for the Room abstract
+base class
+
+*********************************************************************/
+
+WrittenTest::WrittenTest(Player* p1) : Room(p1){
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This function runs the WrittenTest mini-game, which runs a mock
+"test" and generates a random grade between 75 and 100
+
+*********************************************************************/
 
 Room* WrittenTest::play() {
 
@@ -32,8 +50,8 @@ Room* WrittenTest::play() {
       usleep(1000000);
       std::cout << "[Written Test in progress...]" << std::endl;
       usleep(3000000);
-      int score = rand() % 26 + 75;
-      p->currentTime += 10;
+      int score = rand() % 26 + 75; // score is randomly generated between 75 and 100
+      p->currentTime += 10; // time is incremented for completing the activity
       if (score >= 80) {
 
         std::cout << "You passed! You have the knowledge and are ready to hit the road. Here are your test results." << '\n';

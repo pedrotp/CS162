@@ -15,9 +15,28 @@ file includes the source code for all the functions in the class.
 
 #include "VisionTest.hpp"
 
-VisionTest::VisionTest(Player* p1) : Room(p1){
+/*********************************************************************
 
+** Description: VisionTest()
+
+** This is the constructor for the VisionTest class, which
+passes the p variable to the constructor for the Room abstract
+base class
+
+*********************************************************************/
+
+VisionTest::VisionTest(Player* p1) : Room(p1){
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This function runs the VisionTest mini-game, which asks the user to
+"read" letters and gives them a certificate if they get all of them
+right
+
+*********************************************************************/
 
 Room* VisionTest::play() {
 
@@ -25,7 +44,7 @@ Room* VisionTest::play() {
 
   std::cout << "Welcome, I'm your optometrist\n" << std::endl;
 
-  if (!checkInv("vision_cert")) {
+  if (!checkInv("vision_cert")) { // player may only complete this activity once
 
     if (checkInv("form_57b")) {
       bool correct = true;

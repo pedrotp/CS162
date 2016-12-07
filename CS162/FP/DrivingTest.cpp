@@ -15,6 +15,16 @@ file includes the source code for all the functions in the class.
 
 #include "DrivingTest.hpp"
 
+/*********************************************************************
+
+** Description: DrivingTest()
+
+** This is the constructor for the DrivingTest class, which
+passes the p variable to the constructor for the Room abstract
+base class
+
+*********************************************************************/
+
 DrivingTest::DrivingTest(Player* p1) : Room(p1){
 };
 
@@ -22,10 +32,11 @@ DrivingTest::DrivingTest(Player* p1) : Room(p1){
 
 ** Description: displayTrack()
 
-** This function uses a loop to display a 2x2 matrix. The switch statement
-replaces the numbers 0, 1 and 2 (which is how each different position is
-represented in the 2D array) into whatever characters we want to show the
-user to represent white/black/ant
+** This function displays instructions for navigating the car, then
+uses a loop to display the 2x2 matrix that contains the car. The switch
+statement replaces the numbers 0, 1 and 2 (which is how everything is
+represented in the 2D array) into the proper character to show the
+user to represent the road ( ), walls(#) and car (*)
 
 *********************************************************************/
 
@@ -35,6 +46,7 @@ void DrivingTest::displayTrack(int track[16][25]) {
   std::cout << "  a   s     Choose a direction, then press the enter key" << '\n';
   std::cout << "    z       w = up, a = left, s = right, z = down" << '\n';
   std::cout << "            For example, to go up type w + enter\n\n" << '\n';
+
   std::cout << "\n           END           " << std::endl;
   for (int x = 0; x < 16; x++) {
     for (int y = 0; y < 25; y++) {
@@ -53,10 +65,23 @@ void DrivingTest::displayTrack(int track[16][25]) {
     std::cout << std::endl;
   }
   std::cout << "   BEGIN                 " << std::endl;
+
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This function runs the DrivingTest mini-game, which allows the user
+to "drive" through a road and "crash" if they touch a wall. If they
+arrive at the other side of the road without crashing, they win the
+mini-game.
+
+*********************************************************************/
 
 Room* DrivingTest::play() {
 
+  // initial car position
   xCoord = 14;
   yCoord = 5;
 
@@ -86,10 +111,10 @@ Room* DrivingTest::play() {
 
     std::cout << "Welcome, please take the driver's seat. Get to the end of the track to pass the test.\n" << std::endl;
     std::cout << "Press any key to begin..." << std::endl;
-    system("read");
+    system("read"); // press any key
 
     char dir;
-    int prevX, prevY;
+    int prevX, prevY; // store the previous values of x and y
     while (!passed && !crashed) {
 
       prevX = xCoord;
@@ -115,18 +140,19 @@ Room* DrivingTest::play() {
 
       }
 
-      if (yCoord != prevY || xCoord != prevX) {
+      if (yCoord != prevY || xCoord != prevX) { // if there are any changes
 
         if (xCoord == 0) {
 
-          passed = true;
+          passed = true; // if x is 0 the car has reached the top
 
         } else if (!track[xCoord][yCoord]) {
 
-          crashed = true;
+          crashed = true; // if the car moved into a wall, it has crashed
 
         } else if (track[xCoord][yCoord]) {
 
+          // if a car has moved into an empty space, update the track
           track[prevX][prevY] = 1;
           track[xCoord][yCoord] = 2;
 
@@ -136,7 +162,7 @@ Room* DrivingTest::play() {
 
     }
 
-    p->currentTime += 15;
+    p->currentTime += 15; // update the time it took to do the driving test
 
     if (passed) {
 

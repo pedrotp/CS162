@@ -15,6 +15,16 @@ functions in the class.
 
 #include "Game.hpp"
 
+/*********************************************************************
+
+** Description: Game()
+
+** This is the constructor for the Game class, which sets the time to
+0, creates all the rooms in the game, and the pointers to travel
+within them. It then sets the current room to the Waiting Room.
+
+*********************************************************************/
+
 Game::Game() {
 
   srand(std::time(NULL));
@@ -40,6 +50,15 @@ Game::Game() {
 
 };
 
+/*********************************************************************
+
+** Description: ~Game()
+
+** This is the destructor for the Game class, which deallocates
+memory for all of the dynamically allocated Rooms
+
+*********************************************************************/
+
 Game::~Game() {
 
   for (std::map<std::string, Room*>::iterator it = rooms.begin(); it != rooms.end(); it++) {
@@ -47,6 +66,14 @@ Game::~Game() {
   }
 
 };
+
+/*********************************************************************
+
+** Description: showHeader()
+
+** Clears the screen, shows the current time, shows the inventory
+
+*********************************************************************/
 
 void Game::showHeader() {
   std::cout << "\033[2J\033[1;1H";
@@ -66,6 +93,16 @@ void Game::showHeader() {
   }
   std::cout << std::endl;
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This is the main function that plays the game. It shows the initial
+instructions, then loops the game flow between rooms, and shows the
+proper outcome once the loop is broken.
+
+*********************************************************************/
 
 void Game::play() {
 

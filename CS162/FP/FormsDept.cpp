@@ -15,9 +15,27 @@ file includes the source code for all the functions in the class.
 
 #include "FormsDept.hpp"
 
-FormsDept::FormsDept(Player* p1) : Room(p1){
+/*********************************************************************
 
+** Description: FormsDept()
+
+** This is the constructor for the FormsDept class, which
+passes the p variable to the constructor for the Room abstract
+base class
+
+*********************************************************************/
+
+FormsDept::FormsDept(Player* p1) : Room(p1){
 };
+
+/*********************************************************************
+
+** Description: play()
+
+** This function runs the FormsDept mini-game, which allows the user
+to get 3 types of form, provided they have the requirements
+
+*********************************************************************/
 
 Room* FormsDept::play() {
 
