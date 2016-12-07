@@ -16,9 +16,6 @@ file includes the source code for all the functions in the class.
 #include "DrivingTest.hpp"
 
 DrivingTest::DrivingTest(Player* p1) : Room(p1){
-  xCoord = 15;
-  yCoord = 5;
-
 };
 
 /*********************************************************************
@@ -34,6 +31,10 @@ user to represent white/black/ant
 
 void DrivingTest::displayTrack(int track[16][25]) {
   std::cout << "\033[2J\033[1;1H";
+  std::cout << "    w       To drive the car, use the w, a, s and z keys" << '\n';
+  std::cout << "  a   s     Choose a direction, then press the enter key" << '\n';
+  std::cout << "    z       w = up, a = left, s = right, z = down" << '\n';
+  std::cout << "            For example, to go up type w + enter\n\n" << '\n';
   std::cout << "\n           END           " << std::endl;
   for (int x = 0; x < 16; x++) {
     for (int y = 0; y < 25; y++) {
@@ -55,6 +56,9 @@ void DrivingTest::displayTrack(int track[16][25]) {
 };
 
 Room* DrivingTest::play() {
+
+  xCoord = 14;
+  yCoord = 5;
 
   std::cout << "Current room: Driving Test Track\n\n" << std::endl;
 
@@ -87,6 +91,7 @@ Room* DrivingTest::play() {
     char dir;
     int prevX, prevY;
     while (!passed && !crashed) {
+      p->currentTime++;
       prevX = xCoord;
       prevY = yCoord;
       displayTrack(track);

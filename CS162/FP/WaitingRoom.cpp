@@ -21,10 +21,11 @@ WaitingRoom::WaitingRoom(Player* p1) : Room(p1){
 
 void WaitingRoom::showReqs() {
   std::cout << "Here are the requirements I need to issue you a license:" << '\n';
-  std::cout << "- Form 57B from the Forms Department, which validates your identity" << '\n';
+  std::cout << "\n- Form 57B, which validates your identity" << '\n';
   std::cout << "- Signed Vision Certificate from our Optometrist" << '\n';
   std::cout << "- Form 409H, which shows a grade of 80% or more on the Written Test" << '\n';
-  std::cout << "- Form 90A, signed by your instructor, which confirms you passed the Driving Test" << "\n\n";
+  std::cout << "- Form 90A, signed by your instructor, which confirms you passed the Driving Test" << '\n';
+  std::cout << "\n** All forms can be obtained in the forms dept with the proper documents **\n" << '\n';
   std::cout << "Come back with all of these requirements and I'll give you your license!\n" << std::endl;
 };
 
@@ -54,7 +55,7 @@ Room* WaitingRoom::play() {
       showReqs();
     }
   } else {
-    std::cout << "You again?! ... Oh, wait, it looks like you have all the requirements..." << '\n';
+    std::cout << "You again?! ... Oh, wait, it looks like you have all the requirements...\n" << '\n';
     std::cout << "Why didn't you say so?! Please wait...\n" << '\n';
     for (int i = 0; i < 5; i++) {
         std::cout << "..." << std::endl;

@@ -66,7 +66,30 @@ void Game::showHeader() {
 
 void Game::play() {
 
-  while (currentRoom != 0 && p.currentTime != 60) {
+  std::cout << "\n####################################" << '\n';
+  std::cout << "#  ######   ###   ###  ##      ##  #" << '\n';
+  std::cout << "#  ##   ##  ## # # ##   ##    ##   #" << '\n';
+  std::cout << "#  ##   ##  ##  #  ##    ##  ##    #" << '\n';
+  std::cout << "#  ######   ##     ##     ####     #" << '\n';
+  std::cout << "####################################\n" << std::endl;
+
+  std::cout << "Hey there! Welcome to the DMV. This game is meant to simulate" << '\n';
+  std::cout << "the frustration of getting your license in the DMV. To play," << '\n';
+  std::cout << "you move around the different rooms in the DMV gathering all" << '\n';
+  std::cout << "the requirements for your license.\n" << '\n';
+  std::cout << "Pay attention to all the messages in each room to understand" << '\n';
+  std::cout << "which challenges to complete first, and what the requirements" << '\n';
+  std::cout << "are in order to receive your driver's license.\n" << '\n';
+  std::cout << "Lastly, as you move around and complete challenges, keep an" << '\n';
+  std::cout << "eye at the top of your screen which includes three important" << '\n';
+  std::cout << "pieces of information:" << '\n';
+  std::cout << " * The current time (remember, the DMV closes at 6:00PM!)" << '\n';
+  std::cout << " * Your inventory with a list of items you're currently holding" << '\n';
+  std::cout << " * The name of the room you're currently in\n" << '\n';
+  std::cout << "Ready?! Press any key to go to the Waiting Room and start the game." << '\n';
+  system("read");
+
+  while (currentRoom != 0 && p.currentTime < 60) {
     showHeader();
     currentRoom = currentRoom->play();
     p.currentTime++;

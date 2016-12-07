@@ -41,10 +41,10 @@ Room* FormsDept::play() {
         std::cout << "One minute please while I make a copy of your ID and staple the photo to the form." << '\n';
         p->inventory.erase("license_photo");
         usleep(1000000);
-        std::cout << "[license_photo removed from inventory]" << '\n';
+        std::cout << "\n[license_photo removed from inventory]" << '\n';
         p->inventory.insert("form_57b");
         usleep(1000000);
-        std::cout << "[form_57b added to inventory]" << std::endl;
+        std::cout << "\n[form_57b added to inventory]" << std::endl;
         p->currentTime++;
 
       } else {
@@ -61,10 +61,10 @@ Room* FormsDept::play() {
         std::cout << "I'll get you that form in a minute." << '\n';
         p->inventory.erase("wtest_results");
         usleep(1000000);
-        std::cout << "[wtest_results removed from inventory]" << '\n';
+        std::cout << "\n[wtest_results removed from inventory]" << '\n';
         p->inventory.insert("form_409h");
         usleep(1000000);
-        std::cout << "[form_409h added to inventory]" << std::endl;
+        std::cout << "\n[form_409h added to inventory]" << std::endl;
         p->currentTime++;
 
       } else {
@@ -81,10 +81,10 @@ Room* FormsDept::play() {
         std::cout << "Please give me a minute while I put everything together." << '\n';
         p->inventory.erase("dtest_signature");
         usleep(1000000);
-        std::cout << "[dtest_signature removed from inventory]" << '\n';
+        std::cout << "\n[dtest_signature removed from inventory]" << '\n';
         p->inventory.insert("form_90a");
         usleep(1000000);
-        std::cout << "[form_90a added to inventory]" << std::endl;
+        std::cout << "\n[form_90a added to inventory]" << std::endl;
         p->currentTime++;
 
       } else {

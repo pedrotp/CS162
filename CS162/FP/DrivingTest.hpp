@@ -29,7 +29,6 @@ class DrivingTest : public Room
   public:
     DrivingTest(Player* p1);
     void displayTrack(int track[16][25]);
-    void move();
     Room* play();
 
 };
