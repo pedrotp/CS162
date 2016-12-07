@@ -60,6 +60,9 @@ void Game::showHeader() {
     for (it++; it != p.inventory.end(); it++) {
       std::cout << ", " << *it;
     }
+    if (p.inventory.size() >= 4) {
+      std::cout << " [** inventory full **]" << '\n';
+    }
   }
   std::cout << std::endl;
 };

@@ -31,7 +31,7 @@ Room* PhotoLab::play() {
 
     if (getYesNo()) {
 
-      std::cout << "Great. Say cheese!\n" << '\n';
+      std::cout << "\nGreat. Say cheese!\n" << '\n';
       usleep(1000000);
       std::cout << "    \\ | /\n";
       std::cout << "   '  _  '\n";
@@ -52,19 +52,19 @@ Room* PhotoLab::play() {
       std::cout << "! !_____/  !\n";
       std::cout << "! //    \\\\ !\n";
       std::cout << "!----------!\n";
-      p->inventory.insert("license_photo");
+      if (p->inventory.size() < 4) p->inventory.insert("license_photo");
       std::cout << "\n[license_photo added to inventory]" << std::endl;
       p->currentTime += 5;
 
     } else {
 
-      std::cout << "Sorry! Can't take your photo without ID. Come back when you have it!\n" << std::endl;
+      std::cout << "\nSorry! Can't take your photo without ID. Come back when you have it!\n" << std::endl;
 
     }
 
   } else {
 
-    std::cout << "Hm, looks like you've already taken your photo. You're done here!" << std::endl;
+    std::cout << "\nHm, looks like you've already taken your photo. You're done here!" << std::endl;
 
   }
 

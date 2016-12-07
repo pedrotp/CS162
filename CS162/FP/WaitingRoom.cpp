@@ -61,7 +61,7 @@ Room* WaitingRoom::play() {
         std::cout << "..." << std::endl;
         usleep(1000000);
     }
-    p->inventory.insert("drivers_license");
+    if (p->inventory.size() < 4) p->inventory.insert("drivers_license");
     std::cout << "\nOk, here's your driver's license:\n\n";
     std::cout << "___________________________________________________\n";
     std::cout << "!          !                                      !\n";

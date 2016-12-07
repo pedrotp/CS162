@@ -37,7 +37,7 @@ Room* WrittenTest::play() {
       if (score >= 80) {
 
         std::cout << "You passed! You have the knowledge and are ready to hit the road. Here are your test results." << '\n';
-        p->inventory.insert("wtest_results");
+        if (p->inventory.size() < 4) p->inventory.insert("wtest_results");
         std::cout << "\n[wtest_results added to inventory]\n" << std::endl;
 
       } else {

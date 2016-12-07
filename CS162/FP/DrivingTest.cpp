@@ -91,36 +91,57 @@ Room* DrivingTest::play() {
     char dir;
     int prevX, prevY;
     while (!passed && !crashed) {
-      p->currentTime++;
+
       prevX = xCoord;
       prevY = yCoord;
       displayTrack(track);
       dir = getChar();
+
       if (dir == 'w' || dir == 'W') { // UP
+
         xCoord--;
+
       } else if (dir == 'a' || dir == 'A') { // LEFT
+
         yCoord--;
+
       } else if (dir == 's' || dir == 'S') { // RIGHT
+
         yCoord++;
+
       } else if (dir == 'z' || dir == 'Z') { // DOWN
+
         xCoord++;
+
       }
+
       if (yCoord != prevY || xCoord != prevX) {
+
         if (xCoord == 0) {
+
           passed = true;
+
         } else if (!track[xCoord][yCoord]) {
+
           crashed = true;
+
         } else if (track[xCoord][yCoord]) {
+
           track[prevX][prevY] = 1;
           track[xCoord][yCoord] = 2;
+
         }
+
       }
+
     }
+
+    p->currentTime += 15;
 
     if (passed) {
 
       std::cout << "\n\nYou passed! Great driving. Take this signature to the Forms Department to certify your results." << '\n';
-      p->inventory.insert("dtest_signature");
+      if (p->inventory.size() < 4) p->inventory.insert("dtest_signature");
       std::cout << "[dtest_signature added to inventory]\n" << std::endl;
 
     } else {

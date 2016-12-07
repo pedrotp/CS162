@@ -47,7 +47,7 @@ Room* VisionTest::play() {
       if (correct) {
 
         std::cout << "Great job! You have 20/20 vision. Here is your certificate." << '\n';
-        p->inventory.insert("vision_cert");
+        if (p->inventory.size() < 4) p->inventory.insert("vision_cert");
         std::cout << "\n[vision_cert added to inventory]\n" << std::endl;
 
       } else {
