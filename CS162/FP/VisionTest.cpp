@@ -46,7 +46,7 @@ Room* VisionTest::play() {
       p->currentTime += 10;
       if (correct) {
 
-        std::cout << "Great job! You have 20/20 vision. Here is your certificate so you can take it to the Forms Dept." << '\n';
+        std::cout << "Great job! You have 20/20 vision. Here is your certificate." << '\n';
         p->inventory.insert("vision_cert");
         std::cout << "\n[vision_cert added to inventory]\n" << std::endl;
 

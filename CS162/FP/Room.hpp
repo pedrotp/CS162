@@ -21,7 +21,10 @@ variable and function declarations.
 #include <string>
 #include <iostream>
 #include <iomanip>
-#include <unistd.h>
+#include <ctime>
+#include <cstdlib> // rand(), srand()
+#include <ctime> // std::time
+#include <unistd.h> // usleep
 #include "helpers.hpp"
 
 class Room;
